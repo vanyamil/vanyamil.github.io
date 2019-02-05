@@ -1,5 +1,5 @@
 import Earth from "./Earth.jsx";
-import {p5, sgn, newton} from "../helpers.js";
+import {p5, sgn, newton} from "../helpers.jsx";
 
 export default class Orbit {
     // Constants

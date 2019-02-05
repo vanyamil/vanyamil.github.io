@@ -3,7 +3,7 @@ import Ribbon from "./Ribbon.jsx";
 import Payload from "./Payload.jsx";
 import Orbit from "./Orbit.jsx";
 import Profile from "./AstronauticaProfile.jsx";
-import {p5} from "../helpers.js";
+import {p5} from "../helpers.jsx";
 
 export default class Climber {    
     // Constants
