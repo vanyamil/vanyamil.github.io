@@ -5,9 +5,14 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
+    "@babel/preset-react": "^7.0.0",
     "bootstrap": "^4.2.1",
+    "cross-env": "^5.2.0",
+    "jquery": "^3.3.1",
     "laravel-mix": "^4.0.14",
+    "p5": "^0.7.3",
     "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "webpack": "^4.29.1"
   },
   "scripts": {
