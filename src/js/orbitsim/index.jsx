@@ -189,6 +189,8 @@ Payload.p5 = s;
 let orbitSimReact = <OrbitSim p5={s} register={reactRegister} />;
 export default orbitSimReact;
 
+/*
 if (document.getElementById('root')) {
 	ReactDOM.render(orbitSimReact, document.getElementById('root'));
 }
+*/
