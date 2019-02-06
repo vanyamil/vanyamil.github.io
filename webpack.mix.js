@@ -16,6 +16,7 @@ mix.react('src/js/router.jsx', 'res/js/app.js')
    .extract([
    		'react', 
    		'react-router', 
+   		'react-router-dom',
    		'react-dom',
    		'jquery', 
    		'p5'
