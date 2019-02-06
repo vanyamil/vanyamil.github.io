@@ -186,7 +186,9 @@ Climber.p5 = s;
 Orbit.p5 = s;
 Payload.p5 = s;
 
+let orbitSimReact = <OrbitSim p5={s} register={reactRegister} />;
+export default orbitSimReact;
+
 if (document.getElementById('root')) {
-	let react = <OrbitSim p5={s} register={reactRegister} />;
-	ReactDOM.render(react, document.getElementById('root'));
+	ReactDOM.render(orbitSimReact, document.getElementById('root'));
 }
