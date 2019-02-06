@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {Route} from 'react-router';
 
-import OrbitSim from "./orbitsim/index.jsx";
+import orbitSim from "./orbitsim/index.jsx";
 import Home from "./pages/Home.jsx";
 
 ReactDOM.render((
@@ -21,8 +21,8 @@ ReactDOM.render((
 				</ul>
 			</nav>
 			<div className="container-fluid">
-				<Route exact path="/" component={<Home />} />
-				<Route exact path="/orbitsim" component={OrbitSim} />
+				<Route exact path="/" component={Home} />
+				<Route path="/orbitsim" render={() => orbitSim} />
 			</div>
 		</div>
 	</Router>
