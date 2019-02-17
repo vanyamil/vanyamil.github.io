@@ -14,7 +14,7 @@ export default function Layout(props) {
 				</li>
 			</ul>
 		</nav>
-		<div className="container-fluid">
+		<div className="container-fluid" style={{marginTop: "80px"}}>
 			{props.children}
 		</div>
 	</div>
