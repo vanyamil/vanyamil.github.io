@@ -8,6 +8,14 @@ export default class Ribbon {
     static get COUNTER_WIDTH() { return 1000000; }    // Radius of the sphere indicating the counterweight, units : m
     static get COUNTER_COLOR() { return '#22339F'; }
 
-    static get LONGITUDE() { return Math.PI * 90 / 180; }
-    static get LATITUDE() { return Math.PI * 5 / 180; }
+    static get LONGITUDE() { return this._longitude; }
+    static get LATITUDE() { return this._latitude; }
+
+    static setLonLat(longitude, latitude) {
+        const toRad = Math.PI / 180;
+        this._longitude = toRad * (180 + longitude);
+        this._latitude = toRad * latitude;
+    }
 }
+
+Ribbon.setLonLat(-90, 0);
