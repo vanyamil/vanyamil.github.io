@@ -1,12 +1,13 @@
 import React from 'react';
 import Layout from '../layout.jsx';
+import component from '../orbitsim/index.jsx';
 
-export default function Home() {
+export default function OrbitSim() {
 	return (
 	<Layout>
 		<div className="row">
 			<div className="col-12">
-				Welcome home!
+				{component}
 			</div>
 		</div>
 	</Layout>

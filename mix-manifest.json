@@ -1,5 +1,6 @@
 {
-    "/res/js/app.js": "/res/js/app.js",
     "/res/js/manifest.js": "/res/js/manifest.js",
-    "/res/js/vendor.js": "/res/js/vendor.js"
+    "/res/js/vendor.js": "/res/js/vendor.js",
+    "/res/js/home.js": "/res/js/home.js",
+    "/res/js/orbitsim.js": "/res/js/orbitsim.js"
 }
