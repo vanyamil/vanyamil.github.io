@@ -80,7 +80,8 @@ let s = new p5(function(p5) {
 					pos, ZERO_V, up
 				);
 
-				p5.perspective(p5.PI / 3, p5.width / p5.height, Payload.SIZE * sizeScale); // Near plane starts at true location
+				// Near plane starts at true location
+				p5.perspective(p5.PI / 3, p5.width / p5.height, Payload.SIZE * sizeScale, Payload.SIZE * sizeScale * 100); 
 			} else if(p5.payloads[idx].impacted) { // On ground
 				let pos = p5.payloads[idx].true_position.copy().addMag(Earth.RADIUS *0.5); 
 				pos.mult(sizeScale);
@@ -106,7 +107,7 @@ let s = new p5(function(p5) {
 					pos,  ZERO_V, up
 				);
 
-				p5.perspective(p5.PI / 3, p5.width / p5.height, Payload.SIZE * sizeScale);
+				p5.perspective(p5.PI / 3, p5.width / p5.height, Payload.SIZE * sizeScale, Payload.SIZE * sizeScale * 100);
 			}
 		}
 	}
