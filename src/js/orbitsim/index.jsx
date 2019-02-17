@@ -25,7 +25,7 @@ let s = new p5(function(p5) {
 	p5.payloads = [];
 
 	p5.preload = function preload() {
-	    Earth.IMAGE = p5.loadImage("res/images/Albedo.jpg"); /* Add public/ for prod */
+	    Earth.IMAGE = p5.loadImage("/res/images/Albedo.jpg"); /* Add public/ for prod */
 	}
 
 	p5.setup = function setup() {
