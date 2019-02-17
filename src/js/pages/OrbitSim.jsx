@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Layout from '../layout.jsx';
 import component from '../orbitsim/index.jsx';
 
@@ -12,4 +13,8 @@ export default function OrbitSim() {
 		</div>
 	</Layout>
 	);
+}
+
+if (document.getElementById('root')) {
+	ReactDOM.render(<OrbitSim />, document.getElementById('root'));
 }

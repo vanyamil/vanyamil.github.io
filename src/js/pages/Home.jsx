@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Layout from '../layout.jsx';
 
 export default function Home() {
@@ -11,4 +12,8 @@ export default function Home() {
 		</div>
 	</Layout>
 	);
+}
+
+if (document.getElementById('root')) {
+	ReactDOM.render(<Home />, document.getElementById('root'));
 }
