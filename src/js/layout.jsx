@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Layout() {
+export default function Layout(props) {
 	return (
 	<div id="react-root">
 		<nav className="navbar bg-dark navbar-dark fixed-top navbar-expand-md">
@@ -15,7 +15,7 @@ export default function Layout() {
 			</ul>
 		</nav>
 		<div className="container-fluid">
-			{this.props.children}
+			{props.children}
 		</div>
 	</div>
 	);
