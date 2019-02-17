@@ -34,7 +34,7 @@ Ribbon.draw = function(p5, should_shorten) {
     p5.rotateZ(Ribbon.LONGITUDE);
     p5.rotateX(Ribbon.LATITUDE);
 
-    let w = should_shorten ? Ribbon.WIDTH / 10 : Ribbon.WIDTH;
+    let w = should_shorten ? Ribbon.WIDTH / 5 : Ribbon.WIDTH;
 
     p5.draw_wrapper(
         p5.createVector(0, Ribbon.LENGTH / 2 + Earth.RADIUS, 0), // Center of ribbon box

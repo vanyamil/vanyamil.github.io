@@ -106,7 +106,7 @@ let s = new p5(function(p5) {
 					pos,  ZERO_V, up
 				);
 
-				p5.perspective(p5.PI / 3, p5.width / p5.height, 5.5);
+				p5.perspective(p5.PI / 3, p5.width / p5.height, Payload.SIZE * sizeScale);
 			}
 		}
 	}
@@ -115,7 +115,7 @@ let s = new p5(function(p5) {
 		// What is being tracked
 		let idx = tracked !== null ? parseInt(tracked.substr(1)) : null;
 		// Is the tracked object currently climbing
-		let climbing_track = tracked !== null && (tracked[0] == 'c' || (tracked[0] == 'p' && p5.payloads[idx].contained))
+		let climbing_track = tracked !== null && ((tracked[0] == 'c' && p5.climbers[idx] != null) || (tracked[0] == 'p' && p5.payloads[idx].contained))
 		// What is the ID of the payload that is tracked during climbing?
 		let climbing_pid = climbing_track 
 			? (tracked[0] == 'p' 
@@ -146,8 +146,8 @@ let s = new p5(function(p5) {
 	    p5.scale(sizeScale, -sizeScale, sizeScale);  // -y so that +y points up
 	    Earth.draw(p5);
 	    Ribbon.draw(p5, tracked !== null);
-	    p5.climbers.forEach((c, index) => index !== climbing_cid && c.draw(p5));
-	    p5.payloads.forEach((p, index) => index !== climbing_pid && p.draw(p5));
+	    p5.climbers.forEach((c, index) => (!(climbing_track && index == climbing_cid)) && c.draw(p5));
+	    p5.payloads.forEach((p, index) => (!(climbing_track && index == climbing_pid)) && p.draw(p5));
 	};
 
 	p5.windowResized = function windowResized() {
