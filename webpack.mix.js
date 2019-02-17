@@ -12,11 +12,10 @@ let mix = require('laravel-mix');
  */
 
 /* mix.js('src/app.js', 'dist/').sass('src/app.scss', 'dist/'); */
-mix.react('src/js/router.jsx', 'res/js/app.js')
+mix.react('src/js/pages/Home.jsx', 'res/js/home.js')
+   .react('src/js/pages/OrbitSim.jsx', 'res/js/orbitsim.js')
    .extract([
    		'react', 
-   		'react-router', 
-   		'react-router-dom',
    		'react-dom',
    		'jquery', 
    		'p5'
