@@ -1,3 +1,6 @@
+import {p5} from "../helpers.jsx";
+import Earth from "./Earth.jsx";
+
 export default class Ribbon {
     // Constants
     static get LENGTH() { return 100000000; }         // Length of the space tether, units : m
@@ -15,6 +18,16 @@ export default class Ribbon {
         const toRad = Math.PI / 180;
         this._longitude = toRad * (180 + longitude);
         this._latitude = toRad * latitude;
+    }
+
+    static get true_bottom() {
+        let v = p5.prototype.createVector(0, Earth.RADIUS, 0);
+        return v.rotateX(this.LATITUDE).rotateZ(Earth.rotation).rotateZ(this.LONGITUDE);
+    }
+
+    static get true_top() {
+        let v = p5.prototype.createVector(0, Earth.RADIUS + this.LENGTH, 0);
+        return v.rotateX(this.LATITUDE).rotateZ(Earth.rotation).rotateZ(this.LONGITUDE);
     }
 }
 

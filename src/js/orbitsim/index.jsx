@@ -59,9 +59,12 @@ let s = new p5(function(p5) {
 	}
 
 	function handleCamera(idx, climbing_track) {
+		var pos;
+
 		if(tracked === null) {
+			pos = p5.createVector(0, 0, (p5.height/2.0) / p5.tan(p5.PI*30.0 / 180.0));
 			p5.camera(
-				0, 0, (p5.height/2.0) / p5.tan(p5.PI*30.0 / 180.0),
+				pos.x, pos.y, pos.z,
 	        	0, 0, 0,
 	        	0, -1, 0
 	        );
@@ -70,7 +73,7 @@ let s = new p5(function(p5) {
 		}
 		else {
 			if(climbing_track) { // Climber or payload in climber
-				let pos = (tracked[0] == 'c' ? p5.climbers[idx] : p5.payloads[idx]).true_position.copy(); 
+				pos = (tracked[0] == 'c' ? p5.climbers[idx] : p5.payloads[idx]).true_position.copy(); 
 				pos.addMag(Payload.SIZE).mult(sizeScale);
 				pos.y *= -1;
 
@@ -81,9 +84,9 @@ let s = new p5(function(p5) {
 				);
 
 				// Near plane starts at true location
-				p5.perspective(p5.PI / 3, p5.width / p5.height, Payload.SIZE * sizeScale, Payload.SIZE * sizeScale * 100); 
+				p5.perspective(p5.PI / 3, p5.width / p5.height, Payload.SIZE * sizeScale); 
 			} else if(p5.payloads[idx].impacted) { // On ground
-				let pos = p5.payloads[idx].true_position.copy().addMag(Earth.RADIUS *0.5); 
+				pos = p5.payloads[idx].true_position.copy().addMag(Earth.RADIUS *0.5); 
 				pos.mult(sizeScale);
 				pos.y *= -1;
 
@@ -95,24 +98,27 @@ let s = new p5(function(p5) {
 
 				p5.perspective(p5.PI / 3, p5.width / p5.height, 0.01);
 			} else { // Released payload
-				let pos = p5.payloads[idx].true_position.copy(); 
+				pos = p5.payloads[idx].true_position.copy(); 
 				pos.mult(sizeScale);
 				pos.y *= -1;
 				let up = p5.payloads[idx].container.momentum.copy();
 				up.x *= -1;
 				up.z *= -1;
-				//let up = p5.createVector(0, 0, -1);
 
 				p5.cameraV(
 					pos,  ZERO_V, up
 				);
 
-				p5.perspective(p5.PI / 3, p5.width / p5.height, Payload.SIZE * sizeScale, Payload.SIZE * sizeScale * 100);
+				p5.perspective(p5.PI / 3, p5.width / p5.height, Payload.SIZE * sizeScale);
 			}
 		}
+
+	    return pos;
 	}
 
 	p5.draw = function draw() {
+		update();
+
 		// What is being tracked
 		let idx = tracked !== null ? parseInt(tracked.substr(1)) : null;
 		// Is the tracked object currently climbing
@@ -134,8 +140,8 @@ let s = new p5(function(p5) {
 			) 
 			: null;
 
-		update();
-		handleCamera(idx, climbing_track);
+		let camera_pos = handleCamera(idx, climbing_track).div(sizeScale);
+		camera_pos.y *= -1;
 
 		// Draw the UI
 		reactTop.forceUpdate();
@@ -146,7 +152,7 @@ let s = new p5(function(p5) {
 	    // Set up the default transformation : rotation due to earth and scale
 	    p5.scale(sizeScale, -sizeScale, sizeScale);  // -y so that +y points up
 	    Earth.draw(p5);
-	    Ribbon.draw(p5, tracked !== null);
+	    Ribbon.draw(p5, camera_pos, climbing_track);
 	    p5.climbers.forEach((c, index) => (!(climbing_track && index == climbing_cid)) && c.draw(p5));
 	    p5.payloads.forEach((p, index) => (!(climbing_track && index == climbing_pid)) && p.draw(p5));
 	};

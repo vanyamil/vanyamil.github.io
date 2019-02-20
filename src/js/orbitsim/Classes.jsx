@@ -28,18 +28,25 @@ Earth.draw = function(p5) {
     p5.pop();
 };
 
-Ribbon.draw = function(p5, should_shorten) {
+Ribbon.draw = function(p5, camera_pos, further_shorter) {
     p5.push();
     p5.rotateZ(Earth.rotation);
     p5.rotateZ(Ribbon.LONGITUDE);
     p5.rotateX(Ribbon.LATITUDE);
 
-    let w = should_shorten ? Ribbon.WIDTH / 10 : Ribbon.WIDTH;
+    // Make Ribbon wider if camera is too far from the ribbon
+    let dist_to_bot = Ribbon.true_bottom.dist(camera_pos);
+    let dist_to_top = Ribbon.true_top.dist(camera_pos);
+    let max_dist = Math.max(dist_to_bot, dist_to_top) / 300000000; // Randomly found decent factor
+    if(further_shorter)
+        max_dist /= 10;
+
+    let w = Ribbon.WIDTH * max_dist;
 
     p5.draw_wrapper(
-        p5.createVector(0, Ribbon.LENGTH / 2 + Earth.RADIUS, 0), // Center of ribbon box
+        p5.createVector(0, (Ribbon.LENGTH + Earth.RADIUS) / 2, 0), // Center of ribbon box
         Ribbon.COLOR,
-        () => p5.box(w, Ribbon.LENGTH, w)
+        () => p5.cylinder(w, Ribbon.LENGTH + Earth.RADIUS)
     );
     
     p5.draw_wrapper(
