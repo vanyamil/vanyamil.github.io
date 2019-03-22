@@ -69,7 +69,7 @@ export default class Orbit {
         this.flight_time = timer.total - this.epoch.time;
 
         // Mean anomaly - "fraction" of orbit passed
-        let mean_anomaly = (this.mean_at_epoch + this.flight_time * p5.prototype.TAU / this.period) % p5.prototype.TAU; // Tau / period is the mean motion
+        let mean_anomaly = (this.mean_at_epoch + this.flight_time * p5.prototype.TAU / this.period); // Tau / period is the mean motion
         // Eccentric anomaly - using Newton-Ralphson
         let true_anomaly;
         if(this.elliptical) {
