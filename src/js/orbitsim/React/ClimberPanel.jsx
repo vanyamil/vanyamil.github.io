@@ -17,11 +17,11 @@ export default class ClimberPanel extends Component {
 	}
 
 	handleHeightChange(event) {
-		this.setState({height: event.target.value});
+		this.setState({height: Math.max(Math.min(event.target.value, 100000), 5000)});
 	}
 
 	handleTTAChange(event) {
-		this.setState({tta: event.target.value});
+		this.setState({tta: Math.max(0.01, event.target.value)});
 	}
 
 	handleSubmit() {
@@ -73,7 +73,7 @@ export default class ClimberPanel extends Component {
 							Target (km): 
 						</div>
 						<div className="col-8 px-0 text-right">
-							<input type="number" min="0" max="100000" value={this.state.height} style={maxWidthStyle} onChange={this.handleHeightChange} />
+							<input type="number" min="5000" max="100000" value={this.state.height} style={maxWidthStyle} onChange={this.handleHeightChange} />
 						</div>
 					</div>
 					<div className="row py-2 px-1">
@@ -81,7 +81,7 @@ export default class ClimberPanel extends Component {
 							TTA (days): 
 						</div>
 						<div className="col-8 px-0 text-right">
-							<input type="number" min="0" step="0.01" value={this.state.tta} style={maxWidthStyle} onChange={this.handleTTAChange} />
+							<input type="number" min="0.01" step="0.01" value={this.state.tta} style={maxWidthStyle} onChange={this.handleTTAChange} />
 						</div>
 					</div>
 					<div className="row py-2">
