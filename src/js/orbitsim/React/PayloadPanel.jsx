@@ -6,6 +6,7 @@ export default class PayloadPanel extends Component {
 		const active = isActive ? this.props.payloads[this.props.active] : null;
 		const contained = isActive && active.contained;
 		const impacted = isActive && active.impacted;
+		const left_earth = isActive && !active.contained && active.container.left_earth;
 
 		return (
 			<div className="card h-xl-100" id="payload-panel">
@@ -28,58 +29,68 @@ export default class PayloadPanel extends Component {
 							</button>
 						</div>
 					</div>
-					{ active ? (impacted 
+					{ !active ? null : (
+						impacted 
 						? 
 						<div className="row py-2 px-1">
 							<div className="col-12 px-0">
 								Payload destroyed
 							</div>
 						</div>
-						: (contained 
+						: ( 
+						left_earth 
+						? 
+						<div className="row py-2 px-1">
+							<div className="col-12 px-0">
+								Payload left Earth's SOI
+							</div>
+						</div>
+						: (
+							contained 
 							? 
-							<div className="row py-2 px-1">
-								<div className="col-6 px-0 text-left small">
-									Height (km): 
+								<div className="row py-2 px-1">
+									<div className="col-6 px-0 text-left small">
+										Height (km): 
+									</div>
+									<div className="col-6 px-0 text-right">
+										{Math.round(active.container.height / 1000)}
+									</div>
 								</div>
-								<div className="col-6 px-0 text-right">
-									{Math.round(active.container.height / 1000)}
-								</div>
-							</div>
 							:
-							<div><div className="row py-2 px-1">
-								<div className="col-6 px-0 text-left small">
-									Semi-major (km): 
+								<div><div className="row py-2 px-1">
+									<div className="col-6 px-0 text-left small">
+										Semi-major (km): 
+									</div>
+									<div className="col-6 px-0 text-right">
+										{Math.round(active.container.semi_major / 1000)}
+									</div>
 								</div>
-								<div className="col-6 px-0 text-right">
-									{Math.round(active.container.semi_major / 1000)}
+								<div className="row py-2 px-1">
+									<div className="col-6 px-0 text-left small">
+										Eccentricity: 
+									</div>
+									<div className="col-6 px-0 text-right">
+										{active.container.e.toFixed(4)}
+									</div>
 								</div>
-							</div>
-							<div className="row py-2 px-1">
-								<div className="col-6 px-0 text-left small">
-									Eccentricity: 
+								<div className="row py-2 px-1">
+									<div className="col-6 px-0 text-left small">
+										Period (days): 
+									</div>
+									<div className="col-6 px-0 text-right">
+										{(active.container.dayPeriod).toFixed(2)}
+									</div>
 								</div>
-								<div className="col-6 px-0 text-right">
-									{active.container.e.toFixed(4)}
-								</div>
-							</div>
-							<div className="row py-2 px-1">
-								<div className="col-6 px-0 text-left small">
-									Period (days): 
-								</div>
-								<div className="col-6 px-0 text-right">
-									{(active.container.dayPeriod).toFixed(2)}
-								</div>
-							</div>
-							<div className="row py-2 px-1">
-								<div className="col-6 px-0 text-left small">
-									Altitude (km): 
-								</div>
-								<div className="col-6 px-0 text-right">
-									{(active.container.altitude / 1000).toFixed(2)}
-								</div>
-							</div></div>)
+								<div className="row py-2 px-1">
+									<div className="col-6 px-0 text-left small">
+										Altitude (km): 
+									</div>
+									<div className="col-6 px-0 text-right">
+										{(active.container.altitude / 1000).toFixed(2)}
+									</div>
+								</div></div>
+							))
 						)
-						: null
 					}
 				</div>
 			</div>

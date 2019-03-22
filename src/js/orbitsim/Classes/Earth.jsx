@@ -23,7 +23,8 @@ export default class Earth {
     }
 
     static get SOI() { // Height of the sphere of influence of Earth's gravity, units : m, pulled from Wiki
-        return 0.924e9;
+        // True value : 0.924e9. In tests, at this height, drawing no longer happens
+        return 2.5e9;
     }
 }
 
