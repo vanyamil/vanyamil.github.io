@@ -131,8 +131,9 @@ export default class OrbitSim extends Component {
 	}
 
 	onClimberTrack() {
-		if(this.state.active_climber != null)
+		if(this.state.active_climber != null) {
 			this.props.p5.track("c" + this.state.active_climber);
+		}
 	}
 
 	onUntrack() {
@@ -182,7 +183,7 @@ export default class OrbitSim extends Component {
 			<div className="container-fluid text-center">
 				<div className="row">
 					<div className="col text-left">
-						<h1> Space Elevator Operator v4 </h1>
+						<h1> Space Elevator Operator v4.1 </h1>
 						<h3> Created by Ivan Miloslavov and Stephen Cohen </h3>
 						<p className="desc">
 						This program presents the orbits that satellites delivered by a Space Elevator would take when released from various launch altitudes along the tether. To start, press 
@@ -192,6 +193,9 @@ export default class OrbitSim extends Component {
 						<p className="desc">
 						If you have questions or ideas for improvment, as well as if you have found bugs, feel free to email Ivan at MiloslavovIvan[at]gmail[dot]com .
 						If you want to know more about the Space Elevator, visit the <a target="_blank" href="http://www.isec.org">International Space Elevator Consortium</a> website.
+						</p>
+						<p className="desc">
+						Music : Local Forecast - Elevator version, by Kevin Macleod (incompetech.com)
 						</p>
 					</div>
 				</div>

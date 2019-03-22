@@ -21,11 +21,14 @@ let s = new p5(function(p5) {
 
 	let ZERO_V = p5.createVector(0, 0, 0);
 
+	p5.elevator_music = null;
+
 	p5.climbers = [];
 	p5.payloads = [];
 
 	p5.preload = function preload() {
 	    Earth.IMAGE = p5.loadImage("/res/images/Albedo.jpg"); /* Add public/ for prod */
+	    p5.elevator_music = p5.loadSound("/res/sound/elevator.mp3");
 	}
 
 	p5.setup = function setup() {
@@ -42,6 +45,9 @@ let s = new p5(function(p5) {
 		// Main scale
 		this.windowResized();
 		this.updateTimeScale(5);
+
+		p5.elevator_music.setLoop(true);
+		p5.elevator_music.playMode('untilDone');
 	};
 
 	p5.updateTimeScale = function(hps) {
@@ -122,7 +128,7 @@ let s = new p5(function(p5) {
 		// What is being tracked
 		let idx = tracked !== null ? parseInt(tracked.substr(1)) : null;
 		// Is the tracked object currently climbing
-		let climbing_track = tracked !== null && ((tracked[0] == 'c' && p5.climbers[idx] != null) || (tracked[0] == 'p' && p5.payloads[idx].contained))
+		let climbing_track = tracked !== null && ((tracked[0] == 'c' && p5.climbers[idx] != null) || (tracked[0] == 'p' && p5.payloads[idx].contained));
 		// What is the ID of the payload that is tracked during climbing?
 		let climbing_pid = climbing_track 
 			? (tracked[0] == 'p' 
@@ -183,6 +189,18 @@ let s = new p5(function(p5) {
 			tracked = null;
 		else
 			tracked = str;
+
+		// What is being tracked
+		let idx = tracked !== null ? parseInt(tracked.substr(1)) : null;
+		// Is the tracked object currently climbing
+		let climbing_track = tracked !== null && ((tracked[0] == 'c' && p5.climbers[idx] != null) || (tracked[0] == 'p' && p5.payloads[idx].contained));
+
+		// Elevator music update
+		if(climbing_track) {
+			p5.elevator_music.play();
+		} else {
+			p5.elevator_music.pause();
+		}
 	}
 
 	p5.getTracked = function() { return tracked; }
