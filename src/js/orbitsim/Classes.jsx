@@ -87,6 +87,14 @@ Payload.prototype.draw = function(p5) {
         p5.rotateZ(this.container.eulers.longitude);
         p5.rotateX(this.container.eulers.inclination);
         p5.rotateZ(this.container.eulers.argument);
+
+        // Draw the orbit as little marks as long as we look from above
+        if(!this.impacted && p5.getTracked() == null) {
+            let l = this.container.marks.length * 2; // max size - half the payload
+            this.container.marks.forEach((e, idx) =>
+                p5.draw_wrapper(e, 'orange', () => p5.sphere(Payload.SIZE * idx / l))
+            );
+        }
     }
 
     p5.draw_wrapper(this.position, this.color, () => p5.sphere(this.impacted ? Payload.SIZE / 10 : Payload.SIZE));

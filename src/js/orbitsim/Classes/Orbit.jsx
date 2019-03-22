@@ -9,6 +9,7 @@ export default class Orbit {
     constructor(pos, vel, time) {
         this.epoch = {pos, vel, time} // System at time zero/epoch : position and velocity at launch and time of launch
         this._position = pos.copy();
+        this.marks = [];
         this.setup();
     }
     
@@ -95,9 +96,19 @@ export default class Orbit {
         this.last_true_anomaly = true_anomaly;
 
         // Get the altitude from SLR and true
-        let altitude = this.semi_latus / (1 + this.e * Math.cos(true_anomaly));
+        let altitude = this.altitudeAt(true_anomaly);
         // For now, draw in x direction on its own - need to rotate with eulers
         this._position = p5.prototype.createVector(altitude, 0, 0).rotateZ(true_anomaly);
+
+        // Save a couple of marks
+        if(this.marks.length == Orbit.NUM_MARKS)
+            this.marks.shift();
+
+        this.marks.push(this.position);
+    }
+
+    altitudeAt(true_anomaly) {
+        return this.semi_latus / (1 + this.e * Math.cos(true_anomaly));
     }
 
     get position() {
@@ -123,3 +134,5 @@ export default class Orbit {
         return this.period / Earth.PERIOD;
     }
 }
+
+Orbit.NUM_MARKS = 100; // 100 marks per orbit
