@@ -12,6 +12,9 @@ export default function Layout(props) {
 				<li className="nav-item">
 					<a className="nav-link" href="/orbitsim">Space Elevator</a>
 				</li>
+				<li className="nav-item">
+					<a className="nav-link" href="/raytracer">Ray Tracer</a>
+				</li>
 			</ul>
 		</nav>
 		<div className="container-fluid" style={{marginTop: "80px"}}>

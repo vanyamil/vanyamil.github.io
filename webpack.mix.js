@@ -14,10 +14,13 @@ let mix = require('laravel-mix');
 /* mix.js('src/app.js', 'dist/').sass('src/app.scss', 'dist/'); */
 mix.react('src/js/pages/Home.jsx', 'res/js/home.js')
    .react('src/js/pages/OrbitSim.jsx', 'res/js/orbitsim.js')
+   .react('src/js/pages/RayTracer.jsx', 'res/js/raytracer.js')
    .extract([
+   		'jquery',
+   		'popper.js',
+   		'bootstrap',
    		'react', 
-   		'react-dom',
-   		'jquery', 
+   		'react-dom', 
    		'p5'
    	]);
 
