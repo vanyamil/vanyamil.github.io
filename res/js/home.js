@@ -1592,7 +1592,7 @@ if (document.getElementById('root')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Ivan M\Desktop\CODING\github.io\src\js\pages\Home.jsx */"./src/js/pages/Home.jsx");
+module.exports = __webpack_require__(/*! C:\Users\Ivan.Miloslavov\Documents\GithubIO\src\js\pages\Home.jsx */"./src/js/pages/Home.jsx");
 
 
 /***/ })

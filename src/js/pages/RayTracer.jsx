@@ -44,7 +44,7 @@ export default function RayTracer() {
 				</div>
 				<div className="row">
 					<div className="col-6">
-						<a className="btn btn-primary" onClick={() => $("#sceneTab").click()}>New Scene</a>
+						<a className="btn btn-primary" href="#" onClick={(e) => { e.preventDefault(); $("#sceneTab").click(); }}>New Scene</a>
 					</div>
 					<div className="col-6">
 						
@@ -56,11 +56,13 @@ export default function RayTracer() {
 				<textarea id="inputJson" cols="80"></textarea>
 			</div>
 			<div id="render" className="container-fluid tab-pane">
-				<button id="startRender" className="btn btn-success">
-					Start Render
-				</button>
-				<br />
-				<canvas id="mainCanvas"></canvas>
+				<div className="row">
+					<button id="startRender" className="btn btn-success">
+						Start Render
+					</button>
+				</div>
+				<div className="row" id="canvasHolder">
+				</div>
 			</div>
 		</div>
 	</Layout>

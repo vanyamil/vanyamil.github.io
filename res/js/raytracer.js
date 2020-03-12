@@ -1659,8 +1659,10 @@ function RayTracer() {
     className: "col-6"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     className: "btn btn-primary",
-    onClick: function onClick() {
-      return jquery__WEBPACK_IMPORTED_MODULE_3___default()("#sceneTab").click();
+    href: "#",
+    onClick: function onClick(e) {
+      e.preventDefault();
+      jquery__WEBPACK_IMPORTED_MODULE_3___default()("#sceneTab").click();
     }
   }, "New Scene")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "col-6"
@@ -1673,11 +1675,14 @@ function RayTracer() {
   })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     id: "render",
     className: "container-fluid tab-pane"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row"
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     id: "startRender",
     className: "btn btn-success"
-  }, "Start Render"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("canvas", {
-    id: "mainCanvas"
+  }, "Start Render")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "row",
+    id: "canvasHolder"
   }))));
 }
 
@@ -1694,7 +1699,7 @@ if (document.getElementById('root')) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Ivan M\Desktop\CODING\github.io\src\js\pages\RayTracer.jsx */"./src/js/pages/RayTracer.jsx");
+module.exports = __webpack_require__(/*! C:\Users\Ivan.Miloslavov\Documents\GithubIO\src\js\pages\RayTracer.jsx */"./src/js/pages/RayTracer.jsx");
 
 
 /***/ })
