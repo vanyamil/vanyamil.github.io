@@ -1,4 +1,4 @@
-import Vector3 from "./Vector3.jsx";
+import Vector3 from "./Vector3.js";
 
 class MyColor extends Vector3 {
     constructor(arr) {

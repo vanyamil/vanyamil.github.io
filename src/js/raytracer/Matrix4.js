@@ -1,4 +1,4 @@
-import Vector3 from "./Vector3.jsx";
+import Vector3 from "./Vector3.js";
 
 // A 4x4 matrix class for transformations in 3D space
 export default class Matrix4 {

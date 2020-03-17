@@ -1,4 +1,4 @@
-import Vector3 from "./Vector3.jsx";
+import Vector3 from "./Vector3.js";
 
 export default class Ray {
 	constructor(src, dir) {
