@@ -18,6 +18,9 @@ export default class SceneLoader {
             json.up 
         );
         cam.setScreen(json.screen.w, json.screen.h, json.fovy);
+        if(typeof json.dof !== "undefined") {
+            cam.setDOF(json.dof.point, json.dof.normal, json.dof.aperture, json.dof.samples);
+        }
         return cam;
     }
     

@@ -36,30 +36,29 @@ export default class Camera {
         // Vector from camera position to center of screen
         this.vToScreen = this.dir.copy().setMag(this.height2 / tanned);
     }
-    
-    /*
+
     // Returns the t for a ray to hit the focus plane
-    public double DOF.distToFocus(Ray ray) {
-        Vector3d temp = new Vector3d();
-        temp.sub(pointOnFocusPlane, ray.eyePoint);
-        
-        return focusPlaneNormal.dot(temp) / focusPlaneNormal.dot(ray.viewDirection);
+    dofDistToFocus(ray) {
+        const v = Vector3.sub(this.dof.p, ray.src);
+        return this.dof.n.dot(v) / this.dof.n.dot(ray.dir);
     }
-    
-    Start with the pixel sample ray
-    transform using this for each camOffset (which is at most "aperture" away from the center)
-    public static void dofRay(final Point2d camOffset, final Camera cam, Ray ray) {
-//        System.out.println("Original ray: " + ray);
-        Point3d onFocus = new Point3d();
-        if(!ray.getPoint(cam.dof.distToFocus(ray), onFocus))
+
+    // Transforms the ray w.r.t. the i-th DOF sample.
+    modifyRayDOF(dof_i, ray) {
+        const p = new Vector3();
+        // Ray parallel to focus plane or not allowed?
+        if(!ray.at(this.dofDistToFocus(ray), p)) 
             return;
-        ray.eyePoint.scaleAdd(camOffset.x, cam.left, ray.eyePoint);
-        ray.eyePoint.scaleAdd(camOffset.y, cam.up, ray.eyePoint);
-        ray.viewDirection.sub(onFocus, ray.eyePoint);
-        ray.viewDirection.normalize();
-//        System.out.println("Final ray: " + ray);
+
+        // We will move our eye slightly
+        ray.src.scaleAdd(this.right, this.dof.samples[dof_i][0])
+               .scaleAdd(this.up, this.dof.samples[dof_i][1]);
+
+        // We will be looking towards point p still
+        ray.dir.set(p)
+               .sub(ray.src)
+               .normalize();
     }
-    */
     
     setDOF(point, normal, aperture, samples) {
         if(point) {
@@ -67,12 +66,25 @@ export default class Camera {
         }
         if(normal) {
         	this.dof.n = new Vector3(normal);
+            this.dof.n.normalize();
         }
         this.dof.a = aperture;
-        this.dof.samples = samples;
+        this.setDOFSamples(Math.max(samples, 1));
     }
     
-    generateRay(x, y, outR) {
+    setDOFSamples(v) {
+        this.dof.samples = [
+            [0, 0]
+        ];
+        while(--v > 0) {
+            this.dof.samples.push([
+                (Math.random()-0.5) * this.dof.a,
+                (Math.random()-0.5) * this.dof.a
+            ]);
+        }
+    }
+    
+    generateRay(x, y, dof_i, outR) {
         if(x < 0 || y < 0 || x > this.width || y > this.height) { // Removed testing || !(outR instanceof Ray)
             return false;
         }
@@ -88,6 +100,8 @@ export default class Camera {
         // Ray origin is camera position
         outR.set(this.pos, dir);
         outR.resetBounds();
+
+        this.modifyRayDOF(dof_i, outR);
         
         return true;
     }

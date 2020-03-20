@@ -25,8 +25,8 @@ export default class Scene {
         ];
         while(--v > 0) {
             this.samples.push([
-            	Math.random(),
-            	Math.random()
+                Math.random(),
+                Math.random()
             ]);
         }
     }
@@ -133,19 +133,26 @@ export default class Scene {
     
     getPixel(x, y, ray, IR) {
         const sumColor = new MyColor();
-        for(let i = 0; i < this.samples.length; i++) {
+        const dofn = this.cam.dof.samples.length;
+        const sn = this.samples.length;
+
+        for(let i = 0; i < sn; i++) {
             // Generate the ray for this pixel
             const dx = this.samples[i][0];
             const dy = this.samples[i][1];
-            if(!this.cam.generateRay(x+dx, y+dy, ray)) {
-                console.log("Problem in the code - could not generate camera ray!");
-                return;
-            }
             
-            ray.setDepth(this.reflDepth);
-            sumColor.add(this.getColor(ray, IR));
+            // Add DOF generation
+            for(let j = 0; j < dofn; j++) {
+                if(!this.cam.generateRay(x+dx, y+dy, j, ray)) {
+                    console.log("Problem in the code - could not generate camera ray!");
+                    return;
+                }
+
+                ray.setDepth(this.reflDepth);
+                sumColor.add(this.getColor(ray, IR));
+            }
         }
-        sumColor.div(this.samples.length);
+        sumColor.div(sn * dofn);
         return sumColor.getFinal();
     }
     

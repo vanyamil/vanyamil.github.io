@@ -25,6 +25,8 @@ const scenes = [
 	}
 ];
 
+const ver = 0.11
+
 export default class RayTracer extends React.Component {
 	existingLink(obj) {
 		return (
@@ -47,7 +49,7 @@ export default class RayTracer extends React.Component {
 		<Layout>
 			<div className="row">
 				<div className="col-12">
-					<h1> Ray Tracer - v0.9 </h1>
+					<h1> Ray Tracer - v{ver} </h1>
 					<h3> Created by Ivan Miloslavov; based on designs by Paul Kry </h3>
 					<p className="desc">
 						This program allows you to try ray-tracing in the browser! Test out existing scenes or create your own. 
@@ -117,3 +119,5 @@ export default class RayTracer extends React.Component {
 if (document.getElementById('root')) {
 	ReactDOM.render(<RayTracer />, document.getElementById('root'));
 }
+
+window.p5 = p5;

@@ -107,6 +107,17 @@ export default class Vector3 {
 		}
 		return this;
 	}
+
+	scaleAdd(v, t) {
+		this.x += (v.x * t);
+		this.y += (v.y * t);
+		this.z += (v.z * t);
+		
+		if(this.saveMag) {
+			this._saveMags();
+		}
+		return this;
+	}
 	
 	sub(v) {
 		this.x -= v.x;
