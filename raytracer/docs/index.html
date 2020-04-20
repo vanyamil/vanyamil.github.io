@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>Ivan Miloslavov - Ray Tracer Documentation</title>
+
+		<link 
+			rel="stylesheet" 
+			href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" 
+			integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" 
+			crossorigin="anonymous"
+		/>
+		<link 
+			rel="stylesheet" 
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
+			integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" 
+			crossorigin="anonymous"
+		/>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+		<style>
+			.card {
+				margin-bottom: 20px;
+			}
+
+			.list-group {
+				margin-bottom: 10px;
+			}
+
+			.list-group-item {
+				border-color: violet;
+			}
+
+			.param {
+				width: 100px;
+				font-weight: bolder;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h2 class="text-center my-3"> JSON documentation </h2>
+
+			<div class="card" id="types">
+				<div class="card-header">
+					<h4 class="card-title"> Common types </h4>
+				</div>
+				<div class="card-body">
+					<p>The following are common "types" of values.</p>
+
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">point/vector</label> a point in 3D. Represented with an array of 3 number values.</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">color</label> used as a color of material or the color/intensity of a light. You can give either a single value (making the color a grayscale) or an array containing three values for RGB. The range is between 0 and 255. The default value is 0 (black material color or no light emitted)</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="card" id="top-level">
+				<div class="card-header">
+					<h4 class="card-title"> Top-level object </h4>
+				</div>
+				<div class="card-body">
+					<p>The top-level JSON value is an object representing the entire scene as well as all parameters of the render.</p>
+
+					<h5>Mandatory keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">camera</label> the <a href="#camera">camera object</a>.</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">root</label> the <a href="#node">scene node</a> which contains all drawn objects.</li>
+					</ul>
+
+					<h5>Optional keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">ambient</label> the ambient light color.</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">bg</label> the background color, put on a pixel if the ray does not intersect anything.</li>
+						<li class="list-group-item"><label class="param">lights</label> an array of <a href="#light">light objects</a>.</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">materials</label> an array of <a href="#material">material objects</a>.</li>
+						<li class="list-group-item"><label class="param">reflDepth</label> an integer which represents how many times can a ray bounce due to reflections. By default, there are no reflections.</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">samples</label> an integer which represents how many rays are generated per pixel. By default, only one ray per pixel is generated.</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="card" id="camera">
+				<div class="card-header">
+					<h4 class="card-title"> Camera </h4>
+				</div>
+				<div class="card-body">
+					<p>A camera object contains various options for the render. </p>
+
+					<h5>Mandatory keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">fovy</label> the vertical field-of-view; in some simple sense, how zoomed in is the camera. Units are degrees.</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">lookAt</label> the point towards which the camera points.</li>
+						<li class="list-group-item"><label class="param">pos</label> the point at which the camera is located.</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">screen</label> a JSON object containing parameters <i>h</i> and <i>w</i>, the integer height and width of the drawn image.</li>
+						<li class="list-group-item"><label class="param">up</label> the vector representing the orientation of the camera.</li>
+					</ul>
+
+					<h5>Optional keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">dof</label> the <a href="#dof">depth of field properties</a>.</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="card" id="dof">
+				<div class="card-header">
+					<h4 class="card-title"> Depth-of-field </h4>
+				</div>
+				<div class="card-body">
+					<p>The depth-of-field object allows to add a depth-of-field effect to the render, blurring out things that are very close and very far from the focus plane. </p>
+
+					<h5>Mandatory keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">aperture</label> a number that controls how blurry things get. Better keep it low (below/around 1)</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">samples</label> an integer representing how many rays are generated per pixel sample to simulate depth-of-field.</li>
+					</ul>
+
+					<h5>Optional keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">normal</label> the vector representing the direction of the focus plane. By default, the focal plane is oriented the same way as the camera view.</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">point</label> a point on the focal plane. By default, the same as the point at which the camera looks.</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="card" id="light">
+				<div class="card-header">
+					<h4 class="card-title"> Light </h4>
+				</div>
+				<div class="card-body">
+					<p>Each light object represents a distinct light. Currently, only one type of lights exists : a point light, that is, light which emanates in all directions from one point. </p>
+
+					<h5>Mandatory keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">color</label> the light's color. Simple value to use here is 255, which just makes the brightest possible white light.</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">pos</label> the point at which the light is located.</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="card" id="material">
+				<div class="card-header">
+					<h4 class="card-title"> Material </h4>
+				</div>
+				<div class="card-body">
+					<p>Each material object represents a unique material. Materials can be created once then referenced from objects in order to avoid re-writing an identical material across multiple objects. If you have already created a material with a "name" parameter, you can supply this name as the value for an object's material.</p>
+
+					<p> There are no mandatory keys - however, a material with no information is pure black with no properties. Make sure to include at least one mode of light application : diffuse, specular or reflective.</p>
+
+					<h5>Optional keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">diffuse</label> the material's main color.</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">name</label> a string containing the material's name, which can then be referenced elsewhere to reuse this material.</li>
+						<li class="list-group-item"><label class="param">reflect</label> the material's reflection color/intensity. For example, to obtain a mirror material, set no diffuse or specular options and set this value to 255. </li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">specExp</label> an integer which enables specular highlights and regulates their intensity. Best kept between 2 and 100.</li>
+						<li class="list-group-item"><label class="param">specular</label> the specular highlight color. If specExp is given but this isn't, the color is bright white (255)</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="card" id="inter">
+				<div class="card-header">
+					<h4 class="card-title"> Intersectable </h4>
+				</div>
+				<div class="card-body">
+					<p>An intersectable object is the parent class of all renderable objects or collections thereof. These keys are valid for all such objects. Just like <a href="#material">material objects</a>, in the case that you provide a name property to an object written before in the JSON file, you can use the name string as a valid value to obtain a copy of that intersectable. </p>
+
+					<h5>Mandatory keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">type</label> the type of the intersectable. Must be one of the following:
+							<ul style="margin-left: 100px;">
+								<li><a href="#box">box</a></li>
+								<li><a href="#node">node</a></li>
+								<li><a href="#plane">plane</a></li>
+								<li><a href="#sphere">sphere</a></li>
+								<li><a href="#transform">transform</a></li>
+							</ul>
+						</li>
+					</ul>
+
+					<h5>Optional keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">material</label> the material associated to this intersectable. Can be either the name of an existing material or a material object. Can be left empty for node and transform, but should be given for the other options.</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">name</label> a string containing the intersectable's name, which can then be referenced elsewhere to reuse this intersectable.</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="card" id="box">
+				<div class="card-header">
+					<h4 class="card-title"> Box <small>extends Intersectable</small> </h4>
+				</div>
+				<div class="card-body">
+					<p>A box is a 3D straight prism, a stretched cube. </p>
+
+					<h5>Mandatory keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">max</label> the 3D point containing the coordinates of the "bottom-left" corner. Each value must be less than or equal to the corresponding value in max.
+						</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">min</label> the 3D point containing the coordinates of the "top-right" corner. Each value must be greater than or equal to the corresponding value in min.
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="card" id="plane">
+				<div class="card-header">
+					<h4 class="card-title"> Plane <small>extends Intersectable</small> </h4>
+				</div>
+				<div class="card-body">
+					<p>A plane is an infinite sheet. The current implementation always generates the same plane (covering all points with y = 0), which means it is best used in conjunction with <a href="#transform"> the transform intersectable </a> </p>
+
+					<h5>Optional keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">mat2</label> a secondary material. If provided, the plane is covered in a checkerboard pattern using both the <a href="#inter">default material</a> and mat2, with squares of size 1.
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="card" id="node">
+				<div class="card-header">
+					<h4 class="card-title"> Scene node <small>extends Intersectable</small> </h4>
+				</div>
+				<div class="card-body">
+					<p>A scene node is a collection of multiple intersectables. </p>
+
+					<h5>Mandatory keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">children</label> an array of <a href="#inter">intersectables</a>.
+						</li>
+					</ul>
+
+					<h5>Optional keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">bounds</label> any <a href="#inter">intersectable</a> which is guaranteed to contain all descendant objects. For example, if all objects inside this node are within the cube [-5,5]^3, you could provide a <a href="#box">Box</a> intersectable covering that volume. If done correctly, this will help accelerate your rendering.</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="card" id="sphere">
+				<div class="card-header">
+					<h4 class="card-title"> Sphere <small>extends Intersectable</small> </h4>
+				</div>
+				<div class="card-body">
+					<p>A sphere is just a sphere - I don't know what else to say. All keys are optional. </p>
+
+					<h5>Optional keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">pos</label> the position of the sphere's center. By default equal to the origin 0^3.
+						</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">radius</label> the radius of the sphere, default value of 1.
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="card" id="transform">
+				<div class="card-header">
+					<h4 class="card-title"> Transform <small>extends Intersectable</small> </h4>
+				</div>
+				<div class="card-body">
+					<p>A transform intersectable allows to apply transformations like rotations, translations and scaling to the underlying children intersectables. </p>
+
+					<h5>Mandatory keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">child</label> the intersectable that gets transformed. Best paired with a <a href="#node"> scene node </a> to transform a collection of objects.
+						</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">translate</label> the vector by which the child gets shifted/translated.
+						</li>
+					</ul>
+
+					<h5>Optional keys</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">rotate</label> the Euler angles XYZ by which to rotate the child. No rotation done by default.
+						</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">scale</label> either a single value to scale the child equally in all directions, or a vector to scale by in X/Y/Z direction.
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

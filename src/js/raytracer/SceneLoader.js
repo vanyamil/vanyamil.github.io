@@ -42,10 +42,13 @@ export default class SceneLoader {
         if(typeof json.specExp !== "undefined") {
             mat.setSpecular(json.specExp, json.specular);
         }
+        /* Disabling refraction due to complexity
         if(typeof json.refract !== "undefined") {
             mat.setRefract(json.refract, json.index);
         }
-        else if(typeof json.reflect !== "undefined") {
+        else 
+        */
+        if(typeof json.reflect !== "undefined") {
             if(json.reflect === true) {
                 mat.setReflect();
             } else {

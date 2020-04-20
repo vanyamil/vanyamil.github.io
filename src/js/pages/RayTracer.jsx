@@ -25,9 +25,9 @@ const scenes = [
 	}
 ];
 
-const ver = 0.11
+const ver = 1.0
 
-export default class RayTracer extends React.Component {
+class StartPane extends React.Component {
 	existingLink(obj) {
 		return (
 			<a href="#" className="list-group-item list-group-item-action" key={obj.link} onClick={(e) => {
@@ -46,6 +46,45 @@ export default class RayTracer extends React.Component {
 
 	render() {
 		return (
+		<div id="start" className="tab-pane container-fluid active">
+			<div className="row">
+				<div className="col-12">
+					<h5>New Scene or Existing</h5>
+				</div>
+			</div>
+			<div className="row">
+				<div className="col-6">
+					<a className="btn btn-primary" href="#" onClick={(e) => { e.preventDefault(); $("#sceneTab").click(); }}>New Scene</a>
+				</div>
+				<div className="col-6">
+					<div className="list-group">
+						{scenes.map(this.existingLink)}
+					</div>
+				</div>
+			</div>
+		</div>
+		);
+	}
+}
+
+class CameraPane extends React.Component {
+	render() {
+		return (
+		<div id="camera" className="tab-pane container-fluid">
+			<div className="form-row">
+				<div class="col-6">
+				</div>
+				<div class="col-6">
+				</div>
+			</div>
+		</div>
+		);
+	}
+}
+
+export default class RayTracer extends React.Component {
+	render() {
+		return (
 		<Layout>
 			<div className="row">
 				<div className="col-12">
@@ -58,7 +97,7 @@ export default class RayTracer extends React.Component {
 						Based on a design and lectures by Paul Kry, as part of the course COMP 557 - Introduction to Computer Graphics, in McGill University.
 					</p>
 					<p className="desc">
-						Version 1.0 will have better UI to generate custom scenes.
+						Future versions may change the UI to make scenes without JSON, attempt to include multithreading via workers or add new render technology or objects. For now, the JSON documentation is <a href="docs" target="_blank">here</a>.
 					</p>
 				</div>
 			</div>
@@ -69,7 +108,7 @@ export default class RayTracer extends React.Component {
 							<a className="nav-link active" data-toggle="tab" href="#start">Start</a>
 						</li>
 						<li className="nav-item">
-							<a className="nav-link" data-toggle="tab" href="#scene" id="sceneTab">Objects</a>
+							<a className="nav-link" data-toggle="tab" href="#scene" id="sceneTab">JSON</a>
 						</li>
 						<li className="nav-item">
 							<a className="nav-link" data-toggle="tab" href="#render">Render</a>
@@ -78,28 +117,12 @@ export default class RayTracer extends React.Component {
 				</div>
 			</div>
 			<div className="tab-content text-center">
-				<div id="start" className="container-fluid tab-pane active">
-					<div className="row">
-						<div className="col-12">
-							<h5>New Scene or Existing</h5>
-						</div>
-					</div>
-					<div className="row">
-						<div className="col-6">
-							<a className="btn btn-primary" href="#" onClick={(e) => { e.preventDefault(); $("#sceneTab").click(); }}>New Scene</a>
-						</div>
-						<div className="col-6">
-							<div className="list-group">
-								{scenes.map(this.existingLink)}
-							</div>
-						</div>
-					</div>
-				</div>
-				<div id="scene" className="container-fluid tab-pane">
+				<StartPane />
+				<div id="scene" className="tab-pane container-fluid">
 					<h5>Place JSON here</h5>
 					<textarea id="inputJSON" cols="80" rows="20"></textarea>
 				</div>
-				<div id="render" className="container-fluid tab-pane">
+				<div id="render" className="tab-pane container-fluid">
 					<div className="row">
 						<button id="startRender" className="btn btn-success mx-auto" onClick={() => {
 							const json = $("#inputJSON").val();
