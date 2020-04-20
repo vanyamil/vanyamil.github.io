@@ -15,6 +15,7 @@ let mix = require('laravel-mix');
 mix.react('src/js/pages/Home.jsx', 'res/js/home.js')
    .react('src/js/pages/OrbitSim.jsx', 'res/js/orbitsim.js')
    .react('src/js/pages/RayTracer.jsx', 'res/js/raytracer.js')
+   .react('src/js/pages/Randomizer.jsx', 'res/js/randomizer.js')
    .extract([
    		'jquery',
    		'popper.js',
