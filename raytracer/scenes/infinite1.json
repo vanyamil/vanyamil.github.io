@@ -15,7 +15,7 @@
       "samples": 4,
       "aperture": 0.005,
       "focus": [0, 0, 8],
-      "fNormal": [0, 4, -1]
+      "normal": [0, 4, -1]
     }
   },
   "lights": [
