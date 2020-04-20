@@ -6,6 +6,7 @@ export default class Ray {
 		this.dir = new Vector3();
 		this.set(src, dir);
 		this.resetBounds();
+		this.setIndex(1);
 	}
 
 	set(src, dir) {
@@ -35,6 +36,10 @@ export default class Ray {
 	
 	setDepth(depth) {
 		this.depth = depth;
+	}
+
+	setIndex(index) {
+		this.index = index;
 	}
 	
 	resetBounds() {

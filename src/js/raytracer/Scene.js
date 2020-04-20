@@ -63,6 +63,41 @@ export default class Scene {
         
         const lll = new MyColor([0, 0, 0]);
         
+        // Fresnel refraction + reflection - only this.
+        if(IR.material.refractEnabled && ray.depth > 0) {
+            let r0 = (ray.index - IR.material.refrIndex) / (ray.index + IR.material.refrIndex);
+            r0 *= r0;
+
+            const c = IR.n.dot(reflV); // Cos of angle between normal and incoming
+            const factor = Math.pow(1 - c, 5); // Schlick's approximation
+            let reflPortion = r0 + (1 - r0) * factor;
+
+            // If refl > 1 - 1e-4 or TIR, no refraction to do.
+            if(1 - reflPortion > 1e-4) {
+                const refrV = ray.dir.refract(IR.n, ray.index, IR.material.refrIndex);
+                if(refrV === null) { // TIR
+                    reflPortion = 1;
+                } else {
+                    const refrRay = new Ray(IR.p, refrV);
+                    const refrIR = new IntersectionResult(); // Need a new here due to recursion
+                    refrRay.setDepth(ray.depth);
+                    refrRay.setIndex(IR.material.refrIndex);
+                    lll.scaleAdd(this.getColor(refrRay, refrIR), 1 - reflPortion);
+                }
+            }
+            // If refl < 1e-4, insufficient to continue reflection, unless we are in TIR?
+            if(reflPortion > 1e-4) {
+                const reflRay = new Ray(IR.p, reflV);
+                const reflIR = new IntersectionResult(); // Need a new here due to recursion
+                reflRay.setDepth(ray.depth - 1);
+                lll.scaleAdd(this.getColor(reflRay, reflIR), reflPortion);
+            }
+
+            // Combine and return this ("break")
+            lll.multWise(IR.material.refract);
+            return lll.getFinal();
+        } 
+
         // Reflective 
         if(IR.material.reflectEnabled && ray.depth > 0) {
             const reflRay = new Ray(IR.p, reflV);
@@ -75,6 +110,7 @@ export default class Scene {
             lll.add(IR.material.diffuse);
             lll.multWise(this.ambient);
         }
+
         
         // For each light
         this.lights.forEach(function(l) {

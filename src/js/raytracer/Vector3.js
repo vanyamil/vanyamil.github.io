@@ -170,6 +170,29 @@ export default class Vector3 {
 		const dot = 2 * this.dot(n);
 		return n.copy().mult(dot).sub(this);
 	}
+
+	// Rotates this (assumed normalized) vector towards another (n) vector
+	rotateTowards(other, theta) {
+		const up = this.cross(other);
+		const ninety = up.cross(this).normalize();
+
+		const outv = this.copy()
+						 .setMag(Math.cos(theta))
+						 .scaleAdd(ninety, Math.sin(theta));
+
+		return outv;
+	}
+
+	refract(normal, index_now, index_in) {
+		const s = this.cross(normal).mag(); // Sin of angle between; sin's reflection means we don't have to inverse the normal.
+		const s2 = s * index_now / index_in;
+		if(s2 >= 1) { // Total internal reflection
+			return null; // Could return this.reflect(normal);
+		}
+
+		const new_theta = Math.asin(s2);
+		return normal.copy().mult(-1).rotateTowards(this, new_theta);
+	}
 	
 	cross(v) {
 		const x = this.y * v.z - this.z * v.y;
@@ -177,6 +200,10 @@ export default class Vector3 {
 		const z = this.x * v.y - this.y * v.x;
 		
 		return new Vector3(x, y, z);
+	}
+
+	toString() {
+		return "[" + this.x + ", " + this.y + ", " + this.z + "]";
 	}
 }
 

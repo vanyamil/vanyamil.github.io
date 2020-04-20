@@ -59,10 +59,10 @@ class Material {
         this.reflect = new MyColor(c);
     }
     
-    setRefract(c, exp) {
+    setRefract(c, index) {
         this.refractEnabled = true;
         this.refract = new MyColor(c);
-        this.refrExp = exp;
+        this.refrIndex = index;
     }
 }
 
