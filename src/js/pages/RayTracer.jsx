@@ -22,10 +22,14 @@ const scenes = [
 	{
 		link: "infinite1", 
 		name: "Infinite Corridor"
+	},
+	{
+		link: "cornellBox",
+		name: "Cornell Box"
 	}
 ];
 
-const ver = 1.0
+const ver = 1.1
 
 class StartPane extends React.Component {
 	existingLink(obj) {
@@ -101,6 +105,36 @@ export default class RayTracer extends React.Component {
 					</p>
 				</div>
 			</div>
+			<div className="modal fade" id="badJsonModal">
+				<div className="modal-dialog">
+					<div className="modal-content">
+						<div className="modal-header">
+							<h5 className="modal-title">Bad JSON detected!</h5>
+							<button type="button" className="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+						</div>
+						<div className="modal-body">
+							<p>Your JSON was not correctly parsed. Make sure it's well formed!</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div className="modal fade" id="missingJsonModal">
+				<div className="modal-dialog">
+					<div className="modal-content">
+						<div className="modal-header">
+							<h5 className="modal-title">Not enough JSON detected!</h5>
+							<button type="button" className="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+						</div>
+						<div className="modal-body">
+							<p>Your JSON might be missing mandatory keys. Make sure to follow the documentation and check the console!</p>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div className="row">
 				<div className="col-12">
 					<ul className="nav nav-tabs">
@@ -120,16 +154,33 @@ export default class RayTracer extends React.Component {
 				<StartPane />
 				<div id="scene" className="tab-pane container-fluid">
 					<h5>Place JSON here</h5>
-					<textarea id="inputJSON" cols="80" rows="20"></textarea>
+					<textarea id="inputJSON" cols="80" rows="20" style={{fontFamily: "monospace"}}></textarea>
 				</div>
 				<div id="render" className="tab-pane container-fluid">
 					<div className="row">
-						<button id="startRender" className="btn btn-success mx-auto" onClick={() => {
-							const json = $("#inputJSON").val();
-							p5.drawFrom(JSON.parse(json)); 
-						}}>
-							Start Render
-						</button>
+						<div className="col-4">
+							Running time (s): <span id="runtime" />
+						</div>
+						<div className="col-4">
+							<button id="startRender" className="btn btn-success mx-auto" onClick={() => {
+								try {
+									const json = $("#inputJSON").val();
+									p5.drawFrom(JSON.parse(json)); 
+								} catch (err) {
+									if(err.name == "SyntaxError") {
+										$("#badJsonModal").modal("show");
+									} else {
+										$("#missingJsonModal").modal("show");
+										throw err;
+									}
+								}
+							}}>
+								Start Render
+							</button>
+						</div>
+						<div className="col-4">
+							Remaining time (s): <span id="remtime" />
+						</div>
 					</div>
 					<div className="row my-5" id="canvasHolder">
 					</div>

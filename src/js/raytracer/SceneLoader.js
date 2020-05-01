@@ -1,6 +1,6 @@
 import Camera from "./Camera.js";
 import Scene from "./Scene.js";
-import {Material, PointLight} from "./Rendering.js";
+import {Material, PointLight, AreaLight} from "./Rendering.js";
 import * as inter from "./Intersectables.js";
 
 
@@ -61,7 +61,10 @@ export default class SceneLoader {
     
     loadLight(json) {
         const c = json.color;
-        return new PointLight(json.pos, c);
+        switch(json.type?.toLowerCase()) {
+            case "area": return new AreaLight(json.tri, c, json.samples);
+            default: return new PointLight(json.pos, c);
+        }
     }
     
     loadInter(json) {

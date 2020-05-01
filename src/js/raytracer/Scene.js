@@ -14,6 +14,7 @@ export default class Scene {
 		// Special stuff for interactive loading
 		this.lastX = 0;
 		this.lastY = 0;
+        this.numPixel = 0;
 
         // MULTITHREADING WARNING
         this.shadowIR = new IntersectionResult();
@@ -114,40 +115,46 @@ export default class Scene {
         
         // For each light
         this.lights.forEach(function(l) {
-            // TODO for each light sample
+            // for each light sample
+            const thisLight = new MyColor([0, 0, 0]);
+
+            for(let lSample = 0; lSample < l.maxSamples; lSample++) {
             
-            // Get light vector
-            const dv = l.pos.copy().sub(IR.p);
-            const dvm = dv.mag();
-            if(dvm != 1) {
-            	dv.div(dvm);
+                // Get light vector
+                const dv = l.randomSample().copy().sub(IR.p);
+                const dvm = dv.mag();
+                if(dvm != 1) {
+                	dv.div(dvm);
+                }
+                
+                // Test shadow ray
+                shadowRay.set(IR.p, dv);
+                shadowRay.setBounds(1e-5, dvm);
+                this.shadowIR.reset();
+                if(this.root.intersects(shadowRay, this.shadowIR)) {
+                    continue;
+                }
+                
+                // Diffuse
+                let angleCoef = Math.max(0, IR.n.dot(dv));
+                if(angleCoef <= 0) { continue; }
+                let tempLight = IR.material.diffuse.copy();
+                tempLight.mult(angleCoef);
+                thisLight.add(tempLight);
+                
+                // Specular
+                if(IR.material.specularEnabled) {
+                    angleCoef = Math.max(0, reflV.dot(dv));
+                	if(angleCoef <= 0) { continue; }
+                	tempLight = IR.material.specular.copy();
+                	tempLight.mult(Math.pow(angleCoef, IR.material.specExp));
+                	thisLight.add(tempLight);
+                }
             }
-            
-            // Test shadow ray
-            shadowRay.set(IR.p, dv);
-            shadowRay.setBounds(1e-5, dvm);
-            this.shadowIR.reset();
-            if(this.root.intersects(shadowRay, this.shadowIR)) {
-                return;
-            }
-            
-            // Diffuse
-            let angleCoef = Math.max(0, IR.n.dot(dv));
-            if(angleCoef <= 0) { return; }
-            let tempLight = IR.material.diffuse.copy();
-            tempLight.multWise(l.c);
-            tempLight.mult(angleCoef);
-            lll.add(tempLight);
-            
-            // Specular
-            if(IR.material.specularEnabled) {
-                angleCoef = Math.max(0, reflV.dot(dv));
-            	if(angleCoef <= 0) { return; }
-            	tempLight = IR.material.specular.copy();
-            	tempLight.multWise(l.c);
-            	tempLight.mult(Math.pow(angleCoef, IR.material.specExp));
-            	lll.add(tempLight);
-            }
+
+            thisLight.multWise(l.c);
+            thisLight.div(l.maxSamples);
+            lll.add(thisLight);
         }, this);       
         
         const c = lll.getFinal();
@@ -209,6 +216,7 @@ export default class Scene {
         while(sketch.millis() < deadline) {
         	sketch.set(x, y, sketch.color(this.getPixel(x, y, ray, IR)));
         	x++;
+            this.numPixel++;
         	if(x == this.cam.width) {
             	x = 0;
             	y++;

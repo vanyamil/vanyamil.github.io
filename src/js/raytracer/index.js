@@ -29,6 +29,10 @@ let s = new p5((sketch) => {
         	console.log("Completed drawing in " + (sketch.millis() - sketch.startTime) + " ms.");
         	sketch.noLoop();
     	}
+
+        const totalTime = sketch.millis() / 1000;
+        sketch.select("#runtime").html(totalTime.toFixed(1));
+        sketch.select("#remtime").html((totalTime * (sketch.scene.cam.width * sketch.scene.cam.height / sketch.scene.numPixel - 1)).toFixed(1));
     };
     
     sketch.drawFrom = (json) => {
@@ -42,7 +46,7 @@ let s = new p5((sketch) => {
     
     sketch.loadAndDraw = (jsonURL) => {
         sketch.loadJSON(jsonURL, sketch.drawFrom);
-    };
+    }
 }, "canvasHolder");
 
 export default s;

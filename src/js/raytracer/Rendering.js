@@ -70,7 +70,37 @@ class PointLight {
     constructor(pos, c) {
         this.pos = new Vector3(pos);
         this.c = new MyColor(c);
+        this.maxSamples = 1;
+    }
+
+    randomSample() {
+        return this.pos;
     }
 }
 
-export {MyColor, Material, PointLight}
+class AreaLight {
+    constructor(tri, c, maxSamples) {
+        this.tri = [
+            new Vector3(tri[0]),
+            new Vector3(tri[1]),
+            new Vector3(tri[2])
+        ];
+        this.c = new MyColor(c);
+        this.maxSamples = maxSamples || 10;
+    }
+
+    randomSample() {
+        // Random point in triangle
+        const d1 = Math.random(), d2 = Math.random();
+        const d1r = Math.sqrt(d1);
+        const p = new Vector3();
+
+        p.scaleAdd(this.tri[0], 1 - d1r)
+         .scaleAdd(this.tri[1], d1r * (1 - d2))
+         .scaleAdd(this.tri[2], d1r * d2);
+
+        return p;
+    }
+}
+
+export {MyColor, Material, PointLight, AreaLight}

@@ -135,12 +135,23 @@
 					<h4 class="card-title"> Light </h4>
 				</div>
 				<div class="card-body">
-					<p>Each light object represents a distinct light. Currently, only one type of lights exists : a point light, that is, light which emanates in all directions from one point. </p>
+					<p>Each light object represents a distinct light. Currently, only two types of lights exist : a point light, light which emanates in all directions from one point; and area lights, an entire triangle emitting light. </p>
 
 					<h5>Mandatory keys</h5>
 					<ul class="list-group">
 						<li class="list-group-item"><label class="param">color</label> the light's color. Simple value to use here is 255, which just makes the brightest possible white light.</li>
-						<li class="list-group-item list-group-item-secondary"><label class="param">pos</label> the point at which the light is located.</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">type</label> the type of the light, "point" or "area".</li>
+					</ul>
+
+					<h5>Keys for point light</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">pos</label> the point at which the light is located.</li>
+					</ul>
+
+					<h5>Keys for area light</h5>
+					<ul class="list-group">
+						<li class="list-group-item"><label class="param">tri</label> an array of 3 points (so effectively, a 3x3 matrix of numbers) representing the 3 points of the emitting triangle.</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">samples</label> for each light test, how many points on the light should be tested against. More means softer and better shadows, but massively impact performance.</li>
 					</ul>
 				</div>
 			</div>
