@@ -30,7 +30,7 @@ let s = new p5((sketch) => {
         	sketch.noLoop();
     	}
 
-        const totalTime = sketch.millis() / 1000;
+        const totalTime = (sketch.millis() - sketch.startTime) / 1000;
         sketch.select("#runtime").html(totalTime.toFixed(1));
         sketch.select("#remtime").html((totalTime * (sketch.scene.cam.width * sketch.scene.cam.height / sketch.scene.numPixel - 1)).toFixed(1));
     };

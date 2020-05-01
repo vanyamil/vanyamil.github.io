@@ -29,7 +29,7 @@ const scenes = [
 	}
 ];
 
-const ver = 1.1
+const ver = "1.1.1";
 
 class StartPane extends React.Component {
 	existingLink(obj) {
