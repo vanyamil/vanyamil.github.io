@@ -1,0 +1,114 @@
+{
+    "ambient": 25,
+    "bg": [0, 0, 0],
+    "samples": 8,
+    "reflDepth": 3,
+    "camera": {
+        "pos":    [0, 0, -45], 
+        "lookAt": [0, 0, 10],
+        "up":     [0, 1, 0],
+        "fovy":   35,
+        "screen": {
+            "w": 1000,
+            "h": 1000
+        }
+    },
+    "lights": [
+        {
+            "tri":   [
+                [-3, 9.5, -3],
+                [-3, 9.5, 3],
+                [3, 9.5, 3]
+            ],
+            "color": [150, 150, 120],
+            "type":  "area",
+            "samples": 20
+        },
+        {
+            "tri":   [
+                [-3, 9.5, -3],
+                [3, 9.5, -3],
+                [3, 9.5, 3]
+            ],
+            "color": [150, 150, 120],
+            "type":  "area",
+            "samples": 20
+        }
+    ],
+    "materials": [
+        {
+            "name": "green",
+            "diffuse": [0, 255, 0],
+            "reflect": 10
+        },
+        {
+            "name": "red",
+            "diffuse": [255, 0, 0],
+            "reflect": 10
+        },
+        {
+            "name": "white",
+            "diffuse": 255,
+            "reflect": 10
+        }
+    ],
+    "root": {
+        "type": "node",
+        "children": [
+            {
+                "type":   "box",
+                "material": "green",
+                "min": [10, -10, -10],
+                "max": [20, 10, 10]
+            },
+            {
+                "type":   "box",
+                "material": "red",
+                "min": [-20, -10, -10],
+                "max": [-10, 10, 10]
+            },
+            {
+                "type":   "box",
+                "material": "white",
+                "min": [-10, -10, 10],
+                "max": [10, 10, 20]
+            },
+            {
+                "type":   "box",
+                "material": "white",
+                "min": [-11, 10, -10],
+                "max": [11, 20, 10]
+            },
+            {
+                "type":   "box",
+                "material": "white",
+                "min": [-11, -20, -10],
+                "max": [11, -10, 10]
+            },
+            {
+                "type": "transform",
+                "translate": [5, -7, -3],
+                "rotate": [0, 20, 0],
+                "child":
+                {
+                    "type":   "box",
+                    "material": "white",
+                    "min": [-3, -3, -3],
+                    "max": [3, 3, 3]
+                }
+            },
+            {
+                "type": "transform",
+                "translate": [-4, -4, 3],
+                "rotate": [0, -20, 0],
+                "child":
+                {
+                    "type":   "box",
+                    "material": "white",
+                    "min": [-3, -6, -2],
+                    "max": [3, 6, 2]
+                }
+            }
+        ]
+    }
+}
