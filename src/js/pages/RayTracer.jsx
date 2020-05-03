@@ -26,10 +26,14 @@ const scenes = [
 	{
 		link: "cornellBox",
 		name: "Cornell Box"
+	},
+	{
+		link: "transparentTest",
+		name: "Weird Transparencies"
 	}
 ];
 
-const ver = "1.1.1";
+const ver = "1.2.0";
 
 class StartPane extends React.Component {
 	existingLink(obj) {

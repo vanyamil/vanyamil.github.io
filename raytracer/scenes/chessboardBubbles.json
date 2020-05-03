@@ -1,0 +1,135 @@
+{
+    "ambient": 25,
+    "bg": 200,
+    "reflDepth": 8,
+    "samples": 4,
+    "camera": {
+        "pos":    [0, 2, -7], 
+        "lookAt": [0, 0, 0],
+        "up":     [0, 1, 0],
+        "fovy":   45,
+        "screen": {
+            "w": 800,
+            "h": 450
+        }
+    },
+    "lights": [
+        {
+            "pos":   [-5, 8, -3],
+            "color": 255
+        }
+    ],
+    "materials": [
+        {
+            "name": "white",
+            "diffuse": 255,
+            "specExp": 32
+        },
+        {
+            "name": "black",
+            "diffuse": 0,
+            "specExp": 32
+        },
+        {
+            "name": "transparent",
+            "opacity": 50,
+            "reflect": true
+        }
+    ],
+    "root": {
+        "type": "node",
+        "children": [
+            {
+                "type": "transform",
+                "scale": 2,
+                "child": {
+                    "type": "node",
+                    "children": [
+                        {
+                            "type":   "sphere",
+                            "material": "transparent",
+                            "radius": 0.2
+                        },
+                        {
+                            "type":   "sphere",
+                            "material": "transparent",
+                            "pos": [0, 0.5, -1.5],
+                            "radius": 0.2
+                        },
+                        {
+                            "type":   "sphere",
+                            "material": "transparent",
+                            "pos": [-0.1, 0, -2],
+                            "radius": 0.2
+                        },
+                        {
+                            "type":   "sphere",
+                            "material": "transparent",
+                            "pos": [-0.5, 0.2, -1],
+                            "radius": 0.2
+                        },
+                        {
+                            "type":   "sphere",
+                            "material": "transparent",
+                            "pos": [1, 0.5, -1.5],
+                            "radius": 0.2
+                        },
+                        {
+                            "type":   "sphere",
+                            "material": "transparent",
+                            "pos": [0.9, 0, -2],
+                            "radius": 0.2
+                        },
+                        {
+                            "type":   "sphere",
+                            "material": "transparent",
+                            "pos": [0.5, 0.2, -1],
+                            "radius": 0.2
+                        },
+                        {
+                            "type":   "sphere",
+                            "material": "transparent",
+                            "pos": [0, 0.5, -2.5],
+                            "radius": 0.2
+                        },
+                        {
+                            "type":   "sphere",
+                            "material": "transparent",
+                            "pos": [-0.1, 0, -3],
+                            "radius": 0.2
+                        },
+                        {
+                            "type":   "sphere",
+                            "material": "transparent",
+                            "pos": [-0.5, 0.2, -2],
+                            "radius": 0.2
+                        },
+                        {
+                            "type":   "sphere",
+                            "material": "transparent",
+                            "pos": [1, 0.5, -2.5],
+                            "radius": 0.2
+                        },
+                        {
+                            "type":   "sphere",
+                            "material": "transparent",
+                            "pos": [0.9, 0, -3],
+                            "radius": 0.2
+                        },
+                        {
+                            "type":   "sphere",
+                            "material": "transparent",
+                            "pos": [0.5, 0.2, -2],
+                            "radius": 0.2
+                        }
+                    ]
+                }
+            },
+            {
+                "type":   "plane",
+                "material": "white",
+                "mat2": "black"
+            }
+        ]
+    }
+}

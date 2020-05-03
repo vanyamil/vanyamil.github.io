@@ -6,7 +6,8 @@ export default class Ray {
 		this.dir = new Vector3();
 		this.set(src, dir);
 		this.resetBounds();
-		this.setIndex(1);
+
+		this.influence = new Vector3(1, 1, 1);
 	}
 
 	set(src, dir) {
@@ -19,6 +20,11 @@ export default class Ray {
 		this.src.setV(other.src);
 		this.dir.setV(other.dir);
 		this.setBounds(other.min, other.max);
+		this.influence = other.influence.copy();
+	}
+
+	addInfluence(color) {
+		this.influence.multWise(color);
 	}
 	
 	copy() {
@@ -36,10 +42,6 @@ export default class Ray {
 	
 	setDepth(depth) {
 		this.depth = depth;
-	}
-
-	setIndex(index) {
-		this.index = index;
 	}
 	
 	resetBounds() {

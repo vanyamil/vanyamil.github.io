@@ -216,7 +216,7 @@ class Box extends Intersectable {
                 }
                 if(interval[1] > tHigh) {
                     interval[1] = tHigh;
-                    normals[1] = n; //.copy().mult(-1); Original version, but maybe better for internal?
+                    normals[1] = n.copy().mult(-1); 
                 }
             }
             // Have we gone inside out

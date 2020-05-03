@@ -10,6 +10,10 @@ class MyColor extends Vector3 {
         }
     }
     
+    copy() {
+        return new MyColor(0).setV(this);
+    }
+    
     setRGB255(r, g, b) {
         return this.setRGB(r/255.0, g/255.0, b/255.0);
     }
@@ -41,7 +45,7 @@ class Material {
         this.setDiffuse(c);
         this.specularEnabled = false;
         this.reflectEnabled = false;
-        this.refractEnabled = false;
+        this.transparentEnabled = false;
     }
     
     setDiffuse(c) {
@@ -59,10 +63,13 @@ class Material {
         this.reflect = new MyColor(c);
     }
     
-    setRefract(c, index) {
-        this.refractEnabled = true;
-        this.refract = new MyColor(c);
-        this.refrIndex = index;
+    setOpacity(c = 255) {
+        this.transparentEnabled = true;
+        this.opaqueColor = new MyColor(c);
+        this.transColor = this.opaqueColor.copy();
+        this.transColor.x = 1 - this.transColor.x;
+        this.transColor.y = 1 - this.transColor.y;
+        this.transColor.z = 1 - this.transColor.z;
     }
 }
 

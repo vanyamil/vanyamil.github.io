@@ -63,47 +63,29 @@ export default class Scene {
         reflV.mult(-1); // Now points away from surface
         
         const lll = new MyColor([0, 0, 0]);
+        const transColor = new MyColor([0, 0, 0]);
         
-        // Fresnel refraction + reflection - only this.
-        if(IR.material.refractEnabled && ray.depth > 0) {
-            let r0 = (ray.index - IR.material.refrIndex) / (ray.index + IR.material.refrIndex);
-            r0 *= r0;
-
-            const c = IR.n.dot(reflV); // Cos of angle between normal and incoming
-            const factor = Math.pow(1 - c, 5); // Schlick's approximation
-            let reflPortion = r0 + (1 - r0) * factor;
-
-            // If refl > 1 - 1e-4 or TIR, no refraction to do.
-            if(1 - reflPortion > 1e-4) {
-                const refrV = ray.dir.refract(IR.n, ray.index, IR.material.refrIndex);
-                if(refrV === null) { // TIR
-                    reflPortion = 1;
-                } else {
-                    const refrRay = new Ray(IR.p, refrV);
-                    const refrIR = new IntersectionResult(); // Need a new here due to recursion
-                    refrRay.setDepth(ray.depth);
-                    refrRay.setIndex(IR.material.refrIndex);
-                    lll.scaleAdd(this.getColor(refrRay, refrIR), 1 - reflPortion);
-                }
+        // Transparency - color controls pass-through ray, 1 - color is the rest.
+        if(IR.material.transparentEnabled && ray.depth > 0) {
+            // Send through-ray
+            const transRay = new Ray(IR.p, ray.dir);
+            const transIR = new IntersectionResult();
+            transRay.setDepth(ray.depth - 1);
+            transColor.add(IR.material.transColor);
+            transRay.addInfluence(IR.material.transColor);
+            const onlyTrans = transColor.x == 1 && transColor.y == 1 && transColor.z == 1;
+            transColor.multWise(this.getColor(transRay, transIR));
+            if(onlyTrans) {
+                return transColor.getFinal();
             }
-            // If refl < 1e-4, insufficient to continue reflection, unless we are in TIR?
-            if(reflPortion > 1e-4) {
-                const reflRay = new Ray(IR.p, reflV);
-                const reflIR = new IntersectionResult(); // Need a new here due to recursion
-                reflRay.setDepth(ray.depth - 1);
-                lll.scaleAdd(this.getColor(reflRay, reflIR), reflPortion);
-            }
-
-            // Combine and return this ("break")
-            lll.multWise(IR.material.refract);
-            return lll.getFinal();
-        } 
+        }
 
         // Reflective 
         if(IR.material.reflectEnabled && ray.depth > 0) {
             const reflRay = new Ray(IR.p, reflV);
             const reflIR = new IntersectionResult(); // Need a new here due to recursion
             reflRay.setDepth(ray.depth - 1);
+            reflRay.addInfluence(IR.material.reflect);
             lll.add(this.getColor(reflRay, reflIR));
             lll.multWise(IR.material.reflect);
         } 
@@ -131,15 +113,27 @@ export default class Scene {
                 shadowRay.set(IR.p, dv);
                 shadowRay.setBounds(1e-5, dvm);
                 this.shadowIR.reset();
-                if(this.root.intersects(shadowRay, this.shadowIR)) {
-                    continue;
+                let inShadow = false;
+                let lightFilter = new MyColor(255);
+
+                while(this.root.intersects(shadowRay, this.shadowIR)) {
+                    if(this.shadowIR.material.transparentEnabled) {
+                        lightFilter.multWise(this.shadowIR.material.transColor);
+                        shadowRay.setMin(this.shadowIR.t + 1e-5);
+                        this.shadowIR.reset();
+                    } else {
+                        inShadow = true;
+                        break;
+                    }
                 }
+                if(inShadow) continue;
                 
                 // Diffuse
                 let angleCoef = Math.max(0, IR.n.dot(dv));
                 if(angleCoef <= 0) { continue; }
                 let tempLight = IR.material.diffuse.copy();
                 tempLight.mult(angleCoef);
+                tempLight.multWise(lightFilter);
                 thisLight.add(tempLight);
                 
                 // Specular
@@ -148,6 +142,7 @@ export default class Scene {
                 	if(angleCoef <= 0) { continue; }
                 	tempLight = IR.material.specular.copy();
                 	tempLight.mult(Math.pow(angleCoef, IR.material.specExp));
+                    tempLight.multWise(lightFilter);
                 	thisLight.add(tempLight);
                 }
             }
@@ -156,12 +151,23 @@ export default class Scene {
             thisLight.div(l.maxSamples);
             lll.add(thisLight);
         }, this);       
+
+        // Transparency - complete
+        if(IR.material.transparentEnabled && ray.depth > 0) {
+            lll.multWise(IR.material.opaqueColor);
+            lll.add(transColor);
+        }
         
         const c = lll.getFinal();
         return c;
     }
     
     getColor(ray, IR) {
+        // If this ray's influence is too low, just skip and return black.
+        if(ray.influence.x < 0.01 && ray.influence.y < 0.01 && ray.influence.z < 0.01) {
+            return new MyColor(0);
+        }
+
         IR.reset();
         
         if(this.root.intersects(ray, IR)) {

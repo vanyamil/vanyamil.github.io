@@ -80,7 +80,7 @@
 						<li class="list-group-item list-group-item-secondary"><label class="param">bg</label> the background color, put on a pixel if the ray does not intersect anything.</li>
 						<li class="list-group-item"><label class="param">lights</label> an array of <a href="#light">light objects</a>.</li>
 						<li class="list-group-item list-group-item-secondary"><label class="param">materials</label> an array of <a href="#material">material objects</a>.</li>
-						<li class="list-group-item"><label class="param">reflDepth</label> an integer which represents how many times can a ray bounce due to reflections. By default, there are no reflections.</li>
+						<li class="list-group-item"><label class="param">reflDepth</label> an integer which represents how many times can a ray bounce due to reflections or transparencies. By default, there are no additional rays generated for these situations.</li>
 						<li class="list-group-item list-group-item-secondary"><label class="param">samples</label> an integer which represents how many rays are generated per pixel. By default, only one ray per pixel is generated.</li>
 					</ul>
 				</div>
@@ -163,7 +163,7 @@
 				<div class="card-body">
 					<p>Each material object represents a unique material. Materials can be created once then referenced from objects in order to avoid re-writing an identical material across multiple objects. If you have already created a material with a "name" parameter, you can supply this name as the value for an object's material.</p>
 
-					<p> There are no mandatory keys - however, a material with no information is pure black with no properties. Make sure to include at least one mode of light application : diffuse, specular or reflective.</p>
+					<p> There are no mandatory keys - however, a material with no information is pure black with no properties. Make sure to include at least one mode of light application : diffuse, specular, reflective or transparency.</p>
 
 					<h5>Optional keys</h5>
 					<ul class="list-group">
@@ -172,6 +172,7 @@
 						<li class="list-group-item"><label class="param">reflect</label> the material's reflection color/intensity. For example, to obtain a mirror material, set no diffuse or specular options and set this value to 255. </li>
 						<li class="list-group-item list-group-item-secondary"><label class="param">specExp</label> an integer which enables specular highlights and regulates their intensity. Best kept between 2 and 100.</li>
 						<li class="list-group-item"><label class="param">specular</label> the specular highlight color. If specExp is given but this isn't, the color is bright white (255)</li>
+						<li class="list-group-item list-group-item-secondary"><label class="param">opacity</label> the color representing how opaque (anti-transparent) this object is. If set, this color's complement will be used to figure out the transparency part. For example, setting a diffuse color then setting opacity to [255, 255, 100] will mean that 100/255 of the blue channel will be coming from the diffuse lights, and 155/255 from the colors of things behind the object.</li>
 					</ul>
 				</div>
 			</div>
