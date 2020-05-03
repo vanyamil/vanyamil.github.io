@@ -3,7 +3,9 @@ import Vector3 from "./Vector3.js";
 class MyColor extends Vector3 {
     constructor(arr) {
         super();
-        if(arr instanceof Array) {
+        if(typeof arr === "undefined" || arr == 0) {
+            // Nothing; stay at 0
+        } else if(arr instanceof Array) {
             this.setRGB255(...arr);
         } else {
             this.setRGB255(arr, arr, arr);
@@ -11,7 +13,7 @@ class MyColor extends Vector3 {
     }
     
     copy() {
-        return new MyColor(0).setV(this);
+        return new MyColor().setV(this);
     }
     
     setRGB255(r, g, b) {
@@ -109,5 +111,8 @@ class AreaLight {
         return p;
     }
 }
+
+MyColor.BLACK = new MyColor();
+MyColor.WHITE = new MyColor(255);
 
 export {MyColor, Material, PointLight, AreaLight}

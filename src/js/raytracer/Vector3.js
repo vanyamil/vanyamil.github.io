@@ -36,20 +36,27 @@ export default class Vector3 {
 	
 	set(x, y, z, saveMag) {
 		if(x instanceof Vector3) {
-			return this.set(x.x, x.y, x.z, x.saveMag);
+			return this.setV(x);
 		}
 		else if(x instanceof Array) {
-			return this.set(x[0], x[1], x[2], false);
+			// Set the values
+			this.x = x[0] || 0;
+			this.y = x[1] || 0;
+			this.z = x[2] || 0;
+		
+			// Reset saveMag
+			this.saveMag = false;
+		} else {
+			// Set the values
+			this.x = x || 0;
+			this.y = y || 0;
+			this.z = z || 0;
+		
+			// Reset saveMag
+			saveMag = (typeof saveMag === "boolean" ? saveMag : (this.saveMag || false));
+			this.saveMag = false;
 		}
-		
-		// Set the values
-		this.x = x || 0;
-		this.y = y || 0;
-		this.z = z || 0;
-		
-		// Reset saveMag
-		saveMag = (typeof saveMag === "boolean" ? saveMag : (this.saveMag || false));
-		this.saveMag = false;
+
 		if(saveMag) {
 			this._saveMags();
 		}
@@ -70,6 +77,10 @@ export default class Vector3 {
 	
 	dot(other) {
 		return this.x * other.x + this.y * other.y + this.z * other.z;
+	}
+
+	dotArr(x, y, z) {
+		return this.x * x + this.y * y + this.z * z;
 	}
 	
 	magSq() {
@@ -156,12 +167,14 @@ export default class Vector3 {
 	}
 	
 	normalize() {
-		const mag = this.mag();
-		this.saveMag = false;
-		this.div(mag);
-		this.saveMag = true;
-		this._mag = 1;
-		this._magSq = 1;
+		if(this.magSq() != 1) {
+			const mag = this.mag();
+			this.saveMag = false;
+			this.div(mag);
+			this.saveMag = true;
+			this._mag = 1;
+			this._magSq = 1;
+		}
 		
 		return this;
 	}
@@ -204,6 +217,22 @@ export default class Vector3 {
 
 	toString() {
 		return "[" + this.x + ", " + this.y + ", " + this.z + "]";
+	}
+
+	at(coord) {
+		switch(coord) {
+			case 0: return this.x;
+			case 1: return this.y;
+			case 2: return this.z;
+		}
+	}
+
+	setAt(coord, val) {
+		switch(coord) {
+			case 0: this.x = val; break;
+			case 1: this.y = val; break;
+			case 2: this.z = val; break;
+		}
 	}
 }
 

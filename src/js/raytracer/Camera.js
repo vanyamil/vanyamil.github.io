@@ -34,7 +34,7 @@ export default class Camera {
         this.fovy = fovy;
         let tanned = Math.tan(fovy * Math.PI/360); // Angle given in degrees; switch to radians and divide by 2
         // Vector from camera position to center of screen
-        this.vToScreen = this.dir.copy().setMag(this.height2 / tanned);
+        this.vToScreen = this.dir.copy().setMag(this.height2 / tanned).setSaving(false);
     }
 
     // Returns the t for a ray to hit the focus plane
@@ -95,8 +95,8 @@ export default class Camera {
         
         // Direction composed of vector to screen + vector along screen's X and Y
         let dir = this.vToScreen.copy();
-        dir.add(Vector3.mult(this.right, x));
-        dir.add(Vector3.mult(this.up, y));
+        dir.scaleAdd(this.right, x);
+        dir.scaleAdd(this.up, y);
         // Ray origin is camera position
         outR.set(this.pos, dir);
         outR.resetBounds();

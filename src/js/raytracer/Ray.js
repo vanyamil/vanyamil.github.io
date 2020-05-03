@@ -2,17 +2,21 @@ import Vector3 from "./Vector3.js";
 
 export default class Ray {
 	constructor(src, dir) {
-		this.src = new Vector3();
-		this.dir = new Vector3();
-		this.set(src, dir);
+		if(typeof src === "undefined") {
+			this.src = new Vector3();
+			this.dir = new Vector3();
+		} else {
+			this.src = src.copy();
+			this.dir = dir.copy();
+		}
 		this.resetBounds();
 
 		this.influence = new Vector3(1, 1, 1);
 	}
 
 	set(src, dir) {
-		this.src.set(src);
-		this.dir.set(dir);
+		this.src.setV(src);
+		this.dir.setV(dir);
 		this.dir.normalize();
 	}
 	
@@ -20,7 +24,7 @@ export default class Ray {
 		this.src.setV(other.src);
 		this.dir.setV(other.dir);
 		this.setBounds(other.min, other.max);
-		this.influence = other.influence.copy();
+		this.influence.setV(other.influence);
 	}
 
 	addInfluence(color) {

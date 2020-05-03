@@ -18,6 +18,7 @@ export default class Scene {
 
         // MULTITHREADING WARNING
         this.shadowIR = new IntersectionResult();
+        this.pixelColor = new MyColor();
     }
     
     setSamples(v) {
@@ -62,8 +63,8 @@ export default class Scene {
         const reflV = ray.dir.reflect(IR.n);
         reflV.mult(-1); // Now points away from surface
         
-        const lll = new MyColor([0, 0, 0]);
-        const transColor = new MyColor([0, 0, 0]);
+        const lll = new MyColor();
+        const transColor = new MyColor();
         
         // Transparency - color controls pass-through ray, 1 - color is the rest.
         if(IR.material.transparentEnabled && ray.depth > 0) {
@@ -98,7 +99,9 @@ export default class Scene {
         // For each light
         this.lights.forEach(function(l) {
             // for each light sample
-            const thisLight = new MyColor([0, 0, 0]);
+            const thisLight = new MyColor();
+            let tempLight = new MyColor();
+            let lightFilter = new MyColor();
 
             for(let lSample = 0; lSample < l.maxSamples; lSample++) {
             
@@ -114,7 +117,7 @@ export default class Scene {
                 shadowRay.setBounds(1e-5, dvm);
                 this.shadowIR.reset();
                 let inShadow = false;
-                let lightFilter = new MyColor(255);
+                lightFilter.setV(MyColor.WHITE);
 
                 while(this.root.intersects(shadowRay, this.shadowIR)) {
                     if(this.shadowIR.material.transparentEnabled) {
@@ -131,7 +134,7 @@ export default class Scene {
                 // Diffuse
                 let angleCoef = Math.max(0, IR.n.dot(dv));
                 if(angleCoef <= 0) { continue; }
-                let tempLight = IR.material.diffuse.copy();
+                tempLight.setV(IR.material.diffuse);
                 tempLight.mult(angleCoef);
                 tempLight.multWise(lightFilter);
                 thisLight.add(tempLight);
@@ -140,7 +143,7 @@ export default class Scene {
                 if(IR.material.specularEnabled) {
                     angleCoef = Math.max(0, reflV.dot(dv));
                 	if(angleCoef <= 0) { continue; }
-                	tempLight = IR.material.specular.copy();
+                	tempLight.setV(IR.material.specular);
                 	tempLight.mult(Math.pow(angleCoef, IR.material.specExp));
                     tempLight.multWise(lightFilter);
                 	thisLight.add(tempLight);
@@ -165,7 +168,7 @@ export default class Scene {
     getColor(ray, IR) {
         // If this ray's influence is too low, just skip and return black.
         if(ray.influence.x < 0.01 && ray.influence.y < 0.01 && ray.influence.z < 0.01) {
-            return new MyColor(0);
+            return MyColor.BLACK;
         }
 
         IR.reset();
@@ -181,7 +184,7 @@ export default class Scene {
     }
     
     getPixel(x, y, ray, IR) {
-        const sumColor = new MyColor();
+        this.pixelColor.set(0, 0, 0, false);
         const dofn = this.cam.dof.samples.length;
         const sn = this.samples.length;
 
@@ -198,11 +201,11 @@ export default class Scene {
                 }
 
                 ray.setDepth(this.reflDepth);
-                sumColor.add(this.getColor(ray, IR));
+                this.pixelColor.add(this.getColor(ray, IR));
             }
         }
-        sumColor.div(sn * dofn);
-        return sumColor.getFinal();
+        this.pixelColor.div(sn * dofn);
+        return this.pixelColor.getFinal();
     }
     
     draw(timeLimit, sketch) {
