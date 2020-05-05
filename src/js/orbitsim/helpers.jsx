@@ -1,5 +1,5 @@
 import p5 from "p5";
-import 'p5/lib/addons/p5.sound';
+import './p5.sound.0.9.js';
 
 p5.prototype.translateV = function translateV(v) {
     return this.translate(v.x, v.y, v.z);    
