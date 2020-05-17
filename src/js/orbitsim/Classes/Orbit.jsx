@@ -35,8 +35,9 @@ export default class Orbit {
         let argument = undefined;
         if(asc_node.equals(p5.prototype.createVector())) // i.e. if momentum is parallel to z axis
             argument = sgn(this.momentum.z) * this.eccentricity.heading();
-        else
-            argument = sgn(this.eccentricity.z) * asc_node.angleBetween(this.eccentricity);
+        else {
+            argument = asc_node.angleBetween(this.eccentricity);
+        }
             
         this.eulers = {longitude, inclination, argument};
 
@@ -135,4 +136,4 @@ export default class Orbit {
     }
 }
 
-Orbit.NUM_MARKS = 100; // 100 marks per orbit
+Orbit.NUM_MARKS = 300; // 100 marks per orbit

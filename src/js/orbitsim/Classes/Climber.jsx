@@ -22,7 +22,7 @@ export default class Climber {
     // Return a 3D vector relative to the ribbon's frame of reference
     get position() { return p5.prototype.createVector(0, this.height + Earth.RADIUS, 0); }
     // Return the vector relative to standard coordinates, i.e. with rotations TODO
-    get true_position() { return this.position.copy().rotateX(Ribbon.LATITUDE).rotateZ(Earth.rotation).rotateZ(Ribbon.LONGITUDE); }
+    get true_position() { return Ribbon.true_vector(this.position.copy()); }
     // The current color of the climber, depending on selected status
     get color() { return this.active ? Climber.ACTIVE_COLOR : Climber.INACTIVE_COLOR; }
     // Checks if the climber still contains the payload or has it been released.
@@ -51,9 +51,19 @@ export default class Climber {
 
     // Release the contained payload
     release(releaseTime) {
+        // Get the up and along-orbit direction in true vectors
+        const upV = Ribbon.true_vector(p5.Vector.units.y.copy());
+        const orbitV = Ribbon.true_vector(p5.Vector.units.x.copy()).mult(-1);
+
         // Velocity : tangential to future orbit, in direction of rotation
-        let vel = p5.Vector.cross(p5.prototype.createVector(0, 0, 1), this.true_position).setMag(Earth.OMEGA * this.position.y); // Same as true_position.mag()
-        this.payload.container = new Orbit(this.true_position, vel, releaseTime);
+        orbitV.setMag(Earth.OMEGA * Math.cos(Ribbon.LATITUDE) * this.position.y); 
+        // Add to it any elevator velocity, if early release
+        if(this.profile != null) {
+            orbitV.scaleAdd(upV, this.profile.velocity(releaseTime));
+        }
+
+        // Create orbit object which will take over motion control
+        this.payload.container = new Orbit(this.true_position, orbitV, releaseTime);
         this.payload.contained = false;
     }
 }

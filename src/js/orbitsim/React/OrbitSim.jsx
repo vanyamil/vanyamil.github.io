@@ -130,6 +130,11 @@ export default class OrbitSim extends Component {
 			this.props.p5.launch(this.state.active_climber, height, tta);
 	}
 
+	onClimberRelease() {
+		if(this.state.active_climber != null)
+			this.props.p5.earlyRelease(this.state.active_climber);
+	}
+
 	onClimberTrack() {
 		if(this.state.active_climber != null) {
 			this.props.p5.track("c" + this.state.active_climber);
@@ -183,7 +188,7 @@ export default class OrbitSim extends Component {
 			<div className="container-fluid text-center">
 				<div className="row">
 					<div className="col text-left">
-						<h1> Space Elevator Operator v4.1 </h1>
+						<h1> Space Elevator Operator v4.2 </h1>
 						<h3> Created by Ivan Miloslavov and Stephen Cohen </h3>
 						<p className="desc">
 						This program presents the orbits that satellites delivered by a Space Elevator would take when released from various launch altitudes along the tether. To start, press 
@@ -191,7 +196,18 @@ export default class OrbitSim extends Component {
 						choice in however many days of transit you desire. Send as many climbers as you wish.
 						</p>
 						<p className="desc">
-						If you have questions or ideas for improvment, as well as if you have found bugs, feel free to email Ivan at MiloslavovIvan[at]gmail[dot]com .
+						Version log:
+						<ul>
+							<li>v1 - 2D render done in JavaFX/Swing/AWT</li>
+							<li>v2 - Better graphics by using Processing (Java version)</li>
+							<li>v3 - Made more easily available via remaking it in p5.js</li>
+							<li>v4 - Made into a full 3D version and placed at the current web address</li>
+							<li>v4.1 - Added music</li>
+							<li>v4.2 - Fixed bugs with 3D rendering and added midway-launches</li>
+						</ul>
+						</p>
+						<p className="desc">
+						If you have questions or ideas for improvment, as well as if you have found bugs, visit this repository on <a href="https://github.com/vanyamil/vanyamil.github.io">Github</a>.
 						If you want to know more about the Space Elevator, visit the <a target="_blank" href="http://www.isec.org">International Space Elevator Consortium</a> website.
 						</p>
 						<p className="desc">
@@ -224,6 +240,7 @@ export default class OrbitSim extends Component {
 								onRight={this.onClimberRight.bind(this)}
 								onLaunch={this.onClimberLaunch.bind(this)}
 								onTrack={this.onClimberTrack.bind(this)}
+								onRelease={this.onClimberRelease.bind(this)}
 							/>
 						</div>
 						<div className="py-2 h-xl-50">

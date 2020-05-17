@@ -184,6 +184,12 @@ let s = new p5(function(p5) {
 		climber.launch(timer.total, tta * Earth.PERIOD, climber.height, height * 1000);
 	}
 
+	p5.earlyRelease = function(c_idx) { // Let's use indices just in case the copy is not deep?
+		// We receive height in km (need m) and tta in days (need s)
+		let climber = p5.climbers[c_idx];
+		climber.release(timer.total);
+	}
+
 	p5.track = function(str) {
 		if(str == undefined)
 			tracked = null;

@@ -78,4 +78,8 @@ p5.Vector.prototype.addMag = function(v) {
 	return this.setMag(this.mag() + v);
 }
 
+p5.Vector.prototype.scaleAdd = function(v, t) {
+	return this.add(v.x * t, v.y * t, v.z * t);
+}
+
 export {p5, sgn, newton};

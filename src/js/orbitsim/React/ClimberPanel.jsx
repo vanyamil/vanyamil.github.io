@@ -14,6 +14,7 @@ export default class ClimberPanel extends Component {
 		this.handleTTAChange = this.handleTTAChange.bind(this);
 		this.handleHeightChange = this.handleHeightChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleRelease = this.handleRelease.bind(this);
 	}
 
 	handleHeightChange(event) {
@@ -26,6 +27,10 @@ export default class ClimberPanel extends Component {
 
 	handleSubmit() {
 		this.props.onLaunch(this.state.height, this.state.tta);
+	}
+
+	handleRelease() {
+		this.props.onRelease();
 	}
 
 	render() {
@@ -89,7 +94,13 @@ export default class ClimberPanel extends Component {
 							<button id="track-climber" className="btn btn-info btn-sm w-100" onClick={this.props.onTrack}> Track </button> 
 						</div>
 						<div className="col-6 px-1">
-							<button id="launch-climber" className="btn btn-warning btn-sm w-100" onClick={this.handleSubmit}> Launch </button> 
+							{ 
+								isActive && active.profile != null && active.payload.contained 
+								?
+									<button id="early-release" className="btn btn-danger btn-sm w-100" onClick={this.handleRelease}> Release </button> 
+								:
+									<button id="launch-climber" className="btn btn-warning btn-sm w-100" onClick={this.handleSubmit}> Launch </button> 
+							}
 						</div>
 					</div>
 				</div>

@@ -20,15 +20,19 @@ export default class Ribbon {
         this._latitude = toRad * latitude;
     }
 
-    static get true_bottom() {
-        let v = p5.prototype.createVector(0, Earth.RADIUS, 0);
+    static true_vector(v) {
         return v.rotateX(this.LATITUDE).rotateZ(Earth.rotation).rotateZ(this.LONGITUDE);
+    }
+
+    static get true_bottom() {
+        const v = p5.prototype.createVector(0, Earth.RADIUS, 0);
+        return this.true_vector(v);
     }
 
     static get true_top() {
-        let v = p5.prototype.createVector(0, Earth.RADIUS + this.LENGTH, 0);
-        return v.rotateX(this.LATITUDE).rotateZ(Earth.rotation).rotateZ(this.LONGITUDE);
+        const v = p5.prototype.createVector(0, Earth.RADIUS + this.LENGTH, 0);
+        return this.true_vector(v);
     }
 }
 
-Ribbon.setLonLat(-90, 0);
+Ribbon.setLonLat(-69, 12.1);

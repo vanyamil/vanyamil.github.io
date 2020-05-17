@@ -45,20 +45,46 @@ export default class AstronauticaProfile {
 
 		// Ascending stage
 		if(currentTime < this.climbTime) { 
-			let sine = Math.sin(Math.PI * currentTime / this.climbTime);
-			let delta = this.maxVelocity * 0.5 * (currentTime - this.climbTime / Math.PI * sine);
+			const sine = Math.sin(Math.PI * currentTime / this.climbTime);
+			const delta = this.maxVelocity * 0.5 * (currentTime - this.climbTime / Math.PI * sine);
 			return this.startHeight + delta;
 		}
 
 		// Constant stage
 		if(currentTime < this.constantTime + this.climbTime) { 
-			let delta = this.maxVelocity * (currentTime - this.climbTime / 2);
+			const delta = this.maxVelocity * (currentTime - this.climbTime / 2);
 			return this.startHeight + delta;
 		}
 
 		// Descending stage
-		let sine = Math.sin(Math.PI * (currentTime - this.constantTime) / this.climbTime);
-		let delta = this.maxVelocity * 0.5 * (currentTime + this.constantTime - this.climbTime / Math.PI * sine);
+		const sine = Math.sin(Math.PI * (currentTime - this.constantTime) / this.climbTime);
+		const delta = this.maxVelocity * 0.5 * (currentTime + this.constantTime - this.climbTime / Math.PI * sine);
 		return this.startHeight + delta;
+	}
+
+	// Current velocity (derivative of altitude)
+	velocity(currentTime) {
+		if(!this.isMoving(currentTime))
+			return 0;
+
+		// Otherwise, figure out current stage (asc/const/desc)
+		// Using if-return system to avoid else stacks
+		currentTime -= this.launchTime;
+
+		// Ascending stage - cosine mapping from 0 to maxVel
+		if(currentTime < this.climbTime) { 
+			const frac = 1 - Math.cos(Math.PI * currentTime / this.climbTime);
+			return this.maxVelocity * frac * 0.5;
+		}
+
+		// Constant stage
+		if(currentTime < this.constantTime + this.climbTime) { 
+			return this.maxVelocity;
+		}
+
+		// Descending stage - cosine mapping from maxVel to 0
+		const descTime = currentTime - this.constantTime - this.climbTime;
+		const frac = 1 + Math.cos(Math.PI * descTime / this.climbTime);
+		return this.maxVelocity * frac * 0.5;
 	}
 }
