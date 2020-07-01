@@ -45,6 +45,15 @@ p5.Vector.prototype.rotateX = function(rad) {
 	return this;
 }
 
+// Rotates this vector around axis by angle using right-hand rule
+p5.Vector.prototype.rotateAround = function(axis, angle) {
+	const ninety = p5.Vector.cross(axis, this);
+	ninety.setMag(this.mag() * Math.sin(angle));
+	this.mult(Math.cos(angle)).add(ninety);
+
+	return this;
+}
+
 p5.Vector.units = {
 	x: new p5.Vector(1, 0, 0),
 	y: new p5.Vector(0, 1, 0),

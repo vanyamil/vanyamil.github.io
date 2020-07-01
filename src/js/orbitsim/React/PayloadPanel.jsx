@@ -48,47 +48,75 @@ export default class PayloadPanel extends Component {
 						: (
 							contained 
 							? 
-								<div className="row py-2 px-1">
-									<div className="col-6 px-0 text-left small">
-										Height (km): 
+								<div>
+									<div className="row py-2 px-1">
+										<div className="col-6 px-0 text-left small">
+											Height (km): 
+										</div>
+										<div className="col-6 px-0 text-right">
+											{Math.round(active.container.height / 1000)}
+										</div>
 									</div>
-									<div className="col-6 px-0 text-right">
-										{Math.round(active.container.height / 1000)}
+									<div className="row py-2 px-1">
+										<div className="col-6 px-0 text-left small">
+											Speed (m/s): 
+										</div>
+										<div className="col-6 px-0 text-right">
+											{active.container.profile ? active.container.profile.velocity(this.props.time).toFixed(2) : 0}
+										</div>
 									</div>
 								</div>
 							:
-								<div><div className="row py-2 px-1">
-									<div className="col-6 px-0 text-left small">
-										Semi-major (km): 
+								<div>
+									<div className="row py-2 px-1">
+										<div className="col-6 px-0 text-left small">
+											Semi-major (km): 
+										</div>
+										<div className="col-6 px-0 text-right">
+											{Math.round(active.container.semi_major / 1000)}
+										</div>
 									</div>
-									<div className="col-6 px-0 text-right">
-										{Math.round(active.container.semi_major / 1000)}
+									<div className="row py-2 px-1">
+										<div className="col-6 px-0 text-left small">
+											Eccentricity: 
+										</div>
+										<div className="col-6 px-0 text-right">
+											{active.container.e.toFixed(4)}
+										</div>
+									</div>
+									<div className="row py-2 px-1">
+										<div className="col-6 px-0 text-left small">
+											Period (days): 
+										</div>
+										<div className="col-6 px-0 text-right">
+											{(active.container.dayPeriod).toFixed(2)}
+										</div>
+									</div>
+									<div className="row py-2 px-1">
+										<div className="col-6 px-0 text-left small">
+											Altitude (km): 
+										</div>
+										<div className="col-6 px-0 text-right">
+											{(active.container.altitude / 1000).toFixed(2)}
+										</div>
+									</div>
+									<div className="row py-2 px-1">
+										<div className="col-6 px-0 text-left small">
+											Speed (m/s): 
+										</div>
+										<div className="col-6 px-0 text-right">
+											{active.container.velocity.mag().toFixed(2)}
+										</div>
+									</div>
+									<div className="row py-2">
+										<div className="col-6 px-1">
+											<button id="boost-payload" className="btn btn-primary btn-sm w-100" onClick={this.props.onBoost}> Boost </button> 
+										</div>
+										<div className="col-6 px-1">
+											
+										</div>
 									</div>
 								</div>
-								<div className="row py-2 px-1">
-									<div className="col-6 px-0 text-left small">
-										Eccentricity: 
-									</div>
-									<div className="col-6 px-0 text-right">
-										{active.container.e.toFixed(4)}
-									</div>
-								</div>
-								<div className="row py-2 px-1">
-									<div className="col-6 px-0 text-left small">
-										Period (days): 
-									</div>
-									<div className="col-6 px-0 text-right">
-										{(active.container.dayPeriod).toFixed(2)}
-									</div>
-								</div>
-								<div className="row py-2 px-1">
-									<div className="col-6 px-0 text-left small">
-										Altitude (km): 
-									</div>
-									<div className="col-6 px-0 text-right">
-										{(active.container.altitude / 1000).toFixed(2)}
-									</div>
-								</div></div>
 							))
 						)
 					}

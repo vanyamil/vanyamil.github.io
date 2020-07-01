@@ -1,8 +1,8 @@
 {
-    "/res/js/manifest.js": "/res/js/manifest.js",
-    "/res/js/vendor.js": "/res/js/vendor.js",
     "/res/js/home.js": "/res/js/home.js",
+    "/res/js/manifest.js": "/res/js/manifest.js",
     "/res/js/orbitsim.js": "/res/js/orbitsim.js",
     "/res/js/randomizer.js": "/res/js/randomizer.js",
-    "/res/js/raytracer.js": "/res/js/raytracer.js"
+    "/res/js/raytracer.js": "/res/js/raytracer.js",
+    "/res/js/vendor.js": "/res/js/vendor.js"
 }

@@ -145,6 +145,10 @@ export default class OrbitSim extends Component {
 		this.props.p5.track();
 	}
 
+	onPayloadBoost() {
+		this.state.payloads[this.state.active_payload].boost(this.props.p5.createVector(100, 0, 0), false, this.props.p5.time());
+	}
+
 	onPayloadTrack() {
 		if(this.state.active_payload != null)
 			this.props.p5.track("p" + this.state.active_payload);
@@ -250,6 +254,8 @@ export default class OrbitSim extends Component {
 								onLeft={this.onPayloadLeft.bind(this)} 
 								onRight={this.onPayloadRight.bind(this)}
 								onTrack={this.onPayloadTrack.bind(this)}
+								onBoost={this.onPayloadBoost.bind(this)}
+								time={this.props.p5.time()}
 							/>
 						</div>
 					</div>

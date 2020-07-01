@@ -64,7 +64,7 @@ export default class AstronauticaProfile {
 
 	// Current velocity (derivative of altitude)
 	velocity(currentTime) {
-		if(!this.isMoving(currentTime))
+		if(!this.isMoving(currentTime)) 
 			return 0;
 
 		// Otherwise, figure out current stage (asc/const/desc)

@@ -53,14 +53,20 @@ export default class Orbit {
             let true_at_epoch = sgn(this.epoch.pos.dot(this.epoch.vel)) * this.eccentricity.angleBetween(this.epoch.pos); // WRT the periapsis
             let ecc_at_epoch = Math.atan2(Math.sqrt(1 - (this.e ** 2)) * Math.sin(true_at_epoch), this.e + Math.cos(true_at_epoch));
             this.mean_at_epoch = ecc_at_epoch - this.e * Math.sin(ecc_at_epoch);
+            this.last_true_anomaly = true_at_epoch;
         } else {
             this.mean_at_epoch = 0; // We start at periapsis for any hyperbolic orbit
+            this.last_true_anomaly = 0;
         }
 
         this.flight_time = 0;
 
-        // Setup argument; gets recalculated from this position henceforth
-        this.last_true_anomaly = Math.PI;
+        // fix _position
+
+        // Get the altitude from SLR and true
+        let altitude = this.altitudeAt(this.last_true_anomaly);
+        // For now, draw in x direction on its own - need to rotate with eulers
+        this._position = p5.prototype.createVector(altitude, 0, 0).rotateZ(this.last_true_anomaly);
     }
 
     update(timer) {
@@ -117,7 +123,7 @@ export default class Orbit {
     }
 
     get true_position() {
-        let pos = this.position;
+        const pos = this._position;
         let vector = p5.prototype.createVector(
             this.matrix[0] * pos.x + this.matrix[1] * pos.y + this.matrix[2] * pos.z,
             this.matrix[4] * pos.x + this.matrix[5] * pos.y + this.matrix[6] * pos.z,
@@ -128,12 +134,25 @@ export default class Orbit {
     }
 
     get altitude() {
-        return this.position.mag() - Earth.RADIUS;
+        return this._position.mag() - Earth.RADIUS;
     }
 
     get dayPeriod() {
         return this.period / Earth.PERIOD;
     }
+
+    get velocity() {
+        // Get speed (magnitude of velocity)
+        const dist = this._position.mag();
+        const v2 = (2 / dist - 1 / this.semi_major) * Earth.MU;
+        const speed = Math.sqrt(v2);
+
+        // Velocity is tangential to orbit - but we'll get it from the momentum
+        const sine = this.momentum.mag() / dist / speed;
+        const TAU = Math.PI * 2;
+        const rotation = (TAU + this.last_true_anomaly) % TAU > Math.PI ? Math.PI - Math.asin(sine) : Math.asin(sine);
+        return this.true_position.setMag(speed).rotateAround(this.momentum, rotation);
+    }
 }
 
-Orbit.NUM_MARKS = 300; // 100 marks per orbit
+Orbit.NUM_MARKS = 200; // Trace behind orbit of past positions

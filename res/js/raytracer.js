@@ -1,1 +1,3978 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[5],{17:function(t,e,n){t.exports=n(22)},22:function(t,e,n){"use strict";n.r(e),n.d(e,"default",(function(){return mt}));var a=n(0),i=n.n(a),r=n(4),s=n.n(r),o=n(3),l=n(2),c=n.n(l),u=(n(10),n(1)),h=n.n(u);function f(t,e){for(var n=0;n<e.length;n++){var a=e[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(t,a.key,a)}}var m=function(){function t(e,n,a,i){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),void 0===e?(this.x=0,this.y=0,this.z=0,this.saveMag=!1):this.set(e,n,a,i)}var e,n,a;return e=t,(n=[{key:"setSaving",value:function(t){return t?this._saveMags():this.saveMag=!1,this}},{key:"setV",value:function(t){return this.x=t.x,this.y=t.y,this.z=t.z,this.saveMag=t.saveMag,this.saveMag&&(this._mag=t._mag,this._magSq=t._magSq),this}},{key:"set",value:function(e,n,a,i){return e instanceof t?this.setV(e):(e instanceof Array?(this.x=e[0]||0,this.y=e[1]||0,this.z=e[2]||0,this.saveMag=!1):(this.x=e||0,this.y=n||0,this.z=a||0,i="boolean"==typeof i?i:this.saveMag||!1,this.saveMag=!1),i&&this._saveMags(),this)}},{key:"_saveMags",value:function(){this.saveMag=!1,this._magSq=this.magSq(),this._mag=this.mag(),this.saveMag=!0}},{key:"copy",value:function(){return(new t).setV(this)}},{key:"dot",value:function(t){return this.x*t.x+this.y*t.y+this.z*t.z}},{key:"dotArr",value:function(t,e,n){return this.x*t+this.y*e+this.z*n}},{key:"magSq",value:function(){return this.saveMag&&void 0!==this._magSq?this._magSq:this.dot(this)}},{key:"mag",value:function(){return this.saveMag&&void 0!==this._mag?this._mag:Math.sqrt(this.magSq())}},{key:"setMag",value:function(t){var e=this.mag();return this.saveMag=!1,this.mult(t/e),this.saveMag=!0,this._mag=t,this._magSq=t*t,this}},{key:"add",value:function(t){return this.x+=t.x,this.y+=t.y,this.z+=t.z,this.saveMag&&this._saveMags(),this}},{key:"scaleAdd",value:function(t,e){return this.x+=t.x*e,this.y+=t.y*e,this.z+=t.z*e,this.saveMag&&this._saveMags(),this}},{key:"sub",value:function(t){return this.x-=t.x,this.y-=t.y,this.z-=t.z,this.saveMag&&this._saveMags(),this}},{key:"mult",value:function(t){return this.x*=t,this.y*=t,this.z*=t,this.saveMag&&(this._magSq*=t*t,this._mag*=t),this}},{key:"multWise",value:function(t){return this.x*=t.x,this.y*=t.y,this.z*=t.z,this.saveMag&&this._saveMags(),this}},{key:"div",value:function(t){return this.mult(1/t)}},{key:"normalize",value:function(){if(1!=this.magSq()){var t=this.mag();this.saveMag=!1,this.div(t),this.saveMag=!0,this._mag=1,this._magSq=1}return this}},{key:"reflect",value:function(t){var e=2*this.dot(t);return t.copy().mult(e).sub(this)}},{key:"rotateTowards",value:function(t,e){var n=this.cross(t).cross(this).normalize();return this.copy().setMag(Math.cos(e)).scaleAdd(n,Math.sin(e))}},{key:"refract",value:function(t,e,n){var a=this.cross(t).mag()*e/n;if(a>=1)return null;var i=Math.asin(a);return t.copy().mult(-1).rotateTowards(this,i)}},{key:"cross",value:function(e){return new t(this.y*e.z-this.z*e.y,this.z*e.x-this.x*e.z,this.x*e.y-this.y*e.x)}},{key:"toString",value:function(){return"["+this.x+", "+this.y+", "+this.z+"]"}},{key:"at",value:function(t){switch(t){case 0:return this.x;case 1:return this.y;case 2:return this.z}}},{key:"setAt",value:function(t,e){switch(t){case 0:this.x=e;break;case 1:this.y=e;break;case 2:this.z=e}}}])&&f(e.prototype,n),a&&f(e,a),t}();function d(t){return function(t){if(Array.isArray(t)){for(var e=0,n=new Array(t.length);e<t.length;e++)n[e]=t[e];return n}}(t)||function(t){if(Symbol.iterator in Object(t)||"[object Arguments]"===Object.prototype.toString.call(t))return Array.from(t)}(t)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance")}()}function y(t,e){for(var n=0;n<e.length;n++){var a=e[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(t,a.key,a)}}m.sub=function(t,e){return t.copy().sub(e)},m.mult=function(t,e){return t.copy().mult(e)};var v=function(){function t(e,n,a){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.pos=new m,this.dir=new m,this.lookAt=new m,this.set(e,n,a),this.dof={},this.setDOF(this.lookAt.copy(),this.dir.copy(),1,1)}var e,n,a;return e=t,(n=[{key:"set",value:function(t,e,n){var a,i;(a=this.lookAt).set.apply(a,d(e)),(i=this.pos).set.apply(i,d(t)),this.dir.set(this.lookAt).sub(this.pos).normalize(),this.right=new m(n).cross(this.dir).normalize(),this.up=this.dir.cross(this.right).normalize()}},{key:"setScreen",value:function(t,e,n){this.width=t,this.width2=t/2,this.height=e,this.height2=e/2,this.fovy=n;var a=Math.tan(n*Math.PI/360);this.vToScreen=this.dir.copy().setMag(this.height2/a).setSaving(!1)}},{key:"dofDistToFocus",value:function(t){var e=m.sub(this.dof.p,t.src);return this.dof.n.dot(e)/this.dof.n.dot(t.dir)}},{key:"modifyRayDOF",value:function(t,e){var n=new m;e.at(this.dofDistToFocus(e),n)&&(e.src.scaleAdd(this.right,this.dof.samples[t][0]).scaleAdd(this.up,this.dof.samples[t][1]),e.dir.set(n).sub(e.src).normalize())}},{key:"setDOF",value:function(t,e,n,a){t&&(this.dof.p=new m(t)),e&&(this.dof.n=new m(e),this.dof.n.normalize()),this.dof.a=n,this.setDOFSamples(Math.max(a,1))}},{key:"setDOFSamples",value:function(t){for(this.dof.samples=[[0,0]];--t>0;)this.dof.samples.push([(Math.random()-.5)*this.dof.a,(Math.random()-.5)*this.dof.a])}},{key:"generateRay",value:function(t,e,n,a){if(t<0||e<0||t>this.width||e>this.height)return!1;t-=this.width2,e=-(e-=this.height2);var i=this.vToScreen.copy();return i.scaleAdd(this.right,t),i.scaleAdd(this.up,e),a.set(this.pos,i),a.resetBounds(),this.modifyRayDOF(n,a),!0}}])&&y(e.prototype,n),a&&y(e,a),t}();function p(t){return(p="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function b(t){return function(t){if(Array.isArray(t)){for(var e=0,n=new Array(t.length);e<t.length;e++)n[e]=t[e];return n}}(t)||function(t){if(Symbol.iterator in Object(t)||"[object Arguments]"===Object.prototype.toString.call(t))return Array.from(t)}(t)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance")}()}function w(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function g(t,e){for(var n=0;n<e.length;n++){var a=e[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(t,a.key,a)}}function k(t,e,n){return e&&g(t.prototype,e),n&&g(t,n),t}function x(t,e){return!e||"object"!==p(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function E(t){return(E=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}function M(t,e){return(M=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}var _=function(t){function e(t){var n;if(w(this,e),n=x(this,E(e).call(this)),void 0===t||0==t);else if(t instanceof Array){var a;(a=n).setRGB255.apply(a,b(t))}else n.setRGB255(t,t,t);return n}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&M(t,e)}(e,t),k(e,[{key:"copy",value:function(){return(new e).setV(this)}},{key:"setRGB255",value:function(t,e,n){return this.setRGB(t/255,e/255,n/255)}},{key:"setRGB",value:function(t,e,n){return this.set(t,e,n,!1)}},{key:"limit",value:function(){this.x>1&&(this.x=1),this.y>1&&(this.y=1),this.z>1&&(this.z=1)}},{key:"getFinal",value:function(){return this.limit(),[255*this.x,255*this.y,255*this.z]}}]),e}(m),S=function(){function t(e){w(this,t),this.setDiffuse(e),this.specularEnabled=!1,this.reflectEnabled=!1,this.transparentEnabled=!1}return k(t,[{key:"setDiffuse",value:function(t){this.diffuse=new _(t)}},{key:"setSpecular",value:function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:255;this.specularEnabled=!0,this.specular=new _(e),this.specExp=t}},{key:"setReflect",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:255;this.reflectEnabled=!0,this.reflect=new _(t)}},{key:"setOpacity",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:255;this.transparentEnabled=!0,this.opaqueColor=new _(t),this.transColor=this.opaqueColor.copy(),this.transColor.x=1-this.transColor.x,this.transColor.y=1-this.transColor.y,this.transColor.z=1-this.transColor.z}}]),t}(),O=function(){function t(e,n){w(this,t),this.pos=new m(e),this.c=new _(n),this.maxSamples=1}return k(t,[{key:"randomSample",value:function(){return this.pos}}]),t}(),N=function(){function t(e,n,a){w(this,t),this.tri=[new m(e[0]),new m(e[1]),new m(e[2])],this.c=new _(n),this.maxSamples=a||10}return k(t,[{key:"randomSample",value:function(){var t=Math.random(),e=Math.random(),n=Math.sqrt(t),a=new m;return a.scaleAdd(this.tri[0],1-n).scaleAdd(this.tri[1],n*(1-e)).scaleAdd(this.tri[2],n*e),a}}]),t}();function j(t,e){for(var n=0;n<e.length;n++){var a=e[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(t,a.key,a)}}_.BLACK=new _,_.WHITE=new _(255);var C=function(){function t(e,n){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),void 0===e?(this.src=new m,this.dir=new m):(this.src=e.copy(),this.dir=n.copy()),this.resetBounds(),this.influence=new m(1,1,1)}var e,n,a;return e=t,(n=[{key:"set",value:function(t,e){this.src.setV(t),this.dir.setV(e),this.dir.normalize()}},{key:"setOther",value:function(t){this.src.setV(t.src),this.dir.setV(t.dir),this.setBounds(t.min,t.max),this.influence.setV(t.influence)}},{key:"addInfluence",value:function(t){this.influence.multWise(t)}},{key:"copy",value:function(){var e=new t(this.src,this.dir);return e.setBounds(this.min,this.max),e}},{key:"setMin",value:function(t){this.min=Math.max(0,t)}},{key:"setMax",value:function(t){this.max=Math.max(this.min,t)}},{key:"setBounds",value:function(t,e){this.setMin(t),this.setMax(e)}},{key:"setDepth",value:function(t){this.depth=t}},{key:"resetBounds",value:function(){this.setBounds(1e-5,1/0)}},{key:"at",value:function(t,e){return!(!(e instanceof m)||t<this.min||t>this.max||(e.setV(this.dir).mult(t).add(this.src),0))}},{key:"toString",value:function(){return src.toString()+" "+dir.toString()}}])&&j(e.prototype,n),a&&j(e,a),t}();function T(t,e){for(var n=0;n<e.length;n++){var a=e[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(t,a.key,a)}}var I=function(){function t(){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.material=null,this.p=new m(0,0,0,!0),this.n=new m(1,0,0,!0),this.reset()}var e,n,a;return e=t,(n=[{key:"setIntersection",value:function(t,e,n,a){this.connects=!0,this.t=t,this.p.setV(e),this.n.setV(n).normalize(),this.material=a}},{key:"setOther",value:function(t){this.setIntersection(t.t,t.p,t.n,t.material)}},{key:"reset",value:function(){this.connects=!1,this.t=1/0}}])&&T(e.prototype,n),a&&T(e,a),t}();function P(t,e){for(var n=0;n<e.length;n++){var a=e[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(t,a.key,a)}}var R=function(){function t(){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.materials={},this.lights=[],this.setAmbient([0,0,0]),this.setBG([0,0,0]),this.setSamples(1),this.reflDepth=0,this.lastX=0,this.lastY=0,this.numPixel=0,this.shadowIR=new I,this.pixelColor=new _}var e,n,a;return e=t,(n=[{key:"setSamples",value:function(t){for(this.samples=[[.5,.5]];--t>0;)this.samples.push([Math.random(),Math.random()])}},{key:"setCamera",value:function(t){this.cam=t}},{key:"setRootNode",value:function(t){this.root=t}},{key:"setBG",value:function(t){this.bg=new _(t)}},{key:"setAmbient",value:function(t){this.ambient=new _(t)}},{key:"addLight",value:function(t){this.lights.push(t)}},{key:"addMaterial",value:function(t){this.materials[t.name]=t}},{key:"lighting",value:function(t,e){var n=new C,a=t.dir.reflect(e.n);a.mult(-1);var i=new _,r=new _;if(e.material.transparentEnabled&&t.depth>0){var s=new C(e.p,t.dir),o=new I;s.setDepth(t.depth-1),r.add(e.material.transColor),s.addInfluence(e.material.transColor);var l=1==r.x&&1==r.y&&1==r.z;if(r.multWise(this.getColor(s,o)),l)return r.getFinal()}if(e.material.reflectEnabled&&t.depth>0){var c=new C(e.p,a),u=new I;c.setDepth(t.depth-1),c.addInfluence(e.material.reflect),i.add(this.getColor(c,u)),i.multWise(e.material.reflect)}else i.add(e.material.diffuse),i.multWise(this.ambient);return this.lights.forEach((function(t){for(var r=new _,s=new _,o=new _,l=0;l<t.maxSamples;l++){var c=t.randomSample().copy().sub(e.p),u=c.mag();1!=u&&c.div(u),n.set(e.p,c),n.setBounds(1e-5,u),this.shadowIR.reset();var h=!1;for(o.setV(_.WHITE);this.root.intersects(n,this.shadowIR);){if(!this.shadowIR.material.transparentEnabled){h=!0;break}o.multWise(this.shadowIR.material.transColor),n.setMin(this.shadowIR.t+1e-5),this.shadowIR.reset()}if(!h){var f=Math.max(0,e.n.dot(c));if(!(f<=0)&&(s.setV(e.material.diffuse),s.mult(f),s.multWise(o),r.add(s),e.material.specularEnabled)){if((f=Math.max(0,a.dot(c)))<=0)continue;s.setV(e.material.specular),s.mult(Math.pow(f,e.material.specExp)),s.multWise(o),r.add(s)}}}r.multWise(t.c),r.div(t.maxSamples),i.add(r)}),this),e.material.transparentEnabled&&t.depth>0&&(i.multWise(e.material.opaqueColor),i.add(r)),i.getFinal()}},{key:"getColor",value:function(t,e){return t.influence.x<.01&&t.influence.y<.01&&t.influence.z<.01?_.BLACK:(e.reset(),this.root.intersects(t,e)?new _(this.lighting(t,e)):this.bg)}},{key:"getPixel",value:function(t,e,n,a){this.pixelColor.set(0,0,0,!1);for(var i=this.cam.dof.samples.length,r=this.samples.length,s=0;s<r;s++)for(var o=this.samples[s][0],l=this.samples[s][1],c=0;c<i;c++){if(!this.cam.generateRay(t+o,e+l,c,n))return void console.log("Problem in the code - could not generate camera ray!");n.setDepth(this.reflDepth),this.pixelColor.add(this.getColor(n,a))}return this.pixelColor.div(r*i),this.pixelColor.getFinal()}},{key:"draw",value:function(t,e){var n=new C,a=new I;e.loadPixels();for(var i=e.millis()+t,r=this.lastX,s=this.lastY;e.millis()<i;)if(e.set(r,s,e.color(this.getPixel(r,s,n,a))),r++,this.numPixel++,r==this.cam.width&&(r=0,++s==this.cam.height))return e.updatePixels(),!0;return e.updatePixels(),this.lastX=r,this.lastY=s,!1}}])&&P(e.prototype,n),a&&P(e,a),t}();function z(t,e){for(var n=0;n<e.length;n++){var a=e[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(t,a.key,a)}}var A=function(){function t(){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.reset()}var e,n,a;return e=t,(n=[{key:"set",value:function(e){return e instanceof t?this.m=e.m.slice():e instanceof Array?this.m=e.slice():e instanceof m&&(this.reset(),this.translate(e)),this}},{key:"reset",value:function(){return this.set([1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1])}},{key:"copy",value:function(){return(new t).set(this)}},{key:"at",value:function(t,e){return this.m[4*t+e]}},{key:"_multEntry",value:function(t,e,n){for(var a=0,i=0;i<4;i++)a+=t.at(e,i)*this.at(i,n);return a}},{key:"multBy",value:function(e){if(e instanceof Array)return this.multBy((new t).set(e));var n=[this._multEntry(e,0,0),this._multEntry(e,0,1),this._multEntry(e,0,2),this._multEntry(e,0,3),this._multEntry(e,1,0),this._multEntry(e,1,1),this._multEntry(e,1,2),this._multEntry(e,1,3),this._multEntry(e,2,0),this._multEntry(e,2,1),this._multEntry(e,2,2),this._multEntry(e,2,3),this._multEntry(e,3,0),this._multEntry(e,3,1),this._multEntry(e,3,2),this._multEntry(e,3,3)];return this.m=n,this}},{key:"translate",value:function(t){return t instanceof m?(this.m[3]+=t.x,this.m[7]+=t.y,this.m[11]+=t.z,this):t instanceof Array?(this.m[3]+=t[0],this.m[7]+=t[1],this.m[11]+=t[2],this):void 0}},{key:"scale",value:function(t){var e,n,a;return t instanceof Array?(e=t[0],n=t[1],a=t[2]):e=n=a=t,this.m[0]*=e,this.m[1]*=e,this.m[2]*=e,this.m[3]*=e,this.m[4]*=n,this.m[5]*=n,this.m[6]*=n,this.m[7]*=n,this.m[8]*=a,this.m[9]*=a,this.m[10]*=a,this.m[11]*=a,this}},{key:"rotateX",value:function(e){var n=new t;e*=Math.PI/180;var a=Math.cos(e),i=Math.sin(e);return n.m[5]=a,n.m[6]=-i,n.m[9]=i,n.m[10]=a,this.multBy(n)}},{key:"rotateY",value:function(e){var n=new t;e*=Math.PI/180;var a=Math.cos(e),i=Math.sin(e);return n.m[0]=a,n.m[2]=i,n.m[8]=-i,n.m[10]=a,this.multBy(n)}},{key:"rotateZ",value:function(e){var n=new t;e*=Math.PI/180;var a=Math.cos(e),i=Math.sin(e);return n.m[0]=a,n.m[1]=-i,n.m[4]=i,n.m[5]=a,this.multBy(n)}},{key:"rotate",value:function(t){return this.rotateX(t.x).rotateY(t.y).rotateZ(t.z)}},{key:"_swap",value:function(t,e){var n=this.m[t];this.m[t]=this.m[e],this.m[e]=n}},{key:"transpose",value:function(){return this._swap(1,4),this._swap(2,8),this._swap(3,12),this._swap(6,9),this._swap(7,13),this._swap(11,14),this}},{key:"inverse",value:function(){var t=this.m,e=[t[5]*t[10]-t[9]*t[6],t[2]*t[9]-t[1]*t[10],t[1]*t[6]-t[2]*t[5],t[6]*t[8]-t[4]*t[10],t[0]*t[10]-t[2]*t[8],t[4]*t[2]-t[0]*t[6],t[4]*t[9]-t[8]*t[5],t[8]*t[1]-t[0]*t[9],t[0]*t[5]-t[4]*t[1]],n=1/(t[0]*e[0]+t[1]*e[3]+t[2]*e[6]),a=[-((e=e.map((function(t){return t*n})))[0]*t[3]+e[1]*t[7]+e[2]*t[11]),-(e[3]*t[3]+e[4]*t[7]+e[5]*t[11]),-(e[6]*t[3]+e[7]*t[7]+e[8]*t[11])];return this.m=[e[0],e[1],e[2],a[0],e[3],e[4],e[5],a[1],e[6],e[7],e[8],a[2],0,0,0,1],this}},{key:"transP",value:function(t){var e=this.m[0]*t.x+this.m[1]*t.y+this.m[2]*t.z+this.m[3],n=this.m[4]*t.x+this.m[5]*t.y+this.m[6]*t.z+this.m[7],a=this.m[8]*t.x+this.m[9]*t.y+this.m[10]*t.z+this.m[11];return t.x=e,t.y=n,t.z=a,t.saveMag&&t._saveMags(),t}},{key:"transV",value:function(t){var e=this.m[0]*t.x+this.m[1]*t.y+this.m[2]*t.z,n=this.m[4]*t.x+this.m[5]*t.y+this.m[6]*t.z,a=this.m[8]*t.x+this.m[9]*t.y+this.m[10]*t.z;return t.x=e,t.y=n,t.z=a,t.saveMag&&t._saveMags(),t}}])&&z(e.prototype,n),a&&z(e,a),t}();function B(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}function F(t,e,n){return(F=B()?Reflect.construct:function(t,e,n){var a=[null];a.push.apply(a,e);var i=new(Function.bind.apply(t,a));return n&&W(i,n.prototype),i}).apply(null,arguments)}function D(t){return function(t){if(Array.isArray(t)){for(var e=0,n=new Array(t.length);e<t.length;e++)n[e]=t[e];return n}}(t)||function(t){if(Symbol.iterator in Object(t)||"[object Arguments]"===Object.prototype.toString.call(t))return Array.from(t)}(t)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance")}()}function q(t){return(q="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function J(t,e){return!e||"object"!==q(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function V(t){return(V=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}function L(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&W(t,e)}function W(t,e){return(W=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}function G(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function Y(t,e){for(var n=0;n<e.length;n++){var a=e[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(t,a.key,a)}}function H(t,e,n){return e&&Y(t.prototype,e),n&&Y(t,n),t}var X=function(){function t(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:new S;G(this,t),this.setMaterial(e)}return H(t,[{key:"intersects",value:function(t,e){return console.log("You did not implement the Intersects method for this object!"),!1}},{key:"setMaterial",value:function(t){this.material=t}}]),t}(),K=function(t){function e(t){var n;return G(this,e),(n=J(this,V(e).call(this))).children=t,n.count=t.length,n.localIR=new I,n}return L(e,t),H(e,[{key:"setBounds",value:function(t){this.bounds=t}},{key:"intersects",value:function(t,e){if(void 0!==this.bounds&&(this.localIR.reset(),!this.bounds.intersects(t,this.localIR)))return!1;for(var n=t.max,a=this.count-1;a>=0;a--)this.localIR.reset(),this.children[a].intersects(t,this.localIR)&&(e.setOther(this.localIR),t.setMax(e.t));return t.setMax(n),e.connects}}]),e}(X),U=function(t){function e(t,n,a,i){var r;return G(this,e),(r=J(this,V(e).call(this))).child=t,r.setMatrix(n,a,i),r.localRay=new C,r}return L(e,t),H(e,[{key:"setMatrix",value:function(t,e,n){this.m=new A,this.m.scale(n).rotate(F(m,D(e))).translate(t),this.mInv=this.m.copy().inverse(),this.mIt=this.mInv.copy().transpose()}},{key:"intersects",value:function(t,e){this.localRay.setOther(t),this.mInv.transP(this.localRay.src),this.mInv.transV(this.localRay.dir);var n=this.localRay.dir.mag();return 1e-5!=this.localRay.min&&(this.localRay.min*=n),this.localRay.max*=n,n=1/n,this.localRay.dir.mult(n),!!this.child.intersects(this.localRay,e)&&(this.m.transP(e.p),this.mIt.transV(e.n),e.t*=n,!0)}}]),e}(X),Z=function(t){function e(t,n){var a;return G(this,e),(a=J(this,V(e).call(this))).c=F(m,D(t)),a.r=n,a}return L(e,t),H(e,[{key:"intersects",value:function(t,e){var n=t.src.x-this.c.x,a=t.src.y-this.c.y,i=t.src.z-this.c.z,r=n*n+a*a+i*i-this.r*this.r,s=t.dir.dotArr(n,a,i),o=s*s-r;if(o<0)return!1;var l=Math.sqrt(o),c=-s-l;return t.at(c,e.p)?(e.setIntersection(c,e.p,m.sub(e.p,this.c),this.material),!0):(c+=2*l,!!t.at(c,e.p)&&(e.setIntersection(c,e.p,m.sub(e.p,this.c),this.material),!0))}}]),e}(X),Q=function(t){function e(){var t,n=arguments.length>0&&void 0!==arguments[0]?arguments[0]:null;return G(this,e),(t=J(this,V(e).call(this))).setAltMaterial(n),t}return L(e,t),H(e,[{key:"setAltMaterial",value:function(t){this.mat2=t}},{key:"intersects",value:function(t,e){if(t.dir.y*t.src.y>=0)return!1;var n=-t.src.y/t.dir.y;if(t.at(n,e.p)){var a=Math.floor(e.p.x)+Math.floor(e.p.z),i=null==this.mat2||(a%2+2)%2<1?this.material:this.mat2,r=t.src.y>0?new m(0,1,0):new m(0,-1,0);return e.setIntersection(n,e.p,r,i),!0}return!1}}]),e}(X),$=function(t){function e(t,n){var a;return G(this,e),(a=J(this,V(e).call(this))).min=F(m,D(t)),a.max=F(m,D(n)),a}return L(e,t),H(e,[{key:"intersects",value:function(t,n){for(var a=t.min,i=t.max,r=null,s=null,o=0;o<3;o++){var l=t.dir.at(o),c=t.src.at(o);if(0==l){if(c<=this.min.at(o)||c>=this.max.at(o))return!1}else{var u=-1;l=1/l;var h=(this.min.at(o)-c)*l,f=(this.max.at(o)-c)*l,m=void 0,d=void 0;h<f?(m=h,d=f,u=1):(m=f,d=h,u=0),a<m&&(a=m,r=2*o+u),i>d&&(i=d,s=2*o+1-u)}if(a>=i)return!1}return a>t.min&&t.at(a,n.p)?(n.setIntersection(a,n.p,e.normals[r],this.material),!0):!!(i<t.max&&t.at(i,n.p))&&(n.setIntersection(i,n.p,e.normals[s],this.material),!0)}}]),e}(X);function tt(t,e){for(var n=0;n<e.length;n++){var a=e[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(t,a.key,a)}}$.normals=[new m(1,0,0),new m(-1,0,0),new m(0,1,0),new m(0,-1,0),new m(0,0,1),new m(0,0,-1)];var et=function(){function t(e){!function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,t),this.scene=new R,this.refMap={},this.loadScene(e)}var e,n,a;return e=t,(n=[{key:"loadCamera",value:function(t){var e=new v(t.pos,t.lookAt,t.up);return e.setScreen(t.screen.w,t.screen.h,t.fovy),void 0!==t.dof&&e.setDOF(t.dof.point,t.dof.normal,t.dof.aperture,t.dof.samples),e}},{key:"loadMaterial",value:function(t){if("string"==typeof t){if("undefined"===this.scene.materials[t])throw"Material reference to non-existent material!";return this.scene.materials[t]}var e=new S(t.diffuse);return void 0!==t.name&&(e.name=t.name),void 0!==t.specExp&&e.setSpecular(t.specExp,t.specular),void 0!==t.reflect&&(!0===t.reflect?e.setReflect():e.setReflect(t.reflect)),void 0!==t.opacity&&e.setOpacity(t.opacity),e}},{key:"loadLight",value:function(t){var e,n=t.color;switch(null===(e=t.type)||void 0===e?void 0:e.toLowerCase()){case"area":return new N(t.tri,n,t.samples);default:return new O(t.pos,n)}}},{key:"loadInter",value:function(t){if("string"==typeof t){if("undefined"===this.refMap[t])throw"Object reference to non-existent object!";return this.refMap[t]}var e=null;switch(t.type.toLowerCase()){case"plane":e=this.loadPlane(t);break;case"node":e=this.loadNode(t);break;case"sphere":e=this.loadSphere(t);break;case"box":e=this.loadBox(t);break;case"transform":e=this.loadTransform(t);break;default:throw"You did not implement a loader for this object"}return null!==e&&void 0!==t.material&&e.setMaterial(this.loadMaterial(t.material)),null!==e&&void 0!==t.name&&(e.name=t.name,this.refMap[e.name]=e),e}},{key:"loadNode",value:function(t){var e=[];for(var n in t.children)e.push(this.loadInter(t.children[n]));var a=new K(e);return void 0!==t.bounds&&a.setBounds(this.loadInter(t.bounds)),a}},{key:"loadPlane",value:function(t){var e=null;return void 0!==t.mat2&&(e=this.loadMaterial(t.mat2)),new Q(e)}},{key:"loadSphere",value:function(t){return new Z(t.pos||[0,0,0],t.radius||1)}},{key:"loadBox",value:function(t){return new $(t.min,t.max)}},{key:"loadTransform",value:function(t){var e=this.loadInter(t.child),n=t.translate,a=void 0===t.rotate?[0,0,0]:t.rotate,i=void 0===t.scale?1:t.scale;return new U(e,n,a,i)}},{key:"loadScene",value:function(t){if(void 0!==t.samples&&this.scene.setSamples(t.samples),void 0!==t.reflDepth&&(this.scene.reflDepth=t.reflDepth),void 0!==t.ambient&&this.scene.setAmbient(t.ambient),void 0!==t.bg&&this.scene.setBG(t.bg),void 0!==t.lights)for(var e in t.lights)this.scene.addLight(this.loadLight(t.lights[e]));if(void 0!==t.materials)for(var n in t.materials)this.scene.addMaterial(this.loadMaterial(t.materials[n]));this.scene.setCamera(this.loadCamera(t.camera)),this.scene.setRootNode(this.loadInter(t.root))}}])&&tt(e.prototype,n),a&&tt(e,a),t}();var nt=new h.a((function(t){t.preload=function(){t.json=t.loadJSON("/raytracer/scenes/emptyScene.json")},t.setup=function(){t.scene=new et(t.json).scene,console.log(t.scene),t.startTime=t.millis(),t.createCanvas(t.scene.cam.width,t.scene.cam.height).class("mx-auto"),t.frameRate(30),t.loadPixels()},t.draw=function(){t.scene.draw(25,t)&&(console.log("Completed drawing in "+(t.millis()-t.startTime)+" ms."),t.noLoop());var e=(t.millis()-t.startTime)/1e3;t.select("#runtime").html(e.toFixed(1)),t.select("#remtime").html((e*(t.scene.cam.width*t.scene.cam.height/t.scene.numPixel-1)).toFixed(1))},t.drawFrom=function(e){t.noLoop(),delete t.scene,t.scene=new et(e).scene,t.startTime=t.millis(),t.resizeCanvas(t.scene.cam.width,t.scene.cam.height),t.loop()},t.loadAndDraw=function(e){t.loadJSON(e,t.drawFrom)}}),"canvasHolder");function at(t){return(at="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t})(t)}function it(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function rt(t,e){for(var n=0;n<e.length;n++){var a=e[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(t,a.key,a)}}function st(t,e,n){return e&&rt(t.prototype,e),n&&rt(t,n),t}function ot(t,e){return!e||"object"!==at(e)&&"function"!=typeof e?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):e}function lt(t){return(lt=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}function ct(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),e&&ut(t,e)}function ut(t,e){return(ut=Object.setPrototypeOf||function(t,e){return t.__proto__=e,t})(t,e)}var ht=[{link:"firstSphere",name:"Single Sphere"},{link:"fakeTranslucent",name:"Fake Translucency"},{link:"boxStacks",name:"Stacked Boxes"},{link:"infinite1",name:"Infinite Corridor"},{link:"cornellBox",name:"Cornell Box"},{link:"transparentTest",name:"Weird Transparencies"}],ft=function(t){function e(){return it(this,e),ot(this,lt(e).apply(this,arguments))}return ct(e,t),st(e,[{key:"existingLink",value:function(t){return i.a.createElement("a",{href:"#",className:"list-group-item list-group-item-action",key:t.link,onClick:function(e){e.preventDefault(),fetch("/raytracer/scenes/"+t.link+".json").then((function(t){return t.text()})).then((function(t){c()("#inputJSON").val(t),c()("#sceneTab").click()}))}},t.name)}},{key:"render",value:function(){return i.a.createElement("div",{id:"start",className:"tab-pane container-fluid active"},i.a.createElement("div",{className:"row"},i.a.createElement("div",{className:"col-12"},i.a.createElement("h5",null,"New Scene or Existing"))),i.a.createElement("div",{className:"row"},i.a.createElement("div",{className:"col-6"},i.a.createElement("a",{className:"btn btn-primary",href:"#",onClick:function(t){t.preventDefault(),c()("#sceneTab").click()}},"New Scene")),i.a.createElement("div",{className:"col-6"},i.a.createElement("div",{className:"list-group"},ht.map(this.existingLink)))))}}]),e}(i.a.Component),mt=(i.a.Component,function(t){function e(){return it(this,e),ot(this,lt(e).apply(this,arguments))}return ct(e,t),st(e,[{key:"render",value:function(){return i.a.createElement(o.a,null,i.a.createElement("div",{className:"row"},i.a.createElement("div",{className:"col-12"},i.a.createElement("h1",null," Ray Tracer - v","1.2.0"," "),i.a.createElement("h3",null," Created by Ivan Miloslavov; based on designs by Paul Kry "),i.a.createElement("p",{className:"desc"},"This program allows you to try ray-tracing in the browser! Test out existing scenes or create your own."),i.a.createElement("p",{className:"desc"},"Based on a design and lectures by Paul Kry, as part of the course COMP 557 - Introduction to Computer Graphics, in McGill University."),i.a.createElement("p",{className:"desc"},"Future versions may change the UI to make scenes without JSON, attempt to include multithreading via workers or add new render technology or objects. For now, the JSON documentation is ",i.a.createElement("a",{href:"docs",target:"_blank"},"here"),"."))),i.a.createElement("div",{className:"modal fade",id:"badJsonModal"},i.a.createElement("div",{className:"modal-dialog"},i.a.createElement("div",{className:"modal-content"},i.a.createElement("div",{className:"modal-header"},i.a.createElement("h5",{className:"modal-title"},"Bad JSON detected!"),i.a.createElement("button",{type:"button",className:"close","data-dismiss":"modal"},i.a.createElement("span",null,"×"))),i.a.createElement("div",{className:"modal-body"},i.a.createElement("p",null,"Your JSON was not correctly parsed. Make sure it's well formed!"))))),i.a.createElement("div",{className:"modal fade",id:"missingJsonModal"},i.a.createElement("div",{className:"modal-dialog"},i.a.createElement("div",{className:"modal-content"},i.a.createElement("div",{className:"modal-header"},i.a.createElement("h5",{className:"modal-title"},"Not enough JSON detected!"),i.a.createElement("button",{type:"button",className:"close","data-dismiss":"modal"},i.a.createElement("span",null,"×"))),i.a.createElement("div",{className:"modal-body"},i.a.createElement("p",null,"Your JSON might be missing mandatory keys. Make sure to follow the documentation and check the console!"))))),i.a.createElement("div",{className:"row"},i.a.createElement("div",{className:"col-12"},i.a.createElement("ul",{className:"nav nav-tabs"},i.a.createElement("li",{className:"nav-item"},i.a.createElement("a",{className:"nav-link active","data-toggle":"tab",href:"#start"},"Start")),i.a.createElement("li",{className:"nav-item"},i.a.createElement("a",{className:"nav-link","data-toggle":"tab",href:"#scene",id:"sceneTab"},"JSON")),i.a.createElement("li",{className:"nav-item"},i.a.createElement("a",{className:"nav-link","data-toggle":"tab",href:"#render"},"Render"))))),i.a.createElement("div",{className:"tab-content text-center"},i.a.createElement(ft,null),i.a.createElement("div",{id:"scene",className:"tab-pane container-fluid"},i.a.createElement("h5",null,"Place JSON here"),i.a.createElement("textarea",{id:"inputJSON",cols:"80",rows:"20",style:{fontFamily:"monospace"}})),i.a.createElement("div",{id:"render",className:"tab-pane container-fluid"},i.a.createElement("div",{className:"row"},i.a.createElement("div",{className:"col-4"},"Running time (s): ",i.a.createElement("span",{id:"runtime"})),i.a.createElement("div",{className:"col-4"},i.a.createElement("button",{id:"startRender",className:"btn btn-success mx-auto",onClick:function(){try{var t=c()("#inputJSON").val();nt.drawFrom(JSON.parse(t))}catch(t){if("SyntaxError"!=t.name)throw c()("#missingJsonModal").modal("show"),t;c()("#badJsonModal").modal("show")}}},"Start Render")),i.a.createElement("div",{className:"col-4"},"Remaining time (s): ",i.a.createElement("span",{id:"remtime"}))),i.a.createElement("div",{className:"row my-5",id:"canvasHolder"}))))}}]),e}(i.a.Component));document.getElementById("root")&&s.a.render(i.a.createElement(mt,null),document.getElementById("root")),window.p5=nt},3:function(t,e,n){"use strict";n.d(e,"a",(function(){return r}));var a=n(0),i=n.n(a);function r(t){return i.a.createElement("div",{id:"react-root"},i.a.createElement("nav",{className:"navbar bg-dark navbar-dark fixed-top navbar-expand-md"},i.a.createElement("a",{className:"navbar-brand",href:"#"},"Ivan M"),i.a.createElement("ul",{className:"navbar-nav"},i.a.createElement("li",{className:"nav-item"},i.a.createElement("a",{className:"nav-link",href:"/"},"Home")),i.a.createElement("li",{className:"nav-item"},i.a.createElement("a",{className:"nav-link",href:"/orbitsim"},"Space Elevator")),i.a.createElement("li",{className:"nav-item"},i.a.createElement("a",{className:"nav-link",href:"/raytracer"},"Ray Tracer")))),i.a.createElement("div",{className:"container-fluid",style:{marginTop:"80px"}},t.children))}},5:function(t,e,n){"use strict";var a,i,r,s,o;if("undefined"==typeof window||"function"!=typeof MessageChannel){var l=null,c=null,u=function(){if(null!==l)try{var t=e.unstable_now();l(!0,t),l=null}catch(t){throw setTimeout(u,0),t}},h=Date.now();e.unstable_now=function(){return Date.now()-h},a=function(t){null!==l?setTimeout(a,0,t):(l=t,setTimeout(u,0))},i=function(t,e){c=setTimeout(t,e)},r=function(){clearTimeout(c)},s=function(){return!1},o=e.unstable_forceFrameRate=function(){}}else{var f=window.performance,m=window.Date,d=window.setTimeout,y=window.clearTimeout;if("undefined"!=typeof console){var v=window.cancelAnimationFrame;"function"!=typeof window.requestAnimationFrame&&console.error("This browser doesn't support requestAnimationFrame. Make sure that you load a polyfill in older browsers. https://fb.me/react-polyfills"),"function"!=typeof v&&console.error("This browser doesn't support cancelAnimationFrame. Make sure that you load a polyfill in older browsers. https://fb.me/react-polyfills")}if("object"==typeof f&&"function"==typeof f.now)e.unstable_now=function(){return f.now()};else{var p=m.now();e.unstable_now=function(){return m.now()-p}}var b=!1,w=null,g=-1,k=5,x=0;s=function(){return e.unstable_now()>=x},o=function(){},e.unstable_forceFrameRate=function(t){0>t||125<t?console.error("forceFrameRate takes a positive int between 0 and 125, forcing framerates higher than 125 fps is not unsupported"):k=0<t?Math.floor(1e3/t):5};var E=new MessageChannel,M=E.port2;E.port1.onmessage=function(){if(null!==w){var t=e.unstable_now();x=t+k;try{w(!0,t)?M.postMessage(null):(b=!1,w=null)}catch(t){throw M.postMessage(null),t}}else b=!1},a=function(t){w=t,b||(b=!0,M.postMessage(null))},i=function(t,n){g=d((function(){t(e.unstable_now())}),n)},r=function(){y(g),g=-1}}function _(t,e){var n=t.length;t.push(e);t:for(;;){var a=n-1>>>1,i=t[a];if(!(void 0!==i&&0<N(i,e)))break t;t[a]=e,t[n]=i,n=a}}function S(t){return void 0===(t=t[0])?null:t}function O(t){var e=t[0];if(void 0!==e){var n=t.pop();if(n!==e){t[0]=n;t:for(var a=0,i=t.length;a<i;){var r=2*(a+1)-1,s=t[r],o=r+1,l=t[o];if(void 0!==s&&0>N(s,n))void 0!==l&&0>N(l,s)?(t[a]=l,t[o]=n,a=o):(t[a]=s,t[r]=n,a=r);else{if(!(void 0!==l&&0>N(l,n)))break t;t[a]=l,t[o]=n,a=o}}}return e}return null}function N(t,e){var n=t.sortIndex-e.sortIndex;return 0!==n?n:t.id-e.id}var j=[],C=[],T=1,I=null,P=3,R=!1,z=!1,A=!1;function B(t){for(var e=S(C);null!==e;){if(null===e.callback)O(C);else{if(!(e.startTime<=t))break;O(C),e.sortIndex=e.expirationTime,_(j,e)}e=S(C)}}function F(t){if(A=!1,B(t),!z)if(null!==S(j))z=!0,a(D);else{var e=S(C);null!==e&&i(F,e.startTime-t)}}function D(t,n){z=!1,A&&(A=!1,r()),R=!0;var a=P;try{for(B(n),I=S(j);null!==I&&(!(I.expirationTime>n)||t&&!s());){var o=I.callback;if(null!==o){I.callback=null,P=I.priorityLevel;var l=o(I.expirationTime<=n);n=e.unstable_now(),"function"==typeof l?I.callback=l:I===S(j)&&O(j),B(n)}else O(j);I=S(j)}if(null!==I)var c=!0;else{var u=S(C);null!==u&&i(F,u.startTime-n),c=!1}return c}finally{I=null,P=a,R=!1}}function q(t){switch(t){case 1:return-1;case 2:return 250;case 5:return 1073741823;case 4:return 1e4;default:return 5e3}}var J=o;e.unstable_IdlePriority=5,e.unstable_ImmediatePriority=1,e.unstable_LowPriority=4,e.unstable_NormalPriority=3,e.unstable_Profiling=null,e.unstable_UserBlockingPriority=2,e.unstable_cancelCallback=function(t){t.callback=null},e.unstable_continueExecution=function(){z||R||(z=!0,a(D))},e.unstable_getCurrentPriorityLevel=function(){return P},e.unstable_getFirstCallbackNode=function(){return S(j)},e.unstable_next=function(t){switch(P){case 1:case 2:case 3:var e=3;break;default:e=P}var n=P;P=e;try{return t()}finally{P=n}},e.unstable_pauseExecution=function(){},e.unstable_requestPaint=J,e.unstable_runWithPriority=function(t,e){switch(t){case 1:case 2:case 3:case 4:case 5:break;default:t=3}var n=P;P=t;try{return e()}finally{P=n}},e.unstable_scheduleCallback=function(t,n,s){var o=e.unstable_now();if("object"==typeof s&&null!==s){var l=s.delay;l="number"==typeof l&&0<l?o+l:o,s="number"==typeof s.timeout?s.timeout:q(t)}else s=q(t),l=o;return t={id:T++,callback:n,priorityLevel:t,startTime:l,expirationTime:s=l+s,sortIndex:-1},l>o?(t.sortIndex=l,_(C,t),null===S(j)&&t===S(C)&&(A?r():A=!0,i(F,l-o))):(t.sortIndex=s,_(j,t),z||R||(z=!0,a(D))),t},e.unstable_shouldYield=function(){var t=e.unstable_now();B(t);var n=S(j);return n!==I&&null!==I&&null!==n&&null!==n.callback&&n.startTime<=t&&n.expirationTime<I.expirationTime||s()},e.unstable_wrapCallback=function(t){var e=P;return function(){var n=P;P=e;try{return t.apply(this,arguments)}finally{P=n}}}},6:function(t,e,n){"use strict";var a=Object.getOwnPropertySymbols,i=Object.prototype.hasOwnProperty,r=Object.prototype.propertyIsEnumerable;function s(t){if(null==t)throw new TypeError("Object.assign cannot be called with null or undefined");return Object(t)}t.exports=function(){try{if(!Object.assign)return!1;var t=new String("abc");if(t[5]="de","5"===Object.getOwnPropertyNames(t)[0])return!1;for(var e={},n=0;n<10;n++)e["_"+String.fromCharCode(n)]=n;if("0123456789"!==Object.getOwnPropertyNames(e).map((function(t){return e[t]})).join(""))return!1;var a={};return"abcdefghijklmnopqrst".split("").forEach((function(t){a[t]=t})),"abcdefghijklmnopqrst"===Object.keys(Object.assign({},a)).join("")}catch(t){return!1}}()?Object.assign:function(t,e){for(var n,o,l=s(t),c=1;c<arguments.length;c++){for(var u in n=Object(arguments[c]))i.call(n,u)&&(l[u]=n[u]);if(a){o=a(n);for(var h=0;h<o.length;h++)r.call(n,o[h])&&(l[o[h]]=n[o[h]])}}return l}},7:function(t,e){var n;n=function(){return this}();try{n=n||new Function("return this")()}catch(t){"object"==typeof window&&(n=window)}t.exports=n},8:function(t,e,n){"use strict";t.exports=n(5)}},[[17,0,1]]]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["/res/js/raytracer"],{
+
+/***/ "./node_modules/object-assign/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/object-assign/index.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+
+/* eslint-disable no-unused-vars */
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+function toObject(val) {
+	if (val === null || val === undefined) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+function shouldUseNative() {
+	try {
+		if (!Object.assign) {
+			return false;
+		}
+
+		// Detect buggy property enumeration order in older V8 versions.
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
+		test1[5] = 'de';
+		if (Object.getOwnPropertyNames(test1)[0] === '5') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test2 = {};
+		for (var i = 0; i < 10; i++) {
+			test2['_' + String.fromCharCode(i)] = i;
+		}
+		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+			return test2[n];
+		});
+		if (order2.join('') !== '0123456789') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test3 = {};
+		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+			test3[letter] = letter;
+		});
+		if (Object.keys(Object.assign({}, test3)).join('') !==
+				'abcdefghijklmnopqrst') {
+			return false;
+		}
+
+		return true;
+	} catch (err) {
+		// We don't expect any of the above to throw, but better to be safe.
+		return false;
+	}
+}
+
+module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+	var from;
+	var to = toObject(target);
+	var symbols;
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = Object(arguments[s]);
+
+		for (var key in from) {
+			if (hasOwnProperty.call(from, key)) {
+				to[key] = from[key];
+			}
+		}
+
+		if (getOwnPropertySymbols) {
+			symbols = getOwnPropertySymbols(from);
+			for (var i = 0; i < symbols.length; i++) {
+				if (propIsEnumerable.call(from, symbols[i])) {
+					to[symbols[i]] = from[symbols[i]];
+				}
+			}
+		}
+	}
+
+	return to;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/prop-types/checkPropTypes.js":
+/*!***************************************************!*\
+  !*** ./node_modules/prop-types/checkPropTypes.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var printWarning = function() {};
+
+if (true) {
+  var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/prop-types/lib/ReactPropTypesSecret.js");
+  var loggedTypeFailures = {};
+  var has = Function.call.bind(Object.prototype.hasOwnProperty);
+
+  printWarning = function(text) {
+    var message = 'Warning: ' + text;
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+}
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?Function} getStack Returns the component stack.
+ * @private
+ */
+function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+  if (true) {
+    for (var typeSpecName in typeSpecs) {
+      if (has(typeSpecs, typeSpecName)) {
+        var error;
+        // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          if (typeof typeSpecs[typeSpecName] !== 'function') {
+            var err = Error(
+              (componentName || 'React class') + ': ' + location + ' type `' + typeSpecName + '` is invalid; ' +
+              'it must be a function, usually from the `prop-types` package, but received `' + typeof typeSpecs[typeSpecName] + '`.'
+            );
+            err.name = 'Invariant Violation';
+            throw err;
+          }
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+        } catch (ex) {
+          error = ex;
+        }
+        if (error && !(error instanceof Error)) {
+          printWarning(
+            (componentName || 'React class') + ': type specification of ' +
+            location + ' `' + typeSpecName + '` is invalid; the type checker ' +
+            'function must return `null` or an `Error` but returned a ' + typeof error + '. ' +
+            'You may have forgotten to pass an argument to the type checker ' +
+            'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
+            'shape all require an argument).'
+          );
+        }
+        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error.message] = true;
+
+          var stack = getStack ? getStack() : '';
+
+          printWarning(
+            'Failed ' + location + ' type: ' + error.message + (stack != null ? stack : '')
+          );
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Resets warning cache when testing.
+ *
+ * @private
+ */
+checkPropTypes.resetWarningCache = function() {
+  if (true) {
+    loggedTypeFailures = {};
+  }
+}
+
+module.exports = checkPropTypes;
+
+
+/***/ }),
+
+/***/ "./node_modules/prop-types/lib/ReactPropTypesSecret.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/prop-types/lib/ReactPropTypesSecret.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
+
+/***/ "./node_modules/scheduler/cjs/scheduler-tracing.development.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/scheduler/cjs/scheduler-tracing.development.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/** @license React v0.19.0
+ * scheduler-tracing.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+
+
+if (true) {
+  (function() {
+'use strict';
+
+var DEFAULT_THREAD_ID = 0; // Counters used to generate unique IDs.
+
+var interactionIDCounter = 0;
+var threadIDCounter = 0; // Set of currently traced interactions.
+// Interactions "stack"–
+// Meaning that newly traced interactions are appended to the previously active set.
+// When an interaction goes out of scope, the previous set (if any) is restored.
+
+exports.__interactionsRef = null; // Listener(s) to notify when interactions begin and end.
+
+exports.__subscriberRef = null;
+
+{
+  exports.__interactionsRef = {
+    current: new Set()
+  };
+  exports.__subscriberRef = {
+    current: null
+  };
+}
+function unstable_clear(callback) {
+
+  var prevInteractions = exports.__interactionsRef.current;
+  exports.__interactionsRef.current = new Set();
+
+  try {
+    return callback();
+  } finally {
+    exports.__interactionsRef.current = prevInteractions;
+  }
+}
+function unstable_getCurrent() {
+  {
+    return exports.__interactionsRef.current;
+  }
+}
+function unstable_getThreadID() {
+  return ++threadIDCounter;
+}
+function unstable_trace(name, timestamp, callback) {
+  var threadID = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : DEFAULT_THREAD_ID;
+
+  var interaction = {
+    __count: 1,
+    id: interactionIDCounter++,
+    name: name,
+    timestamp: timestamp
+  };
+  var prevInteractions = exports.__interactionsRef.current; // Traced interactions should stack/accumulate.
+  // To do that, clone the current interactions.
+  // The previous set will be restored upon completion.
+
+  var interactions = new Set(prevInteractions);
+  interactions.add(interaction);
+  exports.__interactionsRef.current = interactions;
+  var subscriber = exports.__subscriberRef.current;
+  var returnValue;
+
+  try {
+    if (subscriber !== null) {
+      subscriber.onInteractionTraced(interaction);
+    }
+  } finally {
+    try {
+      if (subscriber !== null) {
+        subscriber.onWorkStarted(interactions, threadID);
+      }
+    } finally {
+      try {
+        returnValue = callback();
+      } finally {
+        exports.__interactionsRef.current = prevInteractions;
+
+        try {
+          if (subscriber !== null) {
+            subscriber.onWorkStopped(interactions, threadID);
+          }
+        } finally {
+          interaction.__count--; // If no async work was scheduled for this interaction,
+          // Notify subscribers that it's completed.
+
+          if (subscriber !== null && interaction.__count === 0) {
+            subscriber.onInteractionScheduledWorkCompleted(interaction);
+          }
+        }
+      }
+    }
+  }
+
+  return returnValue;
+}
+function unstable_wrap(callback) {
+  var threadID = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DEFAULT_THREAD_ID;
+
+  var wrappedInteractions = exports.__interactionsRef.current;
+  var subscriber = exports.__subscriberRef.current;
+
+  if (subscriber !== null) {
+    subscriber.onWorkScheduled(wrappedInteractions, threadID);
+  } // Update the pending async work count for the current interactions.
+  // Update after calling subscribers in case of error.
+
+
+  wrappedInteractions.forEach(function (interaction) {
+    interaction.__count++;
+  });
+  var hasRun = false;
+
+  function wrapped() {
+    var prevInteractions = exports.__interactionsRef.current;
+    exports.__interactionsRef.current = wrappedInteractions;
+    subscriber = exports.__subscriberRef.current;
+
+    try {
+      var returnValue;
+
+      try {
+        if (subscriber !== null) {
+          subscriber.onWorkStarted(wrappedInteractions, threadID);
+        }
+      } finally {
+        try {
+          returnValue = callback.apply(undefined, arguments);
+        } finally {
+          exports.__interactionsRef.current = prevInteractions;
+
+          if (subscriber !== null) {
+            subscriber.onWorkStopped(wrappedInteractions, threadID);
+          }
+        }
+      }
+
+      return returnValue;
+    } finally {
+      if (!hasRun) {
+        // We only expect a wrapped function to be executed once,
+        // But in the event that it's executed more than once–
+        // Only decrement the outstanding interaction counts once.
+        hasRun = true; // Update pending async counts for all wrapped interactions.
+        // If this was the last scheduled async work for any of them,
+        // Mark them as completed.
+
+        wrappedInteractions.forEach(function (interaction) {
+          interaction.__count--;
+
+          if (subscriber !== null && interaction.__count === 0) {
+            subscriber.onInteractionScheduledWorkCompleted(interaction);
+          }
+        });
+      }
+    }
+  }
+
+  wrapped.cancel = function cancel() {
+    subscriber = exports.__subscriberRef.current;
+
+    try {
+      if (subscriber !== null) {
+        subscriber.onWorkCanceled(wrappedInteractions, threadID);
+      }
+    } finally {
+      // Update pending async counts for all wrapped interactions.
+      // If this was the last scheduled async work for any of them,
+      // Mark them as completed.
+      wrappedInteractions.forEach(function (interaction) {
+        interaction.__count--;
+
+        if (subscriber && interaction.__count === 0) {
+          subscriber.onInteractionScheduledWorkCompleted(interaction);
+        }
+      });
+    }
+  };
+
+  return wrapped;
+}
+
+var subscribers = null;
+
+{
+  subscribers = new Set();
+}
+
+function unstable_subscribe(subscriber) {
+  {
+    subscribers.add(subscriber);
+
+    if (subscribers.size === 1) {
+      exports.__subscriberRef.current = {
+        onInteractionScheduledWorkCompleted: onInteractionScheduledWorkCompleted,
+        onInteractionTraced: onInteractionTraced,
+        onWorkCanceled: onWorkCanceled,
+        onWorkScheduled: onWorkScheduled,
+        onWorkStarted: onWorkStarted,
+        onWorkStopped: onWorkStopped
+      };
+    }
+  }
+}
+function unstable_unsubscribe(subscriber) {
+  {
+    subscribers.delete(subscriber);
+
+    if (subscribers.size === 0) {
+      exports.__subscriberRef.current = null;
+    }
+  }
+}
+
+function onInteractionTraced(interaction) {
+  var didCatchError = false;
+  var caughtError = null;
+  subscribers.forEach(function (subscriber) {
+    try {
+      subscriber.onInteractionTraced(interaction);
+    } catch (error) {
+      if (!didCatchError) {
+        didCatchError = true;
+        caughtError = error;
+      }
+    }
+  });
+
+  if (didCatchError) {
+    throw caughtError;
+  }
+}
+
+function onInteractionScheduledWorkCompleted(interaction) {
+  var didCatchError = false;
+  var caughtError = null;
+  subscribers.forEach(function (subscriber) {
+    try {
+      subscriber.onInteractionScheduledWorkCompleted(interaction);
+    } catch (error) {
+      if (!didCatchError) {
+        didCatchError = true;
+        caughtError = error;
+      }
+    }
+  });
+
+  if (didCatchError) {
+    throw caughtError;
+  }
+}
+
+function onWorkScheduled(interactions, threadID) {
+  var didCatchError = false;
+  var caughtError = null;
+  subscribers.forEach(function (subscriber) {
+    try {
+      subscriber.onWorkScheduled(interactions, threadID);
+    } catch (error) {
+      if (!didCatchError) {
+        didCatchError = true;
+        caughtError = error;
+      }
+    }
+  });
+
+  if (didCatchError) {
+    throw caughtError;
+  }
+}
+
+function onWorkStarted(interactions, threadID) {
+  var didCatchError = false;
+  var caughtError = null;
+  subscribers.forEach(function (subscriber) {
+    try {
+      subscriber.onWorkStarted(interactions, threadID);
+    } catch (error) {
+      if (!didCatchError) {
+        didCatchError = true;
+        caughtError = error;
+      }
+    }
+  });
+
+  if (didCatchError) {
+    throw caughtError;
+  }
+}
+
+function onWorkStopped(interactions, threadID) {
+  var didCatchError = false;
+  var caughtError = null;
+  subscribers.forEach(function (subscriber) {
+    try {
+      subscriber.onWorkStopped(interactions, threadID);
+    } catch (error) {
+      if (!didCatchError) {
+        didCatchError = true;
+        caughtError = error;
+      }
+    }
+  });
+
+  if (didCatchError) {
+    throw caughtError;
+  }
+}
+
+function onWorkCanceled(interactions, threadID) {
+  var didCatchError = false;
+  var caughtError = null;
+  subscribers.forEach(function (subscriber) {
+    try {
+      subscriber.onWorkCanceled(interactions, threadID);
+    } catch (error) {
+      if (!didCatchError) {
+        didCatchError = true;
+        caughtError = error;
+      }
+    }
+  });
+
+  if (didCatchError) {
+    throw caughtError;
+  }
+}
+
+exports.unstable_clear = unstable_clear;
+exports.unstable_getCurrent = unstable_getCurrent;
+exports.unstable_getThreadID = unstable_getThreadID;
+exports.unstable_subscribe = unstable_subscribe;
+exports.unstable_trace = unstable_trace;
+exports.unstable_unsubscribe = unstable_unsubscribe;
+exports.unstable_wrap = unstable_wrap;
+  })();
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/scheduler/cjs/scheduler.development.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/scheduler/cjs/scheduler.development.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/** @license React v0.19.0
+ * scheduler.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+
+
+if (true) {
+  (function() {
+'use strict';
+
+var enableSchedulerDebugging = false;
+var enableProfiling = true;
+
+var requestHostCallback;
+var requestHostTimeout;
+var cancelHostTimeout;
+var shouldYieldToHost;
+var requestPaint;
+
+if ( // If Scheduler runs in a non-DOM environment, it falls back to a naive
+// implementation using setTimeout.
+typeof window === 'undefined' || // Check if MessageChannel is supported, too.
+typeof MessageChannel !== 'function') {
+  // If this accidentally gets imported in a non-browser environment, e.g. JavaScriptCore,
+  // fallback to a naive implementation.
+  var _callback = null;
+  var _timeoutID = null;
+
+  var _flushCallback = function () {
+    if (_callback !== null) {
+      try {
+        var currentTime = exports.unstable_now();
+        var hasRemainingTime = true;
+
+        _callback(hasRemainingTime, currentTime);
+
+        _callback = null;
+      } catch (e) {
+        setTimeout(_flushCallback, 0);
+        throw e;
+      }
+    }
+  };
+
+  var initialTime = Date.now();
+
+  exports.unstable_now = function () {
+    return Date.now() - initialTime;
+  };
+
+  requestHostCallback = function (cb) {
+    if (_callback !== null) {
+      // Protect against re-entrancy.
+      setTimeout(requestHostCallback, 0, cb);
+    } else {
+      _callback = cb;
+      setTimeout(_flushCallback, 0);
+    }
+  };
+
+  requestHostTimeout = function (cb, ms) {
+    _timeoutID = setTimeout(cb, ms);
+  };
+
+  cancelHostTimeout = function () {
+    clearTimeout(_timeoutID);
+  };
+
+  shouldYieldToHost = function () {
+    return false;
+  };
+
+  requestPaint = exports.unstable_forceFrameRate = function () {};
+} else {
+  // Capture local references to native APIs, in case a polyfill overrides them.
+  var performance = window.performance;
+  var _Date = window.Date;
+  var _setTimeout = window.setTimeout;
+  var _clearTimeout = window.clearTimeout;
+
+  if (typeof console !== 'undefined') {
+    // TODO: Scheduler no longer requires these methods to be polyfilled. But
+    // maybe we want to continue warning if they don't exist, to preserve the
+    // option to rely on it in the future?
+    var requestAnimationFrame = window.requestAnimationFrame;
+    var cancelAnimationFrame = window.cancelAnimationFrame; // TODO: Remove fb.me link
+
+    if (typeof requestAnimationFrame !== 'function') {
+      // Using console['error'] to evade Babel and ESLint
+      console['error']("This browser doesn't support requestAnimationFrame. " + 'Make sure that you load a ' + 'polyfill in older browsers. https://fb.me/react-polyfills');
+    }
+
+    if (typeof cancelAnimationFrame !== 'function') {
+      // Using console['error'] to evade Babel and ESLint
+      console['error']("This browser doesn't support cancelAnimationFrame. " + 'Make sure that you load a ' + 'polyfill in older browsers. https://fb.me/react-polyfills');
+    }
+  }
+
+  if (typeof performance === 'object' && typeof performance.now === 'function') {
+    exports.unstable_now = function () {
+      return performance.now();
+    };
+  } else {
+    var _initialTime = _Date.now();
+
+    exports.unstable_now = function () {
+      return _Date.now() - _initialTime;
+    };
+  }
+
+  var isMessageLoopRunning = false;
+  var scheduledHostCallback = null;
+  var taskTimeoutID = -1; // Scheduler periodically yields in case there is other work on the main
+  // thread, like user events. By default, it yields multiple times per frame.
+  // It does not attempt to align with frame boundaries, since most tasks don't
+  // need to be frame aligned; for those that do, use requestAnimationFrame.
+
+  var yieldInterval = 5;
+  var deadline = 0; // TODO: Make this configurable
+
+  {
+    // `isInputPending` is not available. Since we have no way of knowing if
+    // there's pending input, always yield at the end of the frame.
+    shouldYieldToHost = function () {
+      return exports.unstable_now() >= deadline;
+    }; // Since we yield every frame regardless, `requestPaint` has no effect.
+
+
+    requestPaint = function () {};
+  }
+
+  exports.unstable_forceFrameRate = function (fps) {
+    if (fps < 0 || fps > 125) {
+      // Using console['error'] to evade Babel and ESLint
+      console['error']('forceFrameRate takes a positive int between 0 and 125, ' + 'forcing framerates higher than 125 fps is not unsupported');
+      return;
+    }
+
+    if (fps > 0) {
+      yieldInterval = Math.floor(1000 / fps);
+    } else {
+      // reset the framerate
+      yieldInterval = 5;
+    }
+  };
+
+  var performWorkUntilDeadline = function () {
+    if (scheduledHostCallback !== null) {
+      var currentTime = exports.unstable_now(); // Yield after `yieldInterval` ms, regardless of where we are in the vsync
+      // cycle. This means there's always time remaining at the beginning of
+      // the message event.
+
+      deadline = currentTime + yieldInterval;
+      var hasTimeRemaining = true;
+
+      try {
+        var hasMoreWork = scheduledHostCallback(hasTimeRemaining, currentTime);
+
+        if (!hasMoreWork) {
+          isMessageLoopRunning = false;
+          scheduledHostCallback = null;
+        } else {
+          // If there's more work, schedule the next message event at the end
+          // of the preceding one.
+          port.postMessage(null);
+        }
+      } catch (error) {
+        // If a scheduler task throws, exit the current browser task so the
+        // error can be observed.
+        port.postMessage(null);
+        throw error;
+      }
+    } else {
+      isMessageLoopRunning = false;
+    } // Yielding to the browser will give it a chance to paint, so we can
+  };
+
+  var channel = new MessageChannel();
+  var port = channel.port2;
+  channel.port1.onmessage = performWorkUntilDeadline;
+
+  requestHostCallback = function (callback) {
+    scheduledHostCallback = callback;
+
+    if (!isMessageLoopRunning) {
+      isMessageLoopRunning = true;
+      port.postMessage(null);
+    }
+  };
+
+  requestHostTimeout = function (callback, ms) {
+    taskTimeoutID = _setTimeout(function () {
+      callback(exports.unstable_now());
+    }, ms);
+  };
+
+  cancelHostTimeout = function () {
+    _clearTimeout(taskTimeoutID);
+
+    taskTimeoutID = -1;
+  };
+}
+
+function push(heap, node) {
+  var index = heap.length;
+  heap.push(node);
+  siftUp(heap, node, index);
+}
+function peek(heap) {
+  var first = heap[0];
+  return first === undefined ? null : first;
+}
+function pop(heap) {
+  var first = heap[0];
+
+  if (first !== undefined) {
+    var last = heap.pop();
+
+    if (last !== first) {
+      heap[0] = last;
+      siftDown(heap, last, 0);
+    }
+
+    return first;
+  } else {
+    return null;
+  }
+}
+
+function siftUp(heap, node, i) {
+  var index = i;
+
+  while (true) {
+    var parentIndex = index - 1 >>> 1;
+    var parent = heap[parentIndex];
+
+    if (parent !== undefined && compare(parent, node) > 0) {
+      // The parent is larger. Swap positions.
+      heap[parentIndex] = node;
+      heap[index] = parent;
+      index = parentIndex;
+    } else {
+      // The parent is smaller. Exit.
+      return;
+    }
+  }
+}
+
+function siftDown(heap, node, i) {
+  var index = i;
+  var length = heap.length;
+
+  while (index < length) {
+    var leftIndex = (index + 1) * 2 - 1;
+    var left = heap[leftIndex];
+    var rightIndex = leftIndex + 1;
+    var right = heap[rightIndex]; // If the left or right node is smaller, swap with the smaller of those.
+
+    if (left !== undefined && compare(left, node) < 0) {
+      if (right !== undefined && compare(right, left) < 0) {
+        heap[index] = right;
+        heap[rightIndex] = node;
+        index = rightIndex;
+      } else {
+        heap[index] = left;
+        heap[leftIndex] = node;
+        index = leftIndex;
+      }
+    } else if (right !== undefined && compare(right, node) < 0) {
+      heap[index] = right;
+      heap[rightIndex] = node;
+      index = rightIndex;
+    } else {
+      // Neither child is smaller. Exit.
+      return;
+    }
+  }
+}
+
+function compare(a, b) {
+  // Compare sort index first, then task id.
+  var diff = a.sortIndex - b.sortIndex;
+  return diff !== 0 ? diff : a.id - b.id;
+}
+
+// TODO: Use symbols?
+var NoPriority = 0;
+var ImmediatePriority = 1;
+var UserBlockingPriority = 2;
+var NormalPriority = 3;
+var LowPriority = 4;
+var IdlePriority = 5;
+
+var runIdCounter = 0;
+var mainThreadIdCounter = 0;
+var profilingStateSize = 4;
+var sharedProfilingBuffer =  // $FlowFixMe Flow doesn't know about SharedArrayBuffer
+typeof SharedArrayBuffer === 'function' ? new SharedArrayBuffer(profilingStateSize * Int32Array.BYTES_PER_ELEMENT) : // $FlowFixMe Flow doesn't know about ArrayBuffer
+typeof ArrayBuffer === 'function' ? new ArrayBuffer(profilingStateSize * Int32Array.BYTES_PER_ELEMENT) : null // Don't crash the init path on IE9
+;
+var profilingState =  sharedProfilingBuffer !== null ? new Int32Array(sharedProfilingBuffer) : []; // We can't read this but it helps save bytes for null checks
+
+var PRIORITY = 0;
+var CURRENT_TASK_ID = 1;
+var CURRENT_RUN_ID = 2;
+var QUEUE_SIZE = 3;
+
+{
+  profilingState[PRIORITY] = NoPriority; // This is maintained with a counter, because the size of the priority queue
+  // array might include canceled tasks.
+
+  profilingState[QUEUE_SIZE] = 0;
+  profilingState[CURRENT_TASK_ID] = 0;
+} // Bytes per element is 4
+
+
+var INITIAL_EVENT_LOG_SIZE = 131072;
+var MAX_EVENT_LOG_SIZE = 524288; // Equivalent to 2 megabytes
+
+var eventLogSize = 0;
+var eventLogBuffer = null;
+var eventLog = null;
+var eventLogIndex = 0;
+var TaskStartEvent = 1;
+var TaskCompleteEvent = 2;
+var TaskErrorEvent = 3;
+var TaskCancelEvent = 4;
+var TaskRunEvent = 5;
+var TaskYieldEvent = 6;
+var SchedulerSuspendEvent = 7;
+var SchedulerResumeEvent = 8;
+
+function logEvent(entries) {
+  if (eventLog !== null) {
+    var offset = eventLogIndex;
+    eventLogIndex += entries.length;
+
+    if (eventLogIndex + 1 > eventLogSize) {
+      eventLogSize *= 2;
+
+      if (eventLogSize > MAX_EVENT_LOG_SIZE) {
+        // Using console['error'] to evade Babel and ESLint
+        console['error']("Scheduler Profiling: Event log exceeded maximum size. Don't " + 'forget to call `stopLoggingProfilingEvents()`.');
+        stopLoggingProfilingEvents();
+        return;
+      }
+
+      var newEventLog = new Int32Array(eventLogSize * 4);
+      newEventLog.set(eventLog);
+      eventLogBuffer = newEventLog.buffer;
+      eventLog = newEventLog;
+    }
+
+    eventLog.set(entries, offset);
+  }
+}
+
+function startLoggingProfilingEvents() {
+  eventLogSize = INITIAL_EVENT_LOG_SIZE;
+  eventLogBuffer = new ArrayBuffer(eventLogSize * 4);
+  eventLog = new Int32Array(eventLogBuffer);
+  eventLogIndex = 0;
+}
+function stopLoggingProfilingEvents() {
+  var buffer = eventLogBuffer;
+  eventLogSize = 0;
+  eventLogBuffer = null;
+  eventLog = null;
+  eventLogIndex = 0;
+  return buffer;
+}
+function markTaskStart(task, ms) {
+  {
+    profilingState[QUEUE_SIZE]++;
+
+    if (eventLog !== null) {
+      // performance.now returns a float, representing milliseconds. When the
+      // event is logged, it's coerced to an int. Convert to microseconds to
+      // maintain extra degrees of precision.
+      logEvent([TaskStartEvent, ms * 1000, task.id, task.priorityLevel]);
+    }
+  }
+}
+function markTaskCompleted(task, ms) {
+  {
+    profilingState[PRIORITY] = NoPriority;
+    profilingState[CURRENT_TASK_ID] = 0;
+    profilingState[QUEUE_SIZE]--;
+
+    if (eventLog !== null) {
+      logEvent([TaskCompleteEvent, ms * 1000, task.id]);
+    }
+  }
+}
+function markTaskCanceled(task, ms) {
+  {
+    profilingState[QUEUE_SIZE]--;
+
+    if (eventLog !== null) {
+      logEvent([TaskCancelEvent, ms * 1000, task.id]);
+    }
+  }
+}
+function markTaskErrored(task, ms) {
+  {
+    profilingState[PRIORITY] = NoPriority;
+    profilingState[CURRENT_TASK_ID] = 0;
+    profilingState[QUEUE_SIZE]--;
+
+    if (eventLog !== null) {
+      logEvent([TaskErrorEvent, ms * 1000, task.id]);
+    }
+  }
+}
+function markTaskRun(task, ms) {
+  {
+    runIdCounter++;
+    profilingState[PRIORITY] = task.priorityLevel;
+    profilingState[CURRENT_TASK_ID] = task.id;
+    profilingState[CURRENT_RUN_ID] = runIdCounter;
+
+    if (eventLog !== null) {
+      logEvent([TaskRunEvent, ms * 1000, task.id, runIdCounter]);
+    }
+  }
+}
+function markTaskYield(task, ms) {
+  {
+    profilingState[PRIORITY] = NoPriority;
+    profilingState[CURRENT_TASK_ID] = 0;
+    profilingState[CURRENT_RUN_ID] = 0;
+
+    if (eventLog !== null) {
+      logEvent([TaskYieldEvent, ms * 1000, task.id, runIdCounter]);
+    }
+  }
+}
+function markSchedulerSuspended(ms) {
+  {
+    mainThreadIdCounter++;
+
+    if (eventLog !== null) {
+      logEvent([SchedulerSuspendEvent, ms * 1000, mainThreadIdCounter]);
+    }
+  }
+}
+function markSchedulerUnsuspended(ms) {
+  {
+    if (eventLog !== null) {
+      logEvent([SchedulerResumeEvent, ms * 1000, mainThreadIdCounter]);
+    }
+  }
+}
+
+/* eslint-disable no-var */
+// Math.pow(2, 30) - 1
+// 0b111111111111111111111111111111
+
+var maxSigned31BitInt = 1073741823; // Times out immediately
+
+var IMMEDIATE_PRIORITY_TIMEOUT = -1; // Eventually times out
+
+var USER_BLOCKING_PRIORITY = 250;
+var NORMAL_PRIORITY_TIMEOUT = 5000;
+var LOW_PRIORITY_TIMEOUT = 10000; // Never times out
+
+var IDLE_PRIORITY = maxSigned31BitInt; // Tasks are stored on a min heap
+
+var taskQueue = [];
+var timerQueue = []; // Incrementing id counter. Used to maintain insertion order.
+
+var taskIdCounter = 1; // Pausing the scheduler is useful for debugging.
+var currentTask = null;
+var currentPriorityLevel = NormalPriority; // This is set while performing work, to prevent re-entrancy.
+
+var isPerformingWork = false;
+var isHostCallbackScheduled = false;
+var isHostTimeoutScheduled = false;
+
+function advanceTimers(currentTime) {
+  // Check for tasks that are no longer delayed and add them to the queue.
+  var timer = peek(timerQueue);
+
+  while (timer !== null) {
+    if (timer.callback === null) {
+      // Timer was cancelled.
+      pop(timerQueue);
+    } else if (timer.startTime <= currentTime) {
+      // Timer fired. Transfer to the task queue.
+      pop(timerQueue);
+      timer.sortIndex = timer.expirationTime;
+      push(taskQueue, timer);
+
+      {
+        markTaskStart(timer, currentTime);
+        timer.isQueued = true;
+      }
+    } else {
+      // Remaining timers are pending.
+      return;
+    }
+
+    timer = peek(timerQueue);
+  }
+}
+
+function handleTimeout(currentTime) {
+  isHostTimeoutScheduled = false;
+  advanceTimers(currentTime);
+
+  if (!isHostCallbackScheduled) {
+    if (peek(taskQueue) !== null) {
+      isHostCallbackScheduled = true;
+      requestHostCallback(flushWork);
+    } else {
+      var firstTimer = peek(timerQueue);
+
+      if (firstTimer !== null) {
+        requestHostTimeout(handleTimeout, firstTimer.startTime - currentTime);
+      }
+    }
+  }
+}
+
+function flushWork(hasTimeRemaining, initialTime) {
+  {
+    markSchedulerUnsuspended(initialTime);
+  } // We'll need a host callback the next time work is scheduled.
+
+
+  isHostCallbackScheduled = false;
+
+  if (isHostTimeoutScheduled) {
+    // We scheduled a timeout but it's no longer needed. Cancel it.
+    isHostTimeoutScheduled = false;
+    cancelHostTimeout();
+  }
+
+  isPerformingWork = true;
+  var previousPriorityLevel = currentPriorityLevel;
+
+  try {
+    if (enableProfiling) {
+      try {
+        return workLoop(hasTimeRemaining, initialTime);
+      } catch (error) {
+        if (currentTask !== null) {
+          var currentTime = exports.unstable_now();
+          markTaskErrored(currentTask, currentTime);
+          currentTask.isQueued = false;
+        }
+
+        throw error;
+      }
+    } else {
+      // No catch in prod codepath.
+      return workLoop(hasTimeRemaining, initialTime);
+    }
+  } finally {
+    currentTask = null;
+    currentPriorityLevel = previousPriorityLevel;
+    isPerformingWork = false;
+
+    {
+      var _currentTime = exports.unstable_now();
+
+      markSchedulerSuspended(_currentTime);
+    }
+  }
+}
+
+function workLoop(hasTimeRemaining, initialTime) {
+  var currentTime = initialTime;
+  advanceTimers(currentTime);
+  currentTask = peek(taskQueue);
+
+  while (currentTask !== null && !(enableSchedulerDebugging )) {
+    if (currentTask.expirationTime > currentTime && (!hasTimeRemaining || shouldYieldToHost())) {
+      // This currentTask hasn't expired, and we've reached the deadline.
+      break;
+    }
+
+    var callback = currentTask.callback;
+
+    if (callback !== null) {
+      currentTask.callback = null;
+      currentPriorityLevel = currentTask.priorityLevel;
+      var didUserCallbackTimeout = currentTask.expirationTime <= currentTime;
+      markTaskRun(currentTask, currentTime);
+      var continuationCallback = callback(didUserCallbackTimeout);
+      currentTime = exports.unstable_now();
+
+      if (typeof continuationCallback === 'function') {
+        currentTask.callback = continuationCallback;
+        markTaskYield(currentTask, currentTime);
+      } else {
+        {
+          markTaskCompleted(currentTask, currentTime);
+          currentTask.isQueued = false;
+        }
+
+        if (currentTask === peek(taskQueue)) {
+          pop(taskQueue);
+        }
+      }
+
+      advanceTimers(currentTime);
+    } else {
+      pop(taskQueue);
+    }
+
+    currentTask = peek(taskQueue);
+  } // Return whether there's additional work
+
+
+  if (currentTask !== null) {
+    return true;
+  } else {
+    var firstTimer = peek(timerQueue);
+
+    if (firstTimer !== null) {
+      requestHostTimeout(handleTimeout, firstTimer.startTime - currentTime);
+    }
+
+    return false;
+  }
+}
+
+function unstable_runWithPriority(priorityLevel, eventHandler) {
+  switch (priorityLevel) {
+    case ImmediatePriority:
+    case UserBlockingPriority:
+    case NormalPriority:
+    case LowPriority:
+    case IdlePriority:
+      break;
+
+    default:
+      priorityLevel = NormalPriority;
+  }
+
+  var previousPriorityLevel = currentPriorityLevel;
+  currentPriorityLevel = priorityLevel;
+
+  try {
+    return eventHandler();
+  } finally {
+    currentPriorityLevel = previousPriorityLevel;
+  }
+}
+
+function unstable_next(eventHandler) {
+  var priorityLevel;
+
+  switch (currentPriorityLevel) {
+    case ImmediatePriority:
+    case UserBlockingPriority:
+    case NormalPriority:
+      // Shift down to normal priority
+      priorityLevel = NormalPriority;
+      break;
+
+    default:
+      // Anything lower than normal priority should remain at the current level.
+      priorityLevel = currentPriorityLevel;
+      break;
+  }
+
+  var previousPriorityLevel = currentPriorityLevel;
+  currentPriorityLevel = priorityLevel;
+
+  try {
+    return eventHandler();
+  } finally {
+    currentPriorityLevel = previousPriorityLevel;
+  }
+}
+
+function unstable_wrapCallback(callback) {
+  var parentPriorityLevel = currentPriorityLevel;
+  return function () {
+    // This is a fork of runWithPriority, inlined for performance.
+    var previousPriorityLevel = currentPriorityLevel;
+    currentPriorityLevel = parentPriorityLevel;
+
+    try {
+      return callback.apply(this, arguments);
+    } finally {
+      currentPriorityLevel = previousPriorityLevel;
+    }
+  };
+}
+
+function timeoutForPriorityLevel(priorityLevel) {
+  switch (priorityLevel) {
+    case ImmediatePriority:
+      return IMMEDIATE_PRIORITY_TIMEOUT;
+
+    case UserBlockingPriority:
+      return USER_BLOCKING_PRIORITY;
+
+    case IdlePriority:
+      return IDLE_PRIORITY;
+
+    case LowPriority:
+      return LOW_PRIORITY_TIMEOUT;
+
+    case NormalPriority:
+    default:
+      return NORMAL_PRIORITY_TIMEOUT;
+  }
+}
+
+function unstable_scheduleCallback(priorityLevel, callback, options) {
+  var currentTime = exports.unstable_now();
+  var startTime;
+  var timeout;
+
+  if (typeof options === 'object' && options !== null) {
+    var delay = options.delay;
+
+    if (typeof delay === 'number' && delay > 0) {
+      startTime = currentTime + delay;
+    } else {
+      startTime = currentTime;
+    }
+
+    timeout = typeof options.timeout === 'number' ? options.timeout : timeoutForPriorityLevel(priorityLevel);
+  } else {
+    timeout = timeoutForPriorityLevel(priorityLevel);
+    startTime = currentTime;
+  }
+
+  var expirationTime = startTime + timeout;
+  var newTask = {
+    id: taskIdCounter++,
+    callback: callback,
+    priorityLevel: priorityLevel,
+    startTime: startTime,
+    expirationTime: expirationTime,
+    sortIndex: -1
+  };
+
+  {
+    newTask.isQueued = false;
+  }
+
+  if (startTime > currentTime) {
+    // This is a delayed task.
+    newTask.sortIndex = startTime;
+    push(timerQueue, newTask);
+
+    if (peek(taskQueue) === null && newTask === peek(timerQueue)) {
+      // All tasks are delayed, and this is the task with the earliest delay.
+      if (isHostTimeoutScheduled) {
+        // Cancel an existing timeout.
+        cancelHostTimeout();
+      } else {
+        isHostTimeoutScheduled = true;
+      } // Schedule a timeout.
+
+
+      requestHostTimeout(handleTimeout, startTime - currentTime);
+    }
+  } else {
+    newTask.sortIndex = expirationTime;
+    push(taskQueue, newTask);
+
+    {
+      markTaskStart(newTask, currentTime);
+      newTask.isQueued = true;
+    } // Schedule a host callback, if needed. If we're already performing work,
+    // wait until the next time we yield.
+
+
+    if (!isHostCallbackScheduled && !isPerformingWork) {
+      isHostCallbackScheduled = true;
+      requestHostCallback(flushWork);
+    }
+  }
+
+  return newTask;
+}
+
+function unstable_pauseExecution() {
+}
+
+function unstable_continueExecution() {
+
+  if (!isHostCallbackScheduled && !isPerformingWork) {
+    isHostCallbackScheduled = true;
+    requestHostCallback(flushWork);
+  }
+}
+
+function unstable_getFirstCallbackNode() {
+  return peek(taskQueue);
+}
+
+function unstable_cancelCallback(task) {
+  {
+    if (task.isQueued) {
+      var currentTime = exports.unstable_now();
+      markTaskCanceled(task, currentTime);
+      task.isQueued = false;
+    }
+  } // Null out the callback to indicate the task has been canceled. (Can't
+  // remove from the queue because you can't remove arbitrary nodes from an
+  // array based heap, only the first one.)
+
+
+  task.callback = null;
+}
+
+function unstable_getCurrentPriorityLevel() {
+  return currentPriorityLevel;
+}
+
+function unstable_shouldYield() {
+  var currentTime = exports.unstable_now();
+  advanceTimers(currentTime);
+  var firstTask = peek(taskQueue);
+  return firstTask !== currentTask && currentTask !== null && firstTask !== null && firstTask.callback !== null && firstTask.startTime <= currentTime && firstTask.expirationTime < currentTask.expirationTime || shouldYieldToHost();
+}
+
+var unstable_requestPaint = requestPaint;
+var unstable_Profiling =  {
+  startLoggingProfilingEvents: startLoggingProfilingEvents,
+  stopLoggingProfilingEvents: stopLoggingProfilingEvents,
+  sharedProfilingBuffer: sharedProfilingBuffer
+} ;
+
+exports.unstable_IdlePriority = IdlePriority;
+exports.unstable_ImmediatePriority = ImmediatePriority;
+exports.unstable_LowPriority = LowPriority;
+exports.unstable_NormalPriority = NormalPriority;
+exports.unstable_Profiling = unstable_Profiling;
+exports.unstable_UserBlockingPriority = UserBlockingPriority;
+exports.unstable_cancelCallback = unstable_cancelCallback;
+exports.unstable_continueExecution = unstable_continueExecution;
+exports.unstable_getCurrentPriorityLevel = unstable_getCurrentPriorityLevel;
+exports.unstable_getFirstCallbackNode = unstable_getFirstCallbackNode;
+exports.unstable_next = unstable_next;
+exports.unstable_pauseExecution = unstable_pauseExecution;
+exports.unstable_requestPaint = unstable_requestPaint;
+exports.unstable_runWithPriority = unstable_runWithPriority;
+exports.unstable_scheduleCallback = unstable_scheduleCallback;
+exports.unstable_shouldYield = unstable_shouldYield;
+exports.unstable_wrapCallback = unstable_wrapCallback;
+  })();
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/scheduler/index.js":
+/*!*****************************************!*\
+  !*** ./node_modules/scheduler/index.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+if (false) {} else {
+  module.exports = __webpack_require__(/*! ./cjs/scheduler.development.js */ "./node_modules/scheduler/cjs/scheduler.development.js");
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/scheduler/tracing.js":
+/*!*******************************************!*\
+  !*** ./node_modules/scheduler/tracing.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+if (false) {} else {
+  module.exports = __webpack_require__(/*! ./cjs/scheduler-tracing.development.js */ "./node_modules/scheduler/cjs/scheduler-tracing.development.js");
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/global.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ "./src/js/layout.jsx":
+/*!***************************!*\
+  !*** ./src/js/layout.jsx ***!
+  \***************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Layout; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+function Layout(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "react-root"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
+    className: "navbar bg-dark navbar-dark fixed-top navbar-expand-md"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    className: "navbar-brand",
+    href: "#"
+  }, "Ivan M"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+    className: "navbar-nav"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "nav-item"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    className: "nav-link",
+    href: "/"
+  }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "nav-item"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    className: "nav-link",
+    href: "/orbitsim"
+  }, "Space Elevator")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+    className: "nav-item"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    className: "nav-link",
+    href: "/raytracer"
+  }, "Ray Tracer")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container-fluid",
+    style: {
+      marginTop: "80px"
+    }
+  }, props.children));
+}
+
+/***/ }),
+
+/***/ "./src/js/pages/RayTracer.jsx":
+/*!************************************!*\
+  !*** ./src/js/pages/RayTracer.jsx ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RayTracer; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _layout_jsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../layout.jsx */ "./src/js/layout.jsx");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var popper_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js");
+/* harmony import */ var bootstrap_dist_js_bootstrap_bundle_min__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.min */ "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js");
+/* harmony import */ var bootstrap_dist_js_bootstrap_bundle_min__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_js_bootstrap_bundle_min__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _raytracer_index_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../raytracer/index.js */ "./src/js/raytracer/index.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+
+var scenes = [{
+  link: "firstSphere",
+  // Keep this always first
+  name: "Single Sphere"
+}, {
+  link: "fakeTranslucent",
+  name: "Fake Translucency"
+}, {
+  link: "boxStacks",
+  name: "Stacked Boxes"
+}, {
+  link: "infinite1",
+  name: "Infinite Corridor"
+}, {
+  link: "cornellBox",
+  name: "Cornell Box"
+}, {
+  link: "transparentTest",
+  name: "Weird Transparencies"
+}];
+var ver = "1.2.0";
+
+var StartPane = /*#__PURE__*/function (_React$Component) {
+  _inherits(StartPane, _React$Component);
+
+  function StartPane() {
+    _classCallCheck(this, StartPane);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(StartPane).apply(this, arguments));
+  }
+
+  _createClass(StartPane, [{
+    key: "existingLink",
+    value: function existingLink(obj) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "#",
+        className: "list-group-item list-group-item-action",
+        key: obj.link,
+        onClick: function onClick(e) {
+          e.preventDefault();
+          fetch("/raytracer/scenes/" + obj.link + ".json").then(function (response) {
+            return response.text();
+          }).then(function (text) {
+            jquery__WEBPACK_IMPORTED_MODULE_3___default()("#inputJSON").val(text);
+            jquery__WEBPACK_IMPORTED_MODULE_3___default()("#sceneTab").click();
+          });
+        }
+      }, obj.name);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "start",
+        className: "tab-pane container-fluid active"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "New Scene or Existing"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "btn btn-primary",
+        href: "#",
+        onClick: function onClick(e) {
+          e.preventDefault();
+          jquery__WEBPACK_IMPORTED_MODULE_3___default()("#sceneTab").click();
+        }
+      }, "New Scene")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "list-group"
+      }, scenes.map(this.existingLink)))));
+    }
+  }]);
+
+  return StartPane;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var CameraPane = /*#__PURE__*/function (_React$Component2) {
+  _inherits(CameraPane, _React$Component2);
+
+  function CameraPane() {
+    _classCallCheck(this, CameraPane);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(CameraPane).apply(this, arguments));
+  }
+
+  _createClass(CameraPane, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "camera",
+        className: "tab-pane container-fluid"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        "class": "col-6"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        "class": "col-6"
+      })));
+    }
+  }]);
+
+  return CameraPane;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+var RayTracer = /*#__PURE__*/function (_React$Component3) {
+  _inherits(RayTracer, _React$Component3);
+
+  function RayTracer() {
+    _classCallCheck(this, RayTracer);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(RayTracer).apply(this, arguments));
+  }
+
+  _createClass(RayTracer, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_layout_jsx__WEBPACK_IMPORTED_MODULE_2__["default"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, " Ray Tracer - v", ver, " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, " Created by Ivan Miloslavov; based on designs by Paul Kry "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "desc"
+      }, "This program allows you to try ray-tracing in the browser! Test out existing scenes or create your own."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "desc"
+      }, "Based on a design and lectures by Paul Kry, as part of the course COMP 557 - Introduction to Computer Graphics, in McGill University."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        className: "desc"
+      }, "Future versions may change the UI to make scenes without JSON, attempt to include multithreading via workers or add new render technology or objects. For now, the JSON documentation is ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        href: "docs",
+        target: "_blank"
+      }, "here"), "."))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal fade",
+        id: "badJsonModal"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-dialog"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+        className: "modal-title"
+      }, "Bad JSON detected!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        className: "close",
+        "data-dismiss": "modal"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\xD7"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Your JSON was not correctly parsed. Make sure it's well formed!"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal fade",
+        id: "missingJsonModal"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-dialog"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", {
+        className: "modal-title"
+      }, "Not enough JSON detected!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        className: "close",
+        "data-dismiss": "modal"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "\xD7"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Your JSON might be missing mandatory keys. Make sure to follow the documentation and check the console!"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-12"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+        className: "nav nav-tabs"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "nav-item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "nav-link active",
+        "data-toggle": "tab",
+        href: "#start"
+      }, "Start")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "nav-item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "nav-link",
+        "data-toggle": "tab",
+        href: "#scene",
+        id: "sceneTab"
+      }, "JSON")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+        className: "nav-item"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+        className: "nav-link",
+        "data-toggle": "tab",
+        href: "#render"
+      }, "Render"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "tab-content text-center"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StartPane, null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "scene",
+        className: "tab-pane container-fluid"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Place JSON here"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        id: "inputJSON",
+        cols: "80",
+        rows: "20",
+        style: {
+          fontFamily: "monospace"
+        }
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "render",
+        className: "tab-pane container-fluid"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-4"
+      }, "Running time (s): ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "runtime"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-4"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        id: "startRender",
+        className: "btn btn-success mx-auto",
+        onClick: function onClick() {
+          try {
+            var json = jquery__WEBPACK_IMPORTED_MODULE_3___default()("#inputJSON").val();
+            _raytracer_index_js__WEBPACK_IMPORTED_MODULE_6__["default"].drawFrom(JSON.parse(json));
+          } catch (err) {
+            if (err.name == "SyntaxError") {
+              jquery__WEBPACK_IMPORTED_MODULE_3___default()("#badJsonModal").modal("show");
+            } else {
+              jquery__WEBPACK_IMPORTED_MODULE_3___default()("#missingJsonModal").modal("show");
+              throw err;
+            }
+          }
+        }
+      }, "Start Render")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-4"
+      }, "Remaining time (s): ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "remtime"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row my-5",
+        id: "canvasHolder"
+      }))));
+    }
+  }]);
+
+  return RayTracer;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
+
+if (document.getElementById('root')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RayTracer, null), document.getElementById('root'));
+}
+
+window.p5 = _raytracer_index_js__WEBPACK_IMPORTED_MODULE_6__["default"];
+
+/***/ }),
+
+/***/ "./src/js/raytracer/Camera.js":
+/*!************************************!*\
+  !*** ./src/js/raytracer/Camera.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Camera; });
+/* harmony import */ var _Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Vector3.js */ "./src/js/raytracer/Vector3.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Camera = /*#__PURE__*/function () {
+  function Camera(pos, lookAt, up) {
+    _classCallCheck(this, Camera);
+
+    this.pos = new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.dir = new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.lookAt = new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.set(pos, lookAt, up);
+    this.dof = {};
+    this.setDOF(this.lookAt.copy(), this.dir.copy(), 1, 1);
+  }
+
+  _createClass(Camera, [{
+    key: "set",
+    value: function set(pos, lookAt, up) {
+      var _this$lookAt, _this$pos;
+
+      (_this$lookAt = this.lookAt).set.apply(_this$lookAt, _toConsumableArray(lookAt)); // Camera location
+
+
+      (_this$pos = this.pos).set.apply(_this$pos, _toConsumableArray(pos)); // Viewing direction
+
+
+      this.dir.set(this.lookAt).sub(this.pos).normalize(); // The "right" vector - the X coordinate of the screen will be along it
+
+      this.right = new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"](up).cross(this.dir).normalize(); // The "up" vector - the Y coordinate of the screen will be along it
+
+      this.up = this.dir.cross(this.right).normalize(); // Should already be normalized, but doing for rounding errors
+    }
+  }, {
+    key: "setScreen",
+    value: function setScreen(width, height, fovy) {
+      // Screen width
+      this.width = width;
+      this.width2 = width / 2; // Screen height
+
+      this.height = height;
+      this.height2 = height / 2; // Field-of-view angle and aspect ratio considerations
+
+      this.fovy = fovy;
+      var tanned = Math.tan(fovy * Math.PI / 360); // Angle given in degrees; switch to radians and divide by 2
+      // Vector from camera position to center of screen
+
+      this.vToScreen = this.dir.copy().setMag(this.height2 / tanned).setSaving(false);
+    } // Returns the t for a ray to hit the focus plane
+
+  }, {
+    key: "dofDistToFocus",
+    value: function dofDistToFocus(ray) {
+      var v = _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"].sub(this.dof.p, ray.src);
+      return this.dof.n.dot(v) / this.dof.n.dot(ray.dir);
+    } // Transforms the ray w.r.t. the i-th DOF sample.
+
+  }, {
+    key: "modifyRayDOF",
+    value: function modifyRayDOF(dof_i, ray) {
+      var p = new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"](); // Ray parallel to focus plane or not allowed?
+
+      if (!ray.at(this.dofDistToFocus(ray), p)) return; // We will move our eye slightly
+
+      ray.src.scaleAdd(this.right, this.dof.samples[dof_i][0]).scaleAdd(this.up, this.dof.samples[dof_i][1]); // We will be looking towards point p still
+
+      ray.dir.set(p).sub(ray.src).normalize();
+    }
+  }, {
+    key: "setDOF",
+    value: function setDOF(point, normal, aperture, samples) {
+      if (point) {
+        this.dof.p = new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"](point);
+      }
+
+      if (normal) {
+        this.dof.n = new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"](normal);
+        this.dof.n.normalize();
+      }
+
+      this.dof.a = aperture;
+      this.setDOFSamples(Math.max(samples, 1));
+    }
+  }, {
+    key: "setDOFSamples",
+    value: function setDOFSamples(v) {
+      this.dof.samples = [[0, 0]];
+
+      while (--v > 0) {
+        this.dof.samples.push([(Math.random() - 0.5) * this.dof.a, (Math.random() - 0.5) * this.dof.a]);
+      }
+    }
+  }, {
+    key: "generateRay",
+    value: function generateRay(x, y, dof_i, outR) {
+      if (x < 0 || y < 0 || x > this.width || y > this.height) {
+        // Removed testing || !(outR instanceof Ray)
+        return false;
+      }
+
+      x -= this.width2;
+      y -= this.height2;
+      y = -y; // Direction composed of vector to screen + vector along screen's X and Y
+
+      var dir = this.vToScreen.copy();
+      dir.scaleAdd(this.right, x);
+      dir.scaleAdd(this.up, y); // Ray origin is camera position
+
+      outR.set(this.pos, dir);
+      outR.resetBounds();
+      this.modifyRayDOF(dof_i, outR);
+      return true;
+    }
+  }]);
+
+  return Camera;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/js/raytracer/IR.js":
+/*!********************************!*\
+  !*** ./src/js/raytracer/IR.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return IntersectionResult; });
+/* harmony import */ var _Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Vector3.js */ "./src/js/raytracer/Vector3.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var IntersectionResult = /*#__PURE__*/function () {
+  function IntersectionResult() {
+    _classCallCheck(this, IntersectionResult);
+
+    this.material = null;
+    this.p = new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"](0, 0, 0, true);
+    this.n = new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"](1, 0, 0, true);
+    this.reset();
+  }
+
+  _createClass(IntersectionResult, [{
+    key: "setIntersection",
+    value: function setIntersection(t, p, n, m) {
+      this.connects = true;
+      this.t = t;
+      this.p.setV(p);
+      this.n.setV(n).normalize();
+      this.material = m;
+    }
+  }, {
+    key: "setOther",
+    value: function setOther(other) {
+      this.setIntersection(other.t, other.p, other.n, other.material);
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      this.connects = false;
+      this.t = Infinity;
+    }
+  }]);
+
+  return IntersectionResult;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/js/raytracer/Intersectables.js":
+/*!********************************************!*\
+  !*** ./src/js/raytracer/Intersectables.js ***!
+  \********************************************/
+/*! exports provided: SceneNode, MatrixTransform, Sphere, Plane, Box */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SceneNode", function() { return SceneNode; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatrixTransform", function() { return MatrixTransform; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Sphere", function() { return Sphere; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Plane", function() { return Plane; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Box", function() { return Box; });
+/* harmony import */ var _Rendering_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Rendering.js */ "./src/js/raytracer/Rendering.js");
+/* harmony import */ var _IR_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./IR.js */ "./src/js/raytracer/IR.js");
+/* harmony import */ var _Matrix4_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Matrix4.js */ "./src/js/raytracer/Matrix4.js");
+/* harmony import */ var _Ray_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Ray.js */ "./src/js/raytracer/Ray.js");
+/* harmony import */ var _Vector3_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Vector3.js */ "./src/js/raytracer/Vector3.js");
+function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+
+
+var Intersectable = /*#__PURE__*/function () {
+  function Intersectable() {
+    var mat = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new _Rendering_js__WEBPACK_IMPORTED_MODULE_0__["Material"]();
+
+    _classCallCheck(this, Intersectable);
+
+    this.setMaterial(mat);
+  }
+
+  _createClass(Intersectable, [{
+    key: "intersects",
+    value: function intersects(ray, outIR) {
+      console.log("You did not implement the Intersects method for this object!");
+      return false;
+    }
+  }, {
+    key: "setMaterial",
+    value: function setMaterial(mat) {
+      this.material = mat;
+    }
+  }]);
+
+  return Intersectable;
+}();
+
+var SceneNode = /*#__PURE__*/function (_Intersectable) {
+  _inherits(SceneNode, _Intersectable);
+
+  function SceneNode(children) {
+    var _this;
+
+    _classCallCheck(this, SceneNode);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(SceneNode).call(this));
+    _this.children = children;
+    _this.count = children.length; // MULTITHREADING WARNING
+
+    _this.localIR = new _IR_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    return _this;
+  }
+
+  _createClass(SceneNode, [{
+    key: "setBounds",
+    value: function setBounds(obj) {
+      this.bounds = obj;
+    } // Returns closest intersection across all children
+
+  }, {
+    key: "intersects",
+    value: function intersects(ray, outIR) {
+      // Are we intersecting bounds, if any?
+      if (typeof this.bounds !== "undefined") {
+        this.localIR.reset();
+
+        if (!this.bounds.intersects(ray, this.localIR)) {
+          return false;
+        }
+      } // Actual test inside
+
+
+      var rayMax = ray.max;
+
+      for (var i = this.count - 1; i >= 0; i--) {
+        this.localIR.reset();
+
+        if (this.children[i].intersects(ray, this.localIR)) {
+          outIR.setOther(this.localIR);
+          ray.setMax(outIR.t);
+        }
+      }
+
+      ray.setMax(rayMax);
+      return outIR.connects;
+    }
+  }]);
+
+  return SceneNode;
+}(Intersectable);
+
+var MatrixTransform = /*#__PURE__*/function (_Intersectable2) {
+  _inherits(MatrixTransform, _Intersectable2);
+
+  function MatrixTransform(child, t, r, s) {
+    var _this2;
+
+    _classCallCheck(this, MatrixTransform);
+
+    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(MatrixTransform).call(this));
+    _this2.child = child;
+
+    _this2.setMatrix(t, r, s); // MULTITHREADING WARNING
+
+
+    _this2.localRay = new _Ray_js__WEBPACK_IMPORTED_MODULE_3__["default"]();
+    return _this2;
+  }
+
+  _createClass(MatrixTransform, [{
+    key: "setMatrix",
+    value: function setMatrix(t, r, s) {
+      this.m = new _Matrix4_js__WEBPACK_IMPORTED_MODULE_2__["default"](); // Order of operations : S * Rz * Ry * Rx * T * v?
+
+      this.m.scale(s).rotate(_construct(_Vector3_js__WEBPACK_IMPORTED_MODULE_4__["default"], _toConsumableArray(r))).translate(t); // Saving two other matrices too : inverse, and inv transpose
+
+      this.mInv = this.m.copy().inverse();
+      this.mIt = this.mInv.copy().transpose();
+    }
+  }, {
+    key: "intersects",
+    value: function intersects(ray, outIR) {
+      this.localRay.setOther(ray); // M transforms the object
+      // We need to transform ray with inverse to send to object
+
+      this.mInv.transP(this.localRay.src);
+      this.mInv.transV(this.localRay.dir); // If the matrix scales direction, need to modify bounds and t values!
+
+      var scale = this.localRay.dir.mag();
+
+      if (this.localRay.min != 1e-5) {
+        this.localRay.min *= scale;
+      }
+
+      this.localRay.max *= scale; // Note the division here to make next two operations multiplications
+
+      scale = 1 / scale;
+      this.localRay.dir.mult(scale);
+
+      if (!this.child.intersects(this.localRay, outIR)) {
+        return false;
+      } // Then pass the resulting point through M
+
+
+      this.m.transP(outIR.p); // Resulting normal through inverse transpose
+
+      this.mIt.transV(outIR.n); // Scale t by the proper direction value
+
+      outIR.t *= scale;
+      return true;
+    }
+  }]);
+
+  return MatrixTransform;
+}(Intersectable);
+
+var Sphere = /*#__PURE__*/function (_Intersectable3) {
+  _inherits(Sphere, _Intersectable3);
+
+  function Sphere(pos, rad) {
+    var _this3;
+
+    _classCallCheck(this, Sphere);
+
+    _this3 = _possibleConstructorReturn(this, _getPrototypeOf(Sphere).call(this));
+    _this3.c = _construct(_Vector3_js__WEBPACK_IMPORTED_MODULE_4__["default"], _toConsumableArray(pos));
+    _this3.r = rad;
+    return _this3;
+  }
+
+  _createClass(Sphere, [{
+    key: "intersects",
+    value: function intersects(ray, outIR) {
+      // Follows the equation (ray.p - c + t * ray.d)^2 = r^2, solves the quadratic for t
+      // Couple of constants
+      // const dd = ray.dir.dot(ray.dir); // ray dir is normalized, so just no need of this variable
+      var px = ray.src.x - this.c.x;
+      var py = ray.src.y - this.c.y;
+      var pz = ray.src.z - this.c.z;
+      var qC = px * px + py * py + pz * pz - this.r * this.r;
+      var dp = ray.dir.dotArr(px, py, pz); // Determinant check - if this is below 0, no intersection
+
+      var det = dp * dp - qC;
+
+      if (det < 0) {
+        return false;
+      }
+
+      var sqrtDet = Math.sqrt(det); // Check lower value against ray bounds
+
+      var t = -dp - sqrtDet;
+
+      if (ray.at(t, outIR.p)) {
+        outIR.setIntersection(t, outIR.p, _Vector3_js__WEBPACK_IMPORTED_MODULE_4__["default"].sub(outIR.p, this.c), this.material);
+        return true;
+      } // Check upper value against ray bounds
+
+
+      t += 2 * sqrtDet;
+
+      if (ray.at(t, outIR.p)) {
+        outIR.setIntersection(t, outIR.p, _Vector3_js__WEBPACK_IMPORTED_MODULE_4__["default"].sub(outIR.p, this.c), this.material);
+        return true;
+      } // Neither t matches
+
+
+      return false;
+    }
+  }]);
+
+  return Sphere;
+}(Intersectable);
+
+var Plane = /*#__PURE__*/function (_Intersectable4) {
+  _inherits(Plane, _Intersectable4);
+
+  function Plane() {
+    var _this4;
+
+    var mat2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+    _classCallCheck(this, Plane);
+
+    _this4 = _possibleConstructorReturn(this, _getPrototypeOf(Plane).call(this));
+
+    _this4.setAltMaterial(mat2);
+
+    return _this4;
+  }
+
+  _createClass(Plane, [{
+    key: "setAltMaterial",
+    value: function setAltMaterial(mat2) {
+      this.mat2 = mat2;
+    }
+  }, {
+    key: "intersects",
+    value: function intersects(ray, outIR) {
+      if (ray.dir.y * ray.src.y >= 0) {
+        // Going away from y = 0
+        return false;
+      }
+
+      var t = -ray.src.y / ray.dir.y;
+
+      if (ray.at(t, outIR.p)) {
+        var b = Math.floor(outIR.p.x) + Math.floor(outIR.p.z);
+        var m = this.mat2 == null || (b % 2 + 2) % 2 < 1 ? this.material : this.mat2;
+        var n = ray.src.y > 0 ? new _Vector3_js__WEBPACK_IMPORTED_MODULE_4__["default"](0, 1, 0) : new _Vector3_js__WEBPACK_IMPORTED_MODULE_4__["default"](0, -1, 0);
+        outIR.setIntersection(t, outIR.p, n, m);
+        return true;
+      }
+
+      return false;
+    }
+  }]);
+
+  return Plane;
+}(Intersectable);
+
+var Box = /*#__PURE__*/function (_Intersectable5) {
+  _inherits(Box, _Intersectable5);
+
+  function Box(min, max) {
+    var _this5;
+
+    _classCallCheck(this, Box);
+
+    _this5 = _possibleConstructorReturn(this, _getPrototypeOf(Box).call(this));
+    _this5.min = _construct(_Vector3_js__WEBPACK_IMPORTED_MODULE_4__["default"], _toConsumableArray(min));
+    _this5.max = _construct(_Vector3_js__WEBPACK_IMPORTED_MODULE_4__["default"], _toConsumableArray(max));
+    return _this5;
+  }
+
+  _createClass(Box, [{
+    key: "intersects",
+    value: function intersects(ray, outIR) {
+      var intervalClose = ray.min;
+      var intervalFar = ray.max;
+      var normalClose = null;
+      var normalFar = null; // For each of the 3 slabs - if putting in a loop, need to use reduce so that the interval test can follow each coord
+
+      for (var i = 0; i < 3; i++) {
+        // Comments given as if for X - equivalent for other dims
+        var d = ray.dir.at(i);
+        var s = ray.src.at(i);
+
+        if (d == 0) {
+          // in the YZ plane
+          if (s <= this.min.at(i) || s >= this.max.at(i)) {
+            // Out of X-slab
+            return false;
+          } // Else, fully in x-slab, keep interval as is
+
+        } else {
+          // Low normal
+          var n = -1; // GOnna divide by d, so do so only once
+
+          d = 1 / d;
+          var tMin = (this.min.at(i) - s) * d;
+          var tMax = (this.max.at(i) - s) * d; // Which t is smaller
+
+          var tLow = void 0,
+              tHigh = void 0;
+
+          if (tMin < tMax) {
+            tLow = tMin;
+            tHigh = tMax;
+            n = 1;
+          } else {
+            tLow = tMax;
+            tHigh = tMin;
+            n = 0;
+          } // Update interval and normals
+
+
+          if (intervalClose < tLow) {
+            intervalClose = tLow;
+            normalClose = i * 2 + n;
+          }
+
+          if (intervalFar > tHigh) {
+            intervalFar = tHigh;
+            normalFar = i * 2 + 1 - n;
+          }
+        } // Have we gone inside out
+
+
+        if (intervalClose >= intervalFar) {
+          return false;
+        }
+      } // Setup the ray
+
+
+      if (intervalClose > ray.min && ray.at(intervalClose, outIR.p)) {
+        outIR.setIntersection(intervalClose, outIR.p, Box.normals[normalClose], this.material);
+        return true;
+      }
+
+      if (intervalFar < ray.max && ray.at(intervalFar, outIR.p)) {
+        outIR.setIntersection(intervalFar, outIR.p, Box.normals[normalFar], this.material);
+        return true;
+      }
+
+      return false;
+    }
+  }]);
+
+  return Box;
+}(Intersectable);
+
+Box.normals = [new _Vector3_js__WEBPACK_IMPORTED_MODULE_4__["default"](1, 0, 0), new _Vector3_js__WEBPACK_IMPORTED_MODULE_4__["default"](-1, 0, 0), new _Vector3_js__WEBPACK_IMPORTED_MODULE_4__["default"](0, 1, 0), new _Vector3_js__WEBPACK_IMPORTED_MODULE_4__["default"](0, -1, 0), new _Vector3_js__WEBPACK_IMPORTED_MODULE_4__["default"](0, 0, 1), new _Vector3_js__WEBPACK_IMPORTED_MODULE_4__["default"](0, 0, -1)];
+
+
+/***/ }),
+
+/***/ "./src/js/raytracer/Matrix4.js":
+/*!*************************************!*\
+  !*** ./src/js/raytracer/Matrix4.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Matrix4; });
+/* harmony import */ var _Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Vector3.js */ "./src/js/raytracer/Vector3.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+ // A 4x4 matrix class for transformations in 3D space
+
+var Matrix4 = /*#__PURE__*/function () {
+  // TODO
+  function Matrix4() {
+    _classCallCheck(this, Matrix4);
+
+    this.reset();
+  }
+
+  _createClass(Matrix4, [{
+    key: "set",
+    value: function set(other) {
+      if (other instanceof Matrix4) {
+        this.m = other.m.slice(); // Clones the array 
+      } else if (other instanceof Array) {
+        this.m = other.slice();
+      } else if (other instanceof _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"]) {
+        this.reset();
+        this.translate(other);
+      }
+
+      return this;
+    }
+  }, {
+    key: "reset",
+    value: function reset() {
+      return this.set([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+    }
+  }, {
+    key: "copy",
+    value: function copy() {
+      return new Matrix4().set(this);
+    }
+  }, {
+    key: "at",
+    value: function at(row, col) {
+      return this.m[row * 4 + col];
+    }
+  }, {
+    key: "_multEntry",
+    value: function _multEntry(other, row, col) {
+      // Computes one entry for the multiplication of matrices
+      //   by sumproduct of local column and other row
+      var sum = 0;
+
+      for (var i = 0; i < 4; i++) {
+        sum += other.at(row, i) * this.at(i, col);
+      }
+
+      return sum;
+    }
+  }, {
+    key: "multBy",
+    value: function multBy(m) {
+      if (m instanceof Array) {
+        return this.multBy(new Matrix4().set(m));
+      }
+
+      var arr = [this._multEntry(m, 0, 0), this._multEntry(m, 0, 1), this._multEntry(m, 0, 2), this._multEntry(m, 0, 3), this._multEntry(m, 1, 0), this._multEntry(m, 1, 1), this._multEntry(m, 1, 2), this._multEntry(m, 1, 3), this._multEntry(m, 2, 0), this._multEntry(m, 2, 1), this._multEntry(m, 2, 2), this._multEntry(m, 2, 3), this._multEntry(m, 3, 0), this._multEntry(m, 3, 1), this._multEntry(m, 3, 2), this._multEntry(m, 3, 3)];
+      this.m = arr;
+      return this;
+    }
+  }, {
+    key: "translate",
+    value: function translate(v) {
+      if (v instanceof _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"]) {
+        this.m[3] += v.x;
+        this.m[7] += v.y;
+        this.m[11] += v.z;
+        return this;
+      } else if (v instanceof Array) {
+        this.m[3] += v[0];
+        this.m[7] += v[1];
+        this.m[11] += v[2];
+        return this;
+      }
+    }
+  }, {
+    key: "scale",
+    value: function scale(v) {
+      var x, y, z;
+
+      if (v instanceof Array) {
+        x = v[0];
+        y = v[1];
+        z = v[2];
+      } else {
+        x = y = z = v;
+      } // Actually scale
+
+
+      this.m[0] *= x;
+      this.m[1] *= x;
+      this.m[2] *= x;
+      this.m[3] *= x;
+      this.m[4] *= y;
+      this.m[5] *= y;
+      this.m[6] *= y;
+      this.m[7] *= y;
+      this.m[8] *= z;
+      this.m[9] *= z;
+      this.m[10] *= z;
+      this.m[11] *= z;
+      return this;
+    }
+  }, {
+    key: "rotateX",
+    value: function rotateX(v) {
+      var by = new Matrix4();
+      v *= Math.PI / 180;
+      var c = Math.cos(v);
+      var s = Math.sin(v);
+      by.m[5] = c;
+      by.m[6] = -s;
+      by.m[9] = s;
+      by.m[10] = c;
+      return this.multBy(by);
+    }
+  }, {
+    key: "rotateY",
+    value: function rotateY(v) {
+      var by = new Matrix4();
+      v *= Math.PI / 180;
+      var c = Math.cos(v);
+      var s = Math.sin(v);
+      by.m[0] = c;
+      by.m[2] = s;
+      by.m[8] = -s;
+      by.m[10] = c;
+      return this.multBy(by);
+    }
+  }, {
+    key: "rotateZ",
+    value: function rotateZ(v) {
+      var by = new Matrix4();
+      v *= Math.PI / 180;
+      var c = Math.cos(v);
+      var s = Math.sin(v);
+      by.m[0] = c;
+      by.m[1] = -s;
+      by.m[4] = s;
+      by.m[5] = c;
+      return this.multBy(by);
+    }
+  }, {
+    key: "rotate",
+    value: function rotate(v) {
+      return this.rotateX(v.x).rotateY(v.y).rotateZ(v.z);
+    }
+  }, {
+    key: "_swap",
+    value: function _swap(a, b) {
+      var temp = this.m[a];
+      this.m[a] = this.m[b];
+      this.m[b] = temp;
+    }
+  }, {
+    key: "transpose",
+    value: function transpose() {
+      this._swap(1, 4);
+
+      this._swap(2, 8);
+
+      this._swap(3, 12);
+
+      this._swap(6, 9);
+
+      this._swap(7, 13);
+
+      this._swap(11, 14);
+
+      return this;
+    }
+  }, {
+    key: "inverse",
+    value: function inverse() {
+      // Invert 3x3 R/S
+      var tm = this.m;
+      var arr = [tm[5] * tm[10] - tm[9] * tm[6], tm[2] * tm[9] - tm[1] * tm[10], tm[1] * tm[6] - tm[2] * tm[5], tm[6] * tm[8] - tm[4] * tm[10], tm[0] * tm[10] - tm[2] * tm[8], tm[4] * tm[2] - tm[0] * tm[6], tm[4] * tm[9] - tm[8] * tm[5], tm[8] * tm[1] - tm[0] * tm[9], tm[0] * tm[5] - tm[4] * tm[1]];
+      var det = tm[0] * arr[0] + tm[1] * arr[3] + tm[2] * arr[6];
+      var invdet = 1 / det;
+      arr = arr.map(function (x) {
+        return x * invdet;
+      }); // Result has form (Inv, -Inv*t, 0, 1), where t is the translation part of the matrix
+
+      var newT = [-(arr[0] * tm[3] + arr[1] * tm[7] + arr[2] * tm[11]), -(arr[3] * tm[3] + arr[4] * tm[7] + arr[5] * tm[11]), -(arr[6] * tm[3] + arr[7] * tm[7] + arr[8] * tm[11])];
+      this.m = [arr[0], arr[1], arr[2], newT[0], arr[3], arr[4], arr[5], newT[1], arr[6], arr[7], arr[8], newT[2], 0, 0, 0, 1];
+      return this;
+    }
+  }, {
+    key: "transP",
+    value: function transP(p) {
+      // Modifies p to be equal to this * p, assuming p is a point (i.e. gets translated)
+      var px = this.m[0] * p.x + this.m[1] * p.y + this.m[2] * p.z + this.m[3];
+      var py = this.m[4] * p.x + this.m[5] * p.y + this.m[6] * p.z + this.m[7];
+      var pz = this.m[8] * p.x + this.m[9] * p.y + this.m[10] * p.z + this.m[11];
+      p.x = px;
+      p.y = py;
+      p.z = pz;
+
+      if (p.saveMag) {
+        p._saveMags();
+      }
+
+      return p;
+    }
+  }, {
+    key: "transV",
+    value: function transV(v) {
+      // Modifies v to be equal to this * v, assuming v is a vector (i.e. does not get translated)
+      var vx = this.m[0] * v.x + this.m[1] * v.y + this.m[2] * v.z;
+      var vy = this.m[4] * v.x + this.m[5] * v.y + this.m[6] * v.z;
+      var vz = this.m[8] * v.x + this.m[9] * v.y + this.m[10] * v.z;
+      v.x = vx;
+      v.y = vy;
+      v.z = vz;
+
+      if (v.saveMag) {
+        v._saveMags();
+      }
+
+      return v;
+    }
+  }]);
+
+  return Matrix4;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/js/raytracer/Ray.js":
+/*!*********************************!*\
+  !*** ./src/js/raytracer/Ray.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Ray; });
+/* harmony import */ var _Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Vector3.js */ "./src/js/raytracer/Vector3.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Ray = /*#__PURE__*/function () {
+  function Ray(src, dir) {
+    _classCallCheck(this, Ray);
+
+    if (typeof src === "undefined") {
+      this.src = new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"]();
+      this.dir = new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    } else {
+      this.src = src.copy();
+      this.dir = dir.copy();
+    }
+
+    this.resetBounds();
+    this.influence = new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"](1, 1, 1);
+  }
+
+  _createClass(Ray, [{
+    key: "set",
+    value: function set(src, dir) {
+      this.src.setV(src);
+      this.dir.setV(dir);
+      this.dir.normalize();
+    }
+  }, {
+    key: "setOther",
+    value: function setOther(other) {
+      this.src.setV(other.src);
+      this.dir.setV(other.dir);
+      this.setBounds(other.min, other.max);
+      this.influence.setV(other.influence);
+    }
+  }, {
+    key: "addInfluence",
+    value: function addInfluence(color) {
+      this.influence.multWise(color);
+    }
+  }, {
+    key: "copy",
+    value: function copy() {
+      var outp = new Ray(this.src, this.dir);
+      outp.setBounds(this.min, this.max);
+      return outp;
+    }
+  }, {
+    key: "setMin",
+    value: function setMin(min) {
+      this.min = Math.max(0, min);
+    }
+  }, {
+    key: "setMax",
+    value: function setMax(max) {
+      this.max = Math.max(this.min, max);
+    }
+  }, {
+    key: "setBounds",
+    value: function setBounds(min, max) {
+      this.setMin(min);
+      this.setMax(max);
+    }
+  }, {
+    key: "setDepth",
+    value: function setDepth(depth) {
+      this.depth = depth;
+    }
+  }, {
+    key: "resetBounds",
+    value: function resetBounds() {
+      this.setBounds(1e-5, Infinity);
+    }
+  }, {
+    key: "at",
+    value: function at(t, outV) {
+      if (!(outV instanceof _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"]) || t < this.min || t > this.max) {
+        return false;
+      }
+
+      outV.setV(this.dir).mult(t).add(this.src);
+      return true;
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return src.toString() + " " + dir.toString();
+    }
+  }]);
+
+  return Ray;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/js/raytracer/Rendering.js":
+/*!***************************************!*\
+  !*** ./src/js/raytracer/Rendering.js ***!
+  \***************************************/
+/*! exports provided: MyColor, Material, PointLight, AreaLight */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MyColor", function() { return MyColor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Material", function() { return Material; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PointLight", function() { return PointLight; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AreaLight", function() { return AreaLight; });
+/* harmony import */ var _Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Vector3.js */ "./src/js/raytracer/Vector3.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var MyColor = /*#__PURE__*/function (_Vector) {
+  _inherits(MyColor, _Vector);
+
+  function MyColor(arr) {
+    var _this;
+
+    _classCallCheck(this, MyColor);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(MyColor).call(this));
+
+    if (typeof arr === "undefined" || arr == 0) {// Nothing; stay at 0
+    } else if (arr instanceof Array) {
+      var _this2;
+
+      (_this2 = _this).setRGB255.apply(_this2, _toConsumableArray(arr));
+    } else {
+      _this.setRGB255(arr, arr, arr);
+    }
+
+    return _this;
+  }
+
+  _createClass(MyColor, [{
+    key: "copy",
+    value: function copy() {
+      return new MyColor().setV(this);
+    }
+  }, {
+    key: "setRGB255",
+    value: function setRGB255(r, g, b) {
+      return this.setRGB(r / 255.0, g / 255.0, b / 255.0);
+    }
+  }, {
+    key: "setRGB",
+    value: function setRGB(r, g, b) {
+      return this.set(r, g, b, false);
+    }
+  }, {
+    key: "limit",
+    value: function limit() {
+      if (this.x > 1) {
+        this.x = 1;
+      }
+
+      if (this.y > 1) {
+        this.y = 1;
+      }
+
+      if (this.z > 1) {
+        this.z = 1;
+      }
+    }
+  }, {
+    key: "getFinal",
+    value: function getFinal() {
+      this.limit();
+      return [this.x * 255, this.y * 255, this.z * 255];
+    }
+  }]);
+
+  return MyColor;
+}(_Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+var Material = /*#__PURE__*/function () {
+  function Material(c) {
+    _classCallCheck(this, Material);
+
+    this.setDiffuse(c);
+    this.specularEnabled = false;
+    this.reflectEnabled = false;
+    this.transparentEnabled = false;
+  }
+
+  _createClass(Material, [{
+    key: "setDiffuse",
+    value: function setDiffuse(c) {
+      this.diffuse = new MyColor(c);
+    }
+  }, {
+    key: "setSpecular",
+    value: function setSpecular(exp) {
+      var c = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 255;
+      this.specularEnabled = true;
+      this.specular = new MyColor(c);
+      this.specExp = exp;
+    }
+  }, {
+    key: "setReflect",
+    value: function setReflect() {
+      var c = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 255;
+      this.reflectEnabled = true;
+      this.reflect = new MyColor(c);
+    }
+  }, {
+    key: "setOpacity",
+    value: function setOpacity() {
+      var c = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 255;
+      this.transparentEnabled = true;
+      this.opaqueColor = new MyColor(c);
+      this.transColor = this.opaqueColor.copy();
+      this.transColor.x = 1 - this.transColor.x;
+      this.transColor.y = 1 - this.transColor.y;
+      this.transColor.z = 1 - this.transColor.z;
+    }
+  }]);
+
+  return Material;
+}();
+
+var PointLight = /*#__PURE__*/function () {
+  function PointLight(pos, c) {
+    _classCallCheck(this, PointLight);
+
+    this.pos = new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"](pos);
+    this.c = new MyColor(c);
+    this.maxSamples = 1;
+  }
+
+  _createClass(PointLight, [{
+    key: "randomSample",
+    value: function randomSample() {
+      return this.pos;
+    }
+  }]);
+
+  return PointLight;
+}();
+
+var AreaLight = /*#__PURE__*/function () {
+  function AreaLight(tri, c, maxSamples) {
+    _classCallCheck(this, AreaLight);
+
+    this.tri = [new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"](tri[0]), new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"](tri[1]), new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"](tri[2])];
+    this.c = new MyColor(c);
+    this.maxSamples = maxSamples || 10;
+  }
+
+  _createClass(AreaLight, [{
+    key: "randomSample",
+    value: function randomSample() {
+      // Random point in triangle
+      var d1 = Math.random(),
+          d2 = Math.random();
+      var d1r = Math.sqrt(d1);
+      var p = new _Vector3_js__WEBPACK_IMPORTED_MODULE_0__["default"]();
+      p.scaleAdd(this.tri[0], 1 - d1r).scaleAdd(this.tri[1], d1r * (1 - d2)).scaleAdd(this.tri[2], d1r * d2);
+      return p;
+    }
+  }]);
+
+  return AreaLight;
+}();
+
+MyColor.BLACK = new MyColor();
+MyColor.WHITE = new MyColor(255);
+
+
+/***/ }),
+
+/***/ "./src/js/raytracer/Scene.js":
+/*!***********************************!*\
+  !*** ./src/js/raytracer/Scene.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Scene; });
+/* harmony import */ var _Rendering_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Rendering.js */ "./src/js/raytracer/Rendering.js");
+/* harmony import */ var _Ray_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Ray.js */ "./src/js/raytracer/Ray.js");
+/* harmony import */ var _IR_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./IR.js */ "./src/js/raytracer/IR.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+var Scene = /*#__PURE__*/function () {
+  function Scene() {
+    _classCallCheck(this, Scene);
+
+    this.materials = {};
+    this.lights = [];
+    this.setAmbient([0, 0, 0]);
+    this.setBG([0, 0, 0]);
+    this.setSamples(1);
+    this.reflDepth = 0; // Special stuff for interactive loading
+
+    this.lastX = 0;
+    this.lastY = 0;
+    this.numPixel = 0; // MULTITHREADING WARNING
+
+    this.shadowIR = new _IR_js__WEBPACK_IMPORTED_MODULE_2__["default"]();
+    this.pixelColor = new _Rendering_js__WEBPACK_IMPORTED_MODULE_0__["MyColor"]();
+  }
+
+  _createClass(Scene, [{
+    key: "setSamples",
+    value: function setSamples(v) {
+      this.samples = [[0.5, 0.5]];
+
+      while (--v > 0) {
+        this.samples.push([Math.random(), Math.random()]);
+      }
+    }
+  }, {
+    key: "setCamera",
+    value: function setCamera(cam) {
+      this.cam = cam;
+    }
+  }, {
+    key: "setRootNode",
+    value: function setRootNode(root) {
+      this.root = root;
+    }
+  }, {
+    key: "setBG",
+    value: function setBG(c) {
+      this.bg = new _Rendering_js__WEBPACK_IMPORTED_MODULE_0__["MyColor"](c);
+    }
+  }, {
+    key: "setAmbient",
+    value: function setAmbient(c) {
+      this.ambient = new _Rendering_js__WEBPACK_IMPORTED_MODULE_0__["MyColor"](c);
+    }
+  }, {
+    key: "addLight",
+    value: function addLight(l) {
+      this.lights.push(l);
+    }
+  }, {
+    key: "addMaterial",
+    value: function addMaterial(mat) {
+      this.materials[mat.name] = mat;
+    }
+  }, {
+    key: "lighting",
+    value: function lighting(ray, IR) {
+      var shadowRay = new _Ray_js__WEBPACK_IMPORTED_MODULE_1__["default"](); // Compute reflection ray
+
+      var reflV = ray.dir.reflect(IR.n);
+      reflV.mult(-1); // Now points away from surface
+
+      var lll = new _Rendering_js__WEBPACK_IMPORTED_MODULE_0__["MyColor"]();
+      var transColor = new _Rendering_js__WEBPACK_IMPORTED_MODULE_0__["MyColor"](); // Transparency - color controls pass-through ray, 1 - color is the rest.
+
+      if (IR.material.transparentEnabled && ray.depth > 0) {
+        // Send through-ray
+        var transRay = new _Ray_js__WEBPACK_IMPORTED_MODULE_1__["default"](IR.p, ray.dir);
+        var transIR = new _IR_js__WEBPACK_IMPORTED_MODULE_2__["default"]();
+        transRay.setDepth(ray.depth - 1);
+        transColor.add(IR.material.transColor);
+        transRay.addInfluence(IR.material.transColor);
+        var onlyTrans = transColor.x == 1 && transColor.y == 1 && transColor.z == 1;
+        transColor.multWise(this.getColor(transRay, transIR));
+
+        if (onlyTrans) {
+          return transColor.getFinal();
+        }
+      } // Reflective 
+
+
+      if (IR.material.reflectEnabled && ray.depth > 0) {
+        var reflRay = new _Ray_js__WEBPACK_IMPORTED_MODULE_1__["default"](IR.p, reflV);
+        var reflIR = new _IR_js__WEBPACK_IMPORTED_MODULE_2__["default"](); // Need a new here due to recursion
+
+        reflRay.setDepth(ray.depth - 1);
+        reflRay.addInfluence(IR.material.reflect);
+        lll.add(this.getColor(reflRay, reflIR));
+        lll.multWise(IR.material.reflect);
+      } else {
+        // Ambient light
+        lll.add(IR.material.diffuse);
+        lll.multWise(this.ambient);
+      } // For each light
+
+
+      this.lights.forEach(function (l) {
+        // for each light sample
+        var thisLight = new _Rendering_js__WEBPACK_IMPORTED_MODULE_0__["MyColor"]();
+        var tempLight = new _Rendering_js__WEBPACK_IMPORTED_MODULE_0__["MyColor"]();
+        var lightFilter = new _Rendering_js__WEBPACK_IMPORTED_MODULE_0__["MyColor"]();
+
+        for (var lSample = 0; lSample < l.maxSamples; lSample++) {
+          // Get light vector
+          var dv = l.randomSample().copy().sub(IR.p);
+          var dvm = dv.mag();
+
+          if (dvm != 1) {
+            dv.div(dvm);
+          } // Test shadow ray
+
+
+          shadowRay.set(IR.p, dv);
+          shadowRay.setBounds(1e-5, dvm);
+          this.shadowIR.reset();
+          var inShadow = false;
+          lightFilter.setV(_Rendering_js__WEBPACK_IMPORTED_MODULE_0__["MyColor"].WHITE);
+
+          while (this.root.intersects(shadowRay, this.shadowIR)) {
+            if (this.shadowIR.material.transparentEnabled) {
+              lightFilter.multWise(this.shadowIR.material.transColor);
+              shadowRay.setMin(this.shadowIR.t + 1e-5);
+              this.shadowIR.reset();
+            } else {
+              inShadow = true;
+              break;
+            }
+          }
+
+          if (inShadow) continue; // Diffuse
+
+          var angleCoef = Math.max(0, IR.n.dot(dv));
+
+          if (angleCoef <= 0) {
+            continue;
+          }
+
+          tempLight.setV(IR.material.diffuse);
+          tempLight.mult(angleCoef);
+          tempLight.multWise(lightFilter);
+          thisLight.add(tempLight); // Specular
+
+          if (IR.material.specularEnabled) {
+            angleCoef = Math.max(0, reflV.dot(dv));
+
+            if (angleCoef <= 0) {
+              continue;
+            }
+
+            tempLight.setV(IR.material.specular);
+            tempLight.mult(Math.pow(angleCoef, IR.material.specExp));
+            tempLight.multWise(lightFilter);
+            thisLight.add(tempLight);
+          }
+        }
+
+        thisLight.multWise(l.c);
+        thisLight.div(l.maxSamples);
+        lll.add(thisLight);
+      }, this); // Transparency - complete
+
+      if (IR.material.transparentEnabled && ray.depth > 0) {
+        lll.multWise(IR.material.opaqueColor);
+        lll.add(transColor);
+      }
+
+      var c = lll.getFinal();
+      return c;
+    }
+  }, {
+    key: "getColor",
+    value: function getColor(ray, IR) {
+      // If this ray's influence is too low, just skip and return black.
+      if (ray.influence.x < 0.01 && ray.influence.y < 0.01 && ray.influence.z < 0.01) {
+        return _Rendering_js__WEBPACK_IMPORTED_MODULE_0__["MyColor"].BLACK;
+      }
+
+      IR.reset();
+
+      if (this.root.intersects(ray, IR)) {
+        // Find value for that pixel
+        return new _Rendering_js__WEBPACK_IMPORTED_MODULE_0__["MyColor"](this.lighting(ray, IR));
+      } else {
+        // If we don't intersect, default background color
+        return this.bg;
+      }
+    }
+  }, {
+    key: "getPixel",
+    value: function getPixel(x, y, ray, IR) {
+      this.pixelColor.set(0, 0, 0, false);
+      var dofn = this.cam.dof.samples.length;
+      var sn = this.samples.length;
+
+      for (var i = 0; i < sn; i++) {
+        // Generate the ray for this pixel
+        var dx = this.samples[i][0];
+        var dy = this.samples[i][1]; // Add DOF generation
+
+        for (var j = 0; j < dofn; j++) {
+          if (!this.cam.generateRay(x + dx, y + dy, j, ray)) {
+            console.log("Problem in the code - could not generate camera ray!");
+            return;
+          }
+
+          ray.setDepth(this.reflDepth);
+          this.pixelColor.add(this.getColor(ray, IR));
+        }
+      }
+
+      this.pixelColor.div(sn * dofn);
+      return this.pixelColor.getFinal();
+    }
+  }, {
+    key: "draw",
+    value: function draw(timeLimit, sketch) {
+      var ray = new _Ray_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
+      var IR = new _IR_js__WEBPACK_IMPORTED_MODULE_2__["default"](); // Load the pixels into the back buffer
+
+      sketch.loadPixels(); // console.log("Current dims: " + this.cam.width + "x" + this.cam.height + " pixels");
+      // Prepare the interactive loop
+
+      var deadline = sketch.millis() + timeLimit;
+      var x = this.lastX;
+      var y = this.lastY; // Interactive loop - can only go until time limit
+
+      while (sketch.millis() < deadline) {
+        sketch.set(x, y, sketch.color(this.getPixel(x, y, ray, IR)));
+        x++;
+        this.numPixel++;
+
+        if (x == this.cam.width) {
+          x = 0;
+          y++;
+
+          if (y == this.cam.height) {
+            // Put those pixels into main buffer/canvas
+            sketch.updatePixels(); // We finished drawing
+
+            return true;
+          }
+        }
+      } // Put those pixels into main buffer/canvas
+
+
+      sketch.updatePixels(); // Not yet finished drawing, save state
+
+      this.lastX = x;
+      this.lastY = y;
+      return false;
+    }
+  }]);
+
+  return Scene;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/js/raytracer/SceneLoader.js":
+/*!*****************************************!*\
+  !*** ./src/js/raytracer/SceneLoader.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SceneLoader; });
+/* harmony import */ var _Camera_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Camera.js */ "./src/js/raytracer/Camera.js");
+/* harmony import */ var _Scene_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Scene.js */ "./src/js/raytracer/Scene.js");
+/* harmony import */ var _Rendering_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Rendering.js */ "./src/js/raytracer/Rendering.js");
+/* harmony import */ var _Intersectables_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Intersectables.js */ "./src/js/raytracer/Intersectables.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+
+var SceneLoader = /*#__PURE__*/function () {
+  function SceneLoader(json) {
+    _classCallCheck(this, SceneLoader);
+
+    this.scene = new _Scene_js__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    this.refMap = {}; // Object names to objects
+
+    this.loadScene(json);
+  }
+
+  _createClass(SceneLoader, [{
+    key: "loadCamera",
+    value: function loadCamera(json) {
+      var cam = new _Camera_js__WEBPACK_IMPORTED_MODULE_0__["default"](json.pos, json.lookAt, json.up);
+      cam.setScreen(json.screen.w, json.screen.h, json.fovy);
+
+      if (typeof json.dof !== "undefined") {
+        cam.setDOF(json.dof.point, json.dof.normal, json.dof.aperture, json.dof.samples);
+      }
+
+      return cam;
+    }
+  }, {
+    key: "loadMaterial",
+    value: function loadMaterial(json) {
+      // If material is just a reference, try and get it
+      if (typeof json === "string") {
+        if (this.scene.materials[json] === "undefined") {
+          throw "Material reference to non-existent material!";
+        } else {
+          return this.scene.materials[json];
+        }
+      } // Load material from scratch
+
+
+      var mat = new _Rendering_js__WEBPACK_IMPORTED_MODULE_2__["Material"](json.diffuse);
+
+      if (typeof json.name !== "undefined") {
+        mat.name = json.name;
+      }
+
+      if (typeof json.specExp !== "undefined") {
+        mat.setSpecular(json.specExp, json.specular);
+      }
+
+      if (typeof json.reflect !== "undefined") {
+        if (json.reflect === true) {
+          mat.setReflect();
+        } else {
+          mat.setReflect(json.reflect);
+        }
+      }
+
+      if (typeof json.opacity !== "undefined") {
+        mat.setOpacity(json.opacity);
+      }
+
+      return mat;
+    }
+  }, {
+    key: "loadLight",
+    value: function loadLight(json) {
+      var _json$type;
+
+      var c = json.color;
+
+      switch ((_json$type = json.type) === null || _json$type === void 0 ? void 0 : _json$type.toLowerCase()) {
+        case "area":
+          return new _Rendering_js__WEBPACK_IMPORTED_MODULE_2__["AreaLight"](json.tri, c, json.samples);
+
+        default:
+          return new _Rendering_js__WEBPACK_IMPORTED_MODULE_2__["PointLight"](json.pos, c);
+      }
+    }
+  }, {
+    key: "loadInter",
+    value: function loadInter(json) {
+      // If we just state a reference, check the map.
+      if (typeof json === "string") {
+        if (this.refMap[json] === "undefined") {
+          throw "Object reference to non-existent object!";
+        } else {
+          return this.refMap[json];
+        }
+      }
+
+      var outp = null;
+
+      switch (json.type.toLowerCase()) {
+        case "plane":
+          outp = this.loadPlane(json);
+          break;
+
+        case "node":
+          outp = this.loadNode(json);
+          break;
+
+        case "sphere":
+          outp = this.loadSphere(json);
+          break;
+
+        case "box":
+          outp = this.loadBox(json);
+          break;
+
+        case "transform":
+          outp = this.loadTransform(json);
+          break;
+
+        default:
+          throw "You did not implement a loader for this object";
+      } // Default material
+
+
+      if (outp !== null && typeof json.material !== "undefined") {
+        outp.setMaterial(this.loadMaterial(json.material));
+      } // Name?
+
+
+      if (outp !== null && typeof json.name !== "undefined") {
+        outp.name = json.name;
+        this.refMap[outp.name] = outp;
+      }
+
+      return outp;
+    }
+  }, {
+    key: "loadNode",
+    value: function loadNode(json) {
+      var children = [];
+
+      for (var i in json.children) {
+        children.push(this.loadInter(json.children[i]));
+      }
+
+      var node = new _Intersectables_js__WEBPACK_IMPORTED_MODULE_3__["SceneNode"](children);
+
+      if (typeof json.bounds !== "undefined") {
+        node.setBounds(this.loadInter(json.bounds));
+      }
+
+      return node;
+    }
+  }, {
+    key: "loadPlane",
+    value: function loadPlane(json) {
+      var mat2 = null;
+
+      if (typeof json.mat2 !== "undefined") {
+        mat2 = this.loadMaterial(json.mat2);
+      }
+
+      return new _Intersectables_js__WEBPACK_IMPORTED_MODULE_3__["Plane"](mat2);
+    }
+  }, {
+    key: "loadSphere",
+    value: function loadSphere(json) {
+      return new _Intersectables_js__WEBPACK_IMPORTED_MODULE_3__["Sphere"](json.pos || [0, 0, 0], json.radius || 1);
+    }
+  }, {
+    key: "loadBox",
+    value: function loadBox(json) {
+      return new _Intersectables_js__WEBPACK_IMPORTED_MODULE_3__["Box"](json.min, json.max);
+    }
+  }, {
+    key: "loadTransform",
+    value: function loadTransform(json) {
+      var child = this.loadInter(json.child);
+      var t = json.translate;
+      var r = typeof json.rotate === "undefined" ? [0, 0, 0] : json.rotate;
+      var s = typeof json.scale === "undefined" ? 1 : json.scale;
+      return new _Intersectables_js__WEBPACK_IMPORTED_MODULE_3__["MatrixTransform"](child, t, r, s);
+    }
+  }, {
+    key: "loadScene",
+    value: function loadScene(json) {
+      // Simple properties        
+      if (typeof json.samples !== "undefined") {
+        this.scene.setSamples(json.samples);
+      }
+
+      if (typeof json.reflDepth !== "undefined") {
+        this.scene.reflDepth = json.reflDepth;
+      }
+
+      if (typeof json.ambient !== "undefined") {
+        this.scene.setAmbient(json.ambient);
+      }
+
+      if (typeof json.bg !== "undefined") {
+        this.scene.setBG(json.bg);
+      } // Harder properties
+
+
+      if (typeof json.lights !== "undefined") {
+        for (var i in json.lights) {
+          this.scene.addLight(this.loadLight(json.lights[i]));
+        }
+      }
+
+      if (typeof json.materials !== "undefined") {
+        for (var _i in json.materials) {
+          this.scene.addMaterial(this.loadMaterial(json.materials[_i]));
+        }
+      }
+
+      this.scene.setCamera(this.loadCamera(json.camera)); // Scene graph
+
+      this.scene.setRootNode(this.loadInter(json.root));
+    }
+  }]);
+
+  return SceneLoader;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/js/raytracer/Vector3.js":
+/*!*************************************!*\
+  !*** ./src/js/raytracer/Vector3.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Vector3; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Vector3 = /*#__PURE__*/function () {
+  function Vector3(x, y, z, saveMag) {
+    _classCallCheck(this, Vector3);
+
+    if (typeof x === "undefined") {
+      // Empty constructor - simple init.
+      this.x = 0;
+      this.y = 0;
+      this.z = 0;
+      this.saveMag = false;
+    } else {
+      this.set(x, y, z, saveMag);
+    }
+  }
+
+  _createClass(Vector3, [{
+    key: "setSaving",
+    value: function setSaving(b) {
+      if (b) {
+        this._saveMags();
+      } else {
+        this.saveMag = false;
+      }
+
+      return this;
+    }
+  }, {
+    key: "setV",
+    value: function setV(v) {
+      this.x = v.x;
+      this.y = v.y;
+      this.z = v.z;
+      this.saveMag = v.saveMag;
+
+      if (this.saveMag) {
+        this._mag = v._mag;
+        this._magSq = v._magSq;
+      }
+
+      return this;
+    }
+  }, {
+    key: "set",
+    value: function set(x, y, z, saveMag) {
+      if (x instanceof Vector3) {
+        return this.setV(x);
+      } else if (x instanceof Array) {
+        // Set the values
+        this.x = x[0] || 0;
+        this.y = x[1] || 0;
+        this.z = x[2] || 0; // Reset saveMag
+
+        this.saveMag = false;
+      } else {
+        // Set the values
+        this.x = x || 0;
+        this.y = y || 0;
+        this.z = z || 0; // Reset saveMag
+
+        saveMag = typeof saveMag === "boolean" ? saveMag : this.saveMag || false;
+        this.saveMag = false;
+      }
+
+      if (saveMag) {
+        this._saveMags();
+      }
+
+      return this;
+    }
+  }, {
+    key: "_saveMags",
+    value: function _saveMags() {
+      this.saveMag = false;
+      this._magSq = this.magSq();
+      this._mag = this.mag();
+      this.saveMag = true;
+    }
+  }, {
+    key: "copy",
+    value: function copy() {
+      return new Vector3().setV(this);
+    }
+  }, {
+    key: "dot",
+    value: function dot(other) {
+      return this.x * other.x + this.y * other.y + this.z * other.z;
+    }
+  }, {
+    key: "dotArr",
+    value: function dotArr(x, y, z) {
+      return this.x * x + this.y * y + this.z * z;
+    }
+  }, {
+    key: "magSq",
+    value: function magSq() {
+      if (this.saveMag && typeof this._magSq !== "undefined") {
+        return this._magSq;
+      }
+
+      return this.dot(this);
+    }
+  }, {
+    key: "mag",
+    value: function mag() {
+      if (this.saveMag && typeof this._mag !== "undefined") {
+        return this._mag;
+      }
+
+      return Math.sqrt(this.magSq());
+    }
+  }, {
+    key: "setMag",
+    value: function setMag(m) {
+      var mag = this.mag();
+      this.saveMag = false;
+      this.mult(m / mag); // Save mag from the given
+
+      this.saveMag = true;
+      this._mag = m;
+      this._magSq = m * m;
+      return this;
+    }
+  }, {
+    key: "add",
+    value: function add(v) {
+      this.x += v.x;
+      this.y += v.y;
+      this.z += v.z;
+
+      if (this.saveMag) {
+        this._saveMags();
+      }
+
+      return this;
+    }
+  }, {
+    key: "scaleAdd",
+    value: function scaleAdd(v, t) {
+      this.x += v.x * t;
+      this.y += v.y * t;
+      this.z += v.z * t;
+
+      if (this.saveMag) {
+        this._saveMags();
+      }
+
+      return this;
+    }
+  }, {
+    key: "sub",
+    value: function sub(v) {
+      this.x -= v.x;
+      this.y -= v.y;
+      this.z -= v.z;
+
+      if (this.saveMag) {
+        this._saveMags();
+      }
+
+      return this;
+    }
+  }, {
+    key: "mult",
+    value: function mult(v) {
+      this.x *= v;
+      this.y *= v;
+      this.z *= v;
+
+      if (this.saveMag) {
+        this._magSq *= v * v;
+        this._mag *= v;
+      }
+
+      return this;
+    }
+  }, {
+    key: "multWise",
+    value: function multWise(other) {
+      this.x *= other.x;
+      this.y *= other.y;
+      this.z *= other.z;
+
+      if (this.saveMag) {
+        this._saveMags();
+      }
+
+      return this;
+    }
+  }, {
+    key: "div",
+    value: function div(v) {
+      return this.mult(1 / v);
+    }
+  }, {
+    key: "normalize",
+    value: function normalize() {
+      if (this.magSq() != 1) {
+        var mag = this.mag();
+        this.saveMag = false;
+        this.div(mag);
+        this.saveMag = true;
+        this._mag = 1;
+        this._magSq = 1;
+      }
+
+      return this;
+    }
+  }, {
+    key: "reflect",
+    value: function reflect(n) {
+      var dot = 2 * this.dot(n);
+      return n.copy().mult(dot).sub(this);
+    } // Rotates this (assumed normalized) vector towards another (n) vector
+
+  }, {
+    key: "rotateTowards",
+    value: function rotateTowards(other, theta) {
+      var up = this.cross(other);
+      var ninety = up.cross(this).normalize();
+      var outv = this.copy().setMag(Math.cos(theta)).scaleAdd(ninety, Math.sin(theta));
+      return outv;
+    }
+  }, {
+    key: "refract",
+    value: function refract(normal, index_now, index_in) {
+      var s = this.cross(normal).mag(); // Sin of angle between; sin's reflection means we don't have to inverse the normal.
+
+      var s2 = s * index_now / index_in;
+
+      if (s2 >= 1) {
+        // Total internal reflection
+        return null; // Could return this.reflect(normal);
+      }
+
+      var new_theta = Math.asin(s2);
+      return normal.copy().mult(-1).rotateTowards(this, new_theta);
+    }
+  }, {
+    key: "cross",
+    value: function cross(v) {
+      var x = this.y * v.z - this.z * v.y;
+      var y = this.z * v.x - this.x * v.z;
+      var z = this.x * v.y - this.y * v.x;
+      return new Vector3(x, y, z);
+    }
+  }, {
+    key: "toString",
+    value: function toString() {
+      return "[" + this.x + ", " + this.y + ", " + this.z + "]";
+    }
+  }, {
+    key: "at",
+    value: function at(coord) {
+      switch (coord) {
+        case 0:
+          return this.x;
+
+        case 1:
+          return this.y;
+
+        case 2:
+          return this.z;
+      }
+    }
+  }, {
+    key: "setAt",
+    value: function setAt(coord, val) {
+      switch (coord) {
+        case 0:
+          this.x = val;
+          break;
+
+        case 1:
+          this.y = val;
+          break;
+
+        case 2:
+          this.z = val;
+          break;
+      }
+    }
+  }]);
+
+  return Vector3;
+}();
+
+
+
+Vector3.sub = function (v1, v2) {
+  return v1.copy().sub(v2);
+};
+
+Vector3.mult = function (v, k) {
+  return v.copy().mult(k);
+};
+
+/***/ }),
+
+/***/ "./src/js/raytracer/index.js":
+/*!***********************************!*\
+  !*** ./src/js/raytracer/index.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var p5__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! p5 */ "./node_modules/p5/lib/p5.js");
+/* harmony import */ var p5__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(p5__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _SceneLoader_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SceneLoader.js */ "./src/js/raytracer/SceneLoader.js");
+
+
+
+function sleep(ms) {
+  return new Promise(function (resolve) {
+    return setTimeout(resolve, ms);
+  });
+}
+
+var s = new p5__WEBPACK_IMPORTED_MODULE_0___default.a(function (sketch) {
+  sketch.preload = function () {
+    sketch.json = sketch.loadJSON("/raytracer/scenes/emptyScene.json");
+  };
+
+  sketch.setup = function () {
+    sketch.scene = new _SceneLoader_js__WEBPACK_IMPORTED_MODULE_1__["default"](sketch.json).scene;
+    console.log(sketch.scene); // P5 settings
+
+    sketch.startTime = sketch.millis();
+    var canvas = sketch.createCanvas(sketch.scene.cam.width, sketch.scene.cam.height);
+    canvas["class"]("mx-auto");
+    sketch.frameRate(30); // Load the pixels into the back buffer
+
+    sketch.loadPixels();
+  };
+
+  sketch.draw = function () {
+    if (sketch.scene.draw(1000 / 40, sketch)) {
+      // Roughly 40 FPS limit on ray-tracing, around 30 with overheads
+      console.log("Completed drawing in " + (sketch.millis() - sketch.startTime) + " ms.");
+      sketch.noLoop();
+    }
+
+    var totalTime = (sketch.millis() - sketch.startTime) / 1000;
+    sketch.select("#runtime").html(totalTime.toFixed(1));
+    sketch.select("#remtime").html((totalTime * (sketch.scene.cam.width * sketch.scene.cam.height / sketch.scene.numPixel - 1)).toFixed(1));
+  };
+
+  sketch.drawFrom = function (json) {
+    sketch.noLoop();
+    delete sketch.scene;
+    sketch.scene = new _SceneLoader_js__WEBPACK_IMPORTED_MODULE_1__["default"](json).scene;
+    sketch.startTime = sketch.millis();
+    sketch.resizeCanvas(sketch.scene.cam.width, sketch.scene.cam.height);
+    sketch.loop();
+  };
+
+  sketch.loadAndDraw = function (jsonURL) {
+    sketch.loadJSON(jsonURL, sketch.drawFrom);
+  };
+}, "canvasHolder");
+/* harmony default export */ __webpack_exports__["default"] = (s);
+
+/***/ }),
+
+/***/ 2:
+/*!******************************************!*\
+  !*** multi ./src/js/pages/RayTracer.jsx ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! C:\Users\Ivan M\Desktop\CODING\github.io\src\js\pages\RayTracer.jsx */"./src/js/pages/RayTracer.jsx");
+
+
+/***/ })
+
+},[[2,"/res/js/manifest","/res/js/vendor"]]]);

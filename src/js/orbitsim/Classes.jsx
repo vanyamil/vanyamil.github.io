@@ -99,22 +99,16 @@ Payload.prototype.draw = function(p5) {
 
     p5.draw_wrapper(this.position, this.color, () => p5.sphere(this.impacted ? Payload.SIZE / 10 : Payload.SIZE));
 
-    // Path on earth
-/*
-    let closer = this.position.setMag(Earth.RADIUS);
-
-    p5.draw_wrapper(closer, this.color, () => p5.sphere(Payload.SIZE));
-*/
     p5.pop();
-/*
-    // Momentum
-    if(!this.contained) {
-        let m = this.container.momentum.copy().setMag(Earth.RADIUS);
-        p5.draw_wrapper(
-            m, this.color, () => p5.sphere(Payload.SIZE)
-        );
+
+    // Velocity
+    /*
+    if(!this.impacted && !this.contained && p5.getTracked() == null) {
+        p5.draw_wrapper(this.true_position.copy().add(this.container.velocity.mult(500)), "orange", () => p5.sphere(this.impacted ? Payload.SIZE / 10 : Payload.SIZE));
+        p5.draw_wrapper(this.true_position.copy().add(this.container.velocity.mult(1000)), "orange", () => p5.sphere(this.impacted ? Payload.SIZE / 10 : Payload.SIZE));
     }
-*/
+    */
+
 };
 
 export {Earth, Ribbon, Climber, Payload, Orbit, ImpactPosition, FrameTimer, UI};

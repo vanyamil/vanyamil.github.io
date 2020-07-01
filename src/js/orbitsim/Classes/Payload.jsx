@@ -1,4 +1,5 @@
 import ImpactPosition from "./ImpactPosition.jsx";
+import Orbit from "./Orbit.jsx";
 
 export default class Payload {    
     // Constants
@@ -31,5 +32,37 @@ export default class Payload {
                 this.container = new ImpactPosition(this.container);
             }
         }
+    }
+
+    boost(v, addOrSet, curTime) {
+        // Only allowed in flight
+        if(this.impacted || this.contained) {
+            console.log("Cannot boost");
+            return;
+        }
+
+        const fwd = this.container.velocity;
+        console.log("Old v: " + fwd);
+        console.log("Old pos: " + this.true_position);
+
+        const speed = fwd.mag();
+        fwd.normalize();
+
+        const normal = this.container.momentum.copy().normalize();
+        const tangent = fwd.cross(normal);
+
+        if(!addOrSet) // add move
+            v.x += speed;
+
+        // x is forward, y is tangent, z is normal - need to transform to world coords
+        const moddedV = v.copy().mult(0);
+        moddedV.scaleAdd(fwd, v.x);
+        moddedV.scaleAdd(tangent, v.y);
+        moddedV.scaleAdd(normal, v.z);
+        console.log("New v: " + moddedV);
+
+        this.container = new Orbit(this.true_position, moddedV, curTime);
+        console.log("New pos: " + this.true_position);
+        console.log("New epoch pos: " + this.container.epoch.pos);
     }
 }
