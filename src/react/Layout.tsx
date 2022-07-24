@@ -23,6 +23,9 @@ export default function Layout() {
 						<LinkContainer to="/raytracer">
 							<Nav.Link>Ray Tracer</Nav.Link>
 						</LinkContainer>
+						<LinkContainer to="/custom-timers">
+							<Nav.Link>Custom Timers</Nav.Link>
+						</LinkContainer>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

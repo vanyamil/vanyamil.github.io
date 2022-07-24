@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 
 import Layout from './Layout';
+import CustomTimers from './CustomTimers';
 
 function Home() {
 	return (
@@ -24,6 +25,7 @@ function App() {
 		<Routes>
 			<Route path="/" element={<Layout />}>
 				<Route index element={<Home />} />
+				<Route path="custom-timers" element={<CustomTimers />} />
 				<Route path="*" element={<NoPage />} />
 			</Route>
 		</Routes>
